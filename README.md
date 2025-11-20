@@ -1,6 +1,6 @@
-# Steam Node.js Library
+# Steam Node.js Library (Unofficial)
 
-A Node.js library for the Steam Web API
+An unofficial Node.js library for the Steam Web API
 
 ## Installation
 
@@ -19,6 +19,10 @@ const friendsList = await steamClient.user.getFriendsList('76561198000000000');
 
 console.log(friendsList);
 ```
+
+## Documentation
+
+For more information, please see the [documentation](https://steam-unofficial-docs.vercel.app).
 
 ## Contributing
 
