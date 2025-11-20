@@ -1,5 +1,5 @@
-import { BaseService } from './base.service';
-import type { NewsForAppResponse } from '../types';
+import type { NewsForAppResponse } from '../types'
+import { BaseService } from './base.service'
 
 export class NewsService extends BaseService {
 	async getNewsForApp(appId: number): Promise<NewsForAppResponse> {
@@ -8,8 +8,8 @@ export class NewsService extends BaseService {
 			{
 				key: this.apiKey,
 				appid: appId.toString(),
-			}
-		);
-		return await this.sendSteamRequest<NewsForAppResponse>(url);
+			},
+		)
+		return await this.sendSteamRequest<NewsForAppResponse>(url)
 	}
 }

@@ -1,26 +1,26 @@
-import { BaseService } from './base.service';
 import type {
 	NumberOfCurrentPlayersResponse,
 	PlayerAchievementsResponse,
-} from '../types';
+} from '../types'
+import { BaseService } from './base.service'
 
 export class StatsService extends BaseService {
 	async getNumberOfCurrentPlayers(
-		appId: number
+		appId: number,
 	): Promise<NumberOfCurrentPlayersResponse> {
 		const url = this.generateSteamUrl(
 			`${this.baseUrl}/ISteamUserStats/GetNumberOfCurrentPlayers/v1`,
 			{
 				key: this.apiKey,
 				appid: appId.toString(),
-			}
-		);
-		return await this.sendSteamRequest<NumberOfCurrentPlayersResponse>(url);
+			},
+		)
+		return await this.sendSteamRequest<NumberOfCurrentPlayersResponse>(url)
 	}
 
 	async getPlayerAchievements(
 		steamUserId: string,
-		appId: number
+		appId: number,
 	): Promise<PlayerAchievementsResponse> {
 		const url = this.generateSteamUrl(
 			`${this.baseUrl}/ISteamUserStats/GetPlayerAchievements/v1`,
@@ -28,8 +28,8 @@ export class StatsService extends BaseService {
 				key: this.apiKey,
 				steamid: steamUserId,
 				appid: appId.toString(),
-			}
-		);
-		return await this.sendSteamRequest<PlayerAchievementsResponse>(url);
+			},
+		)
+		return await this.sendSteamRequest<PlayerAchievementsResponse>(url)
 	}
 }

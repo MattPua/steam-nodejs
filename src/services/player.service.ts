@@ -1,10 +1,10 @@
-import { BaseService } from './base.service';
 import type {
-	SteamLevelResponse,
 	BadgesResponse,
 	OwnedGamesResponse,
 	RecentlyPlayedGamesResponse,
-} from '../types';
+	SteamLevelResponse,
+} from '../types'
+import { BaseService } from './base.service'
 
 export class PlayerService extends BaseService {
 	async getSteamLevel(steamUserId: string): Promise<SteamLevelResponse> {
@@ -13,9 +13,9 @@ export class PlayerService extends BaseService {
 			{
 				key: this.apiKey,
 				steamid: steamUserId,
-			}
-		);
-		return await this.sendSteamRequest<SteamLevelResponse>(url);
+			},
+		)
+		return await this.sendSteamRequest<SteamLevelResponse>(url)
 	}
 
 	async getBadges(steamUserId: string): Promise<BadgesResponse> {
@@ -24,9 +24,9 @@ export class PlayerService extends BaseService {
 			{
 				key: this.apiKey,
 				steamid: steamUserId,
-			}
-		);
-		return await this.sendSteamRequest<BadgesResponse>(url);
+			},
+		)
+		return await this.sendSteamRequest<BadgesResponse>(url)
 	}
 
 	async getOwnedGames(steamUserId: string): Promise<OwnedGamesResponse> {
@@ -36,21 +36,21 @@ export class PlayerService extends BaseService {
 				key: this.apiKey,
 				steamid: steamUserId,
 				include_appinfo: 'true',
-			}
-		);
-		return await this.sendSteamRequest<OwnedGamesResponse>(url);
+			},
+		)
+		return await this.sendSteamRequest<OwnedGamesResponse>(url)
 	}
 
 	async getRecentlyPlayedGames(
-		steamUserId: string
+		steamUserId: string,
 	): Promise<RecentlyPlayedGamesResponse> {
 		const url = this.generateSteamUrl(
 			`${this.baseUrl}/IPlayerService/GetRecentlyPlayedGames/v1`,
 			{
 				key: this.apiKey,
 				steamid: steamUserId,
-			}
-		);
-		return await this.sendSteamRequest<RecentlyPlayedGamesResponse>(url);
+			},
+		)
+		return await this.sendSteamRequest<RecentlyPlayedGamesResponse>(url)
 	}
 }

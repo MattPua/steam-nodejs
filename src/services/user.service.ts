@@ -1,9 +1,9 @@
-import { BaseService } from './base.service';
 import type {
 	FriendsListResponse,
 	ListUsersResponse,
 	UserGroupListResponse,
-} from '../types';
+} from '../types'
+import { BaseService } from './base.service'
 
 export class UserService extends BaseService {
 	async getFriendsList(steamUserId: string): Promise<FriendsListResponse> {
@@ -13,9 +13,9 @@ export class UserService extends BaseService {
 				key: this.apiKey,
 				steamid: steamUserId,
 				relationship: 'friend',
-			}
-		);
-		return await this.sendSteamRequest<FriendsListResponse>(url);
+			},
+		)
+		return await this.sendSteamRequest<FriendsListResponse>(url)
 	}
 
 	async listUsers(steamUserIds: string[]): Promise<ListUsersResponse> {
@@ -24,9 +24,9 @@ export class UserService extends BaseService {
 			{
 				key: this.apiKey,
 				steamids: steamUserIds.join(','),
-			}
-		);
-		return await this.sendSteamRequest<ListUsersResponse>(url);
+			},
+		)
+		return await this.sendSteamRequest<ListUsersResponse>(url)
 	}
 
 	async getUserGroupList(steamUserId: string): Promise<UserGroupListResponse> {
@@ -35,8 +35,8 @@ export class UserService extends BaseService {
 			{
 				key: this.apiKey,
 				steamid: steamUserId,
-			}
-		);
-		return await this.sendSteamRequest<UserGroupListResponse>(url);
+			},
+		)
+		return await this.sendSteamRequest<UserGroupListResponse>(url)
 	}
 }
