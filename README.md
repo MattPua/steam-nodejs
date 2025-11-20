@@ -15,7 +15,23 @@ import { SteamClient } from 'steam-nodejs';
 
 const steamClient = new SteamClient('your-api-key');
 
-const friendsList = await steamClient.user.getFriendsList('76561198000000000');
+// Generate a redirect URL to login with Steam with openID Connect
+const redirectUrl = await steamClient
+.getSteamAuth({
+  realm: "https://your-website.com",
+  returnUrl: "https://your-website.com/callback",
+})
+.getRedirectUrl();
+
+// On receiving the callback, authenticate the user
+const user = await steamClient
+.getSteamAuth({
+  realm: "https://your-website.com",
+  returnUrl: "https://your-website.com/callback",
+})
+.authenticate(request);
+
+const friendsList = await steamClient.user.getFriendsList(user.steamid);
 
 console.log(friendsList);
 ```
