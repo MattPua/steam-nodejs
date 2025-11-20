@@ -14,6 +14,13 @@
 		"type": "git",
 		"url": "git+https://github.com/mattpua/steam-nodejs.git"
 	},
+	"keywords": [
+		"steam",
+		"api",
+		"nodejs",
+		"unofficial",
+		"steamworks"
+	],
 	"scripts": {
 		"build": "bunup",
 		"dev": "bunup --watch",
