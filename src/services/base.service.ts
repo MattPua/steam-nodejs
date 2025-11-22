@@ -18,11 +18,17 @@ export abstract class BaseService {
 
 	protected generateSteamUrl(
 		link: string,
-		params: Record<string, string>,
+		params: Record<string, string | number | boolean | undefined>,
+		dataRequest?: Record<string, string | number | boolean | undefined>,
 	): string {
 		const url = new URL(link)
 		for (const [key, value] of Object.entries(params)) {
-			url.searchParams.set(key, value)
+			if (value !== undefined) {
+				url.searchParams.set(key, value.toString())
+			}
+		}
+		if (dataRequest) {
+			url.searchParams.set('data_request', JSON.stringify(dataRequest))
 		}
 		return url.toString()
 	}

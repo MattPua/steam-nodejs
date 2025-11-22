@@ -1,11 +1,26 @@
 import type {
 	FriendsListResponse,
 	ListUsersResponse,
+	PlayerSummaryResponse,
 	UserGroupListResponse,
-} from '../types'
+} from '../schemas/responses'
 import { BaseService } from './base.service'
 
 export class UserService extends BaseService {
+	async getUser(steamUserId: string): Promise<PlayerSummaryResponse> {
+		const url = this.generateSteamUrl(
+			`${this.baseUrl}/ISteamUser/GetPlayerSummaries/v1`,
+			{
+				key: this.apiKey,
+				steamids: steamUserId,
+			},
+		)
+		return await this.sendSteamRequest<PlayerSummaryResponse>(url)
+	}
+
+	/**
+	 * Returns the friends list for a user
+	 */
 	async getFriendsList(steamUserId: string): Promise<FriendsListResponse> {
 		const url = this.generateSteamUrl(
 			`${this.baseUrl}/ISteamUser/GetFriendList/v0001`,
@@ -18,7 +33,7 @@ export class UserService extends BaseService {
 		return await this.sendSteamRequest<FriendsListResponse>(url)
 	}
 
-	async listUsers(steamUserIds: string[]): Promise<ListUsersResponse> {
+	async getUsers(steamUserIds: string[]): Promise<ListUsersResponse> {
 		const url = this.generateSteamUrl(
 			`${this.baseUrl}/ISteamUser/GetPlayerSummaries/v1`,
 			{

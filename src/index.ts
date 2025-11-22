@@ -1,24 +1,2 @@
+export * from './schemas'
 export { SteamClient } from './steam-client'
-export type {
-	Achievement,
-	Badge,
-	BadgesResponse,
-	Friend,
-	FriendsListResponse,
-	Game,
-	ListUsersResponse,
-	NewsForAppResponse,
-	NewsItem,
-	NumberOfCurrentPlayersResponse,
-	OwnedGamesResponse,
-	Player,
-	PlayerAchievementsResponse,
-	RecentlyPlayedGame,
-	RecentlyPlayedGamesResponse,
-	SteamLevelResponse,
-	UserGroup,
-	UserGroupListResponse,
-	WishlistItem,
-	WishlistItemCountResponse,
-	WishlistResponse,
-} from './types'
