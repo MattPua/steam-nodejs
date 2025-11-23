@@ -112,37 +112,42 @@ const ListUsersResponseSchema: z.ZodObject<{
 const PlayerSummaryResponseSchema: z.ZodObject<{
 	response: z.ZodObject<
 		{
-			players: z.ZodArray<
-				z.ZodObject<
-					{
-						steamid: z.ZodString
-						communityvisibilitystate: z.ZodNumber
-						profilestate: z.ZodNumber
-						personaname: z.ZodString
-						profileurl: z.ZodString
-						avatar: z.ZodString
-						avatarmedium: z.ZodString
-						avatarfull: z.ZodString
-						avatarhash: z.ZodString
-						lastlogoff: z.ZodOptional<z.ZodNumber>
-						personastate: z.ZodOptional<z.ZodNumber>
-						realname: z.ZodOptional<z.ZodString>
-						primaryclanid: z.ZodOptional<z.ZodString>
-						timecreated: z.ZodOptional<z.ZodNumber>
-						personastateflags: z.ZodOptional<z.ZodNumber>
-						loccountrycode: z.ZodOptional<z.ZodString>
-						locstatecode: z.ZodOptional<z.ZodString>
-						loccityid: z.ZodOptional<z.ZodNumber>
-					},
-					z.core.$strip
-				>
+			players: z.ZodObject<
+				{
+					player: z.ZodObject<
+						{
+							steamid: z.ZodString
+							communityvisibilitystate: z.ZodNumber
+							profilestate: z.ZodNumber
+							personaname: z.ZodString
+							profileurl: z.ZodString
+							avatar: z.ZodString
+							avatarmedium: z.ZodString
+							avatarfull: z.ZodString
+							avatarhash: z.ZodString
+							lastlogoff: z.ZodOptional<z.ZodNumber>
+							personastate: z.ZodOptional<z.ZodNumber>
+							realname: z.ZodOptional<z.ZodString>
+							primaryclanid: z.ZodOptional<z.ZodString>
+							timecreated: z.ZodOptional<z.ZodNumber>
+							personastateflags: z.ZodOptional<z.ZodNumber>
+							loccountrycode: z.ZodOptional<z.ZodString>
+							locstatecode: z.ZodOptional<z.ZodString>
+							loccityid: z.ZodOptional<z.ZodNumber>
+						},
+						z.core.$strip
+					>
+				},
+				z.core.$strip
 			>
 		},
 		z.core.$strip
 	>
 }> = z.object({
 	response: z.object({
-		players: z.array(PlayerSchema),
+		players: z.object({
+			player: PlayerSchema,
+		}),
 	}),
 })
 

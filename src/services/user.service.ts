@@ -1,6 +1,7 @@
 import type {
 	FriendsListResponse,
 	ListUsersResponse,
+	Player,
 	PlayerSummaryResponse,
 	UserGroupListResponse,
 } from '../schemas/responses'
@@ -12,11 +13,12 @@ export class UserService extends BaseService {
 		this.baseUrl = `${this.baseUrl}/ISteamUser`
 	}
 
-	async getUser(steamUserId: string): Promise<PlayerSummaryResponse> {
+	async getUser(steamUserId: string): Promise<Player> {
 		const url = this.generateSteamUrl(`/GetPlayerSummaries/v1`, {
 			steamids: steamUserId,
 		})
-		return await this.sendSteamRequest<PlayerSummaryResponse>(url)
+		const response = await this.sendSteamRequest<PlayerSummaryResponse>(url)
+		return response.response.players.player
 	}
 
 	/**
