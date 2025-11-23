@@ -18,7 +18,7 @@ export class UserService extends BaseService {
 			steamids: steamUserId,
 		})
 		const response = await this.sendSteamRequest<PlayerSummaryResponse>(url)
-		return response.response.players.player
+		return response.response.players.player[0] as Player
 	}
 
 	/**

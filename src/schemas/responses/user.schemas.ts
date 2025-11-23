@@ -114,28 +114,30 @@ const PlayerSummaryResponseSchema: z.ZodObject<{
 		{
 			players: z.ZodObject<
 				{
-					player: z.ZodObject<
-						{
-							steamid: z.ZodString
-							communityvisibilitystate: z.ZodNumber
-							profilestate: z.ZodNumber
-							personaname: z.ZodString
-							profileurl: z.ZodString
-							avatar: z.ZodString
-							avatarmedium: z.ZodString
-							avatarfull: z.ZodString
-							avatarhash: z.ZodString
-							lastlogoff: z.ZodOptional<z.ZodNumber>
-							personastate: z.ZodOptional<z.ZodNumber>
-							realname: z.ZodOptional<z.ZodString>
-							primaryclanid: z.ZodOptional<z.ZodString>
-							timecreated: z.ZodOptional<z.ZodNumber>
-							personastateflags: z.ZodOptional<z.ZodNumber>
-							loccountrycode: z.ZodOptional<z.ZodString>
-							locstatecode: z.ZodOptional<z.ZodString>
-							loccityid: z.ZodOptional<z.ZodNumber>
-						},
-						z.core.$strip
+					player: z.ZodArray<
+						z.ZodObject<
+							{
+								steamid: z.ZodString
+								communityvisibilitystate: z.ZodNumber
+								profilestate: z.ZodNumber
+								personaname: z.ZodString
+								profileurl: z.ZodString
+								avatar: z.ZodString
+								avatarmedium: z.ZodString
+								avatarfull: z.ZodString
+								avatarhash: z.ZodString
+								lastlogoff: z.ZodOptional<z.ZodNumber>
+								personastate: z.ZodOptional<z.ZodNumber>
+								realname: z.ZodOptional<z.ZodString>
+								primaryclanid: z.ZodOptional<z.ZodString>
+								timecreated: z.ZodOptional<z.ZodNumber>
+								personastateflags: z.ZodOptional<z.ZodNumber>
+								loccountrycode: z.ZodOptional<z.ZodString>
+								locstatecode: z.ZodOptional<z.ZodString>
+								loccityid: z.ZodOptional<z.ZodNumber>
+							},
+							z.core.$strip
+						>
 					>
 				},
 				z.core.$strip
@@ -146,7 +148,7 @@ const PlayerSummaryResponseSchema: z.ZodObject<{
 }> = z.object({
 	response: z.object({
 		players: z.object({
-			player: PlayerSchema,
+			player: z.array(PlayerSchema),
 		}),
 	}),
 })
