@@ -1,13 +1,27 @@
 import { z } from 'zod'
 
-const NumberOfCurrentPlayersResponseSchema = z.object({
+const NumberOfCurrentPlayersResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			result: z.ZodNumber
+			player_count: z.ZodNumber
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		result: z.number(),
 		player_count: z.number(),
 	}),
 })
 
-const AchievementSchema = z.object({
+const AchievementSchema: z.ZodObject<{
+	apiname: z.ZodString
+	achieved: z.ZodNumber
+	unlocktime: z.ZodNumber
+	name: z.ZodOptional<z.ZodString>
+	description: z.ZodOptional<z.ZodString>
+}> = z.object({
 	apiname: z.string(),
 	achieved: z.number(),
 	unlocktime: z.number(),
@@ -15,7 +29,39 @@ const AchievementSchema = z.object({
 	description: z.string().optional(),
 })
 
-const PlayerAchievementsResponseSchema = z.object({
+const PlayerAchievementsResponseSchema: z.ZodObject<{
+	playerstats: z.ZodUnion<
+		readonly [
+			z.ZodObject<
+				{
+					steamID: z.ZodString
+					gameName: z.ZodString
+					achievements: z.ZodArray<
+						z.ZodObject<
+							{
+								apiname: z.ZodString
+								achieved: z.ZodNumber
+								unlocktime: z.ZodNumber
+								name: z.ZodOptional<z.ZodString>
+								description: z.ZodOptional<z.ZodString>
+							},
+							z.core.$strip
+						>
+					>
+					success: z.ZodUnion<[z.ZodLiteral<true>, z.ZodLiteral<false>]>
+				},
+				z.core.$strip
+			>,
+			z.ZodObject<
+				{
+					error: z.ZodString
+					success: z.ZodLiteral<false>
+				},
+				z.core.$strip
+			>,
+		]
+	>
+}> = z.object({
 	playerstats: z.union([
 		z
 			.object({
@@ -35,7 +81,27 @@ const PlayerAchievementsResponseSchema = z.object({
 	]),
 })
 
-const GlobalAchievementPercentagesForAppResponseSchema = z.object({
+const GlobalAchievementPercentagesForAppResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			achievementpercentages: z.ZodObject<
+				{
+					achievements: z.ZodArray<
+						z.ZodObject<
+							{
+								name: z.ZodString
+								percent: z.ZodString
+							},
+							z.core.$strip
+						>
+					>
+				},
+				z.core.$strip
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		achievementpercentages: z.object({
 			achievements: z.array(
@@ -48,7 +114,42 @@ const GlobalAchievementPercentagesForAppResponseSchema = z.object({
 	}),
 })
 
-const SchemaForGameResponseSchema = z.object({
+const SchemaForGameResponseSchema: z.ZodObject<{
+	game: z.ZodObject<
+		{
+			gameName: z.ZodString
+			gameVersion: z.ZodString
+			availableGameStats: z.ZodObject<
+				{
+					achievements: z.ZodArray<
+						z.ZodObject<
+							{
+								name: z.ZodString
+								defaultvalue: z.ZodNumber
+								displayName: z.ZodString
+								hidden: z.ZodNumber
+								description: z.ZodString
+								icon: z.ZodString
+								icongray: z.ZodString
+							},
+							z.core.$strip
+						>
+					>
+					stats: z.ZodObject<
+						{
+							name: z.ZodString
+							defaultvalue: z.ZodNumber
+							displayName: z.ZodString
+						},
+						z.core.$strip
+					>
+				},
+				z.core.$strip
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	game: z.object({
 		gameName: z.string(),
 		gameVersion: z.string(),
@@ -73,7 +174,22 @@ const SchemaForGameResponseSchema = z.object({
 	}),
 })
 
-const UserStatsForGameResponseSchema = z.object({
+const UserStatsForGameResponseSchema: z.ZodObject<{
+	playerstats: z.ZodObject<
+		{
+			steamID: z.ZodString
+			gameName: z.ZodString
+			achievements: z.ZodObject<
+				{
+					name: z.ZodString
+					achived: z.ZodNumber
+				},
+				z.core.$strip
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	playerstats: z.object({
 		steamID: z.string(),
 		gameName: z.string(),

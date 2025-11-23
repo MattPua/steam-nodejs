@@ -74,7 +74,7 @@ export class StoreService extends BaseService {
 		return await this.sendSteamRequest<GetGamesFollowedCountResponse>(url)
 	}
 
-	async getMostPopularTags() {
+	async getMostPopularTags(): Promise<GetMostPopularTagsResponse> {
 		const url = this.generateSteamUrl(`/GetMostPopularTags/v1`)
 		return await this.sendSteamRequest<GetMostPopularTagsResponse>(url)
 	}

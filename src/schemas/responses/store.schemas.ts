@@ -1,6 +1,25 @@
 import z from 'zod'
 
-const GetAppListResponseSchema = z.object({
+const GetAppListResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			apps: z.ZodArray<
+				z.ZodObject<
+					{
+						appid: z.ZodNumber
+						name: z.ZodString
+						last_modified: z.ZodNumber
+						price_change_number: z.ZodNumber
+					},
+					z.core.$strip
+				>
+			>
+			have_more: z.ZodBoolean
+			last_appid: z.ZodNumber
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		apps: z.array(
 			z.object({
@@ -19,19 +38,48 @@ const GetAppListResponseSchema = z.object({
 	}),
 })
 
-const GetGamesFollowedResponseSchema = z.object({
+const GetGamesFollowedResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			appids: z.ZodArray<z.ZodNumber>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		appids: z.array(z.number()),
 	}),
 })
 
-const GetGamesFollowedCountResponseSchema = z.object({
+const GetGamesFollowedCountResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			followed_game_count: z.ZodNumber
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		followed_game_count: z.number(),
 	}),
 })
 
-const GetMostPopularTagsResponseSchema = z.object({
+const GetMostPopularTagsResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			tags: z.ZodArray<
+				z.ZodObject<
+					{
+						tag: z.ZodString
+						name: z.ZodString
+					},
+					z.core.$strip
+				>
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		tags: z.array(
 			z.object({

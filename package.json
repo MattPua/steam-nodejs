@@ -62,7 +62,7 @@
 	},
 	"module": "./dist/index.js",
 	"simple-git-hooks": {
-		"pre-commit": "bun run lint:fix && bun run type-check"
+		"pre-commit": "bun run lint && bun run type-check"
 	},
 	"types": "./dist/index.d.ts",
 	"dependencies": {

@@ -1,18 +1,57 @@
 import { z } from 'zod'
 
-const FriendSchema = z.object({
+const FriendSchema: z.ZodObject<{
+	steamid: z.ZodString
+	relationship: z.ZodString
+	friend_since: z.ZodNumber
+}> = z.object({
 	steamid: z.string(),
 	relationship: z.string(),
 	friend_since: z.number(),
 })
 
-const FriendsListResponseSchema = z.object({
+const FriendsListResponseSchema: z.ZodObject<{
+	friendslist: z.ZodObject<
+		{
+			friends: z.ZodArray<
+				z.ZodObject<
+					{
+						steamid: z.ZodString
+						relationship: z.ZodString
+						friend_since: z.ZodNumber
+					},
+					z.core.$strip
+				>
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	friendslist: z.object({
 		friends: z.array(FriendSchema),
 	}),
 })
 
-const PlayerSchema = z.object({
+const PlayerSchema: z.ZodObject<{
+	steamid: z.ZodString
+	communityvisibilitystate: z.ZodNumber
+	profilestate: z.ZodNumber
+	personaname: z.ZodString
+	profileurl: z.ZodString
+	avatar: z.ZodString
+	avatarmedium: z.ZodString
+	avatarfull: z.ZodString
+	avatarhash: z.ZodString
+	lastlogoff: z.ZodOptional<z.ZodNumber>
+	personastate: z.ZodOptional<z.ZodNumber>
+	realname: z.ZodOptional<z.ZodString>
+	primaryclanid: z.ZodOptional<z.ZodString>
+	timecreated: z.ZodOptional<z.ZodNumber>
+	personastateflags: z.ZodOptional<z.ZodNumber>
+	loccountrycode: z.ZodOptional<z.ZodString>
+	locstatecode: z.ZodOptional<z.ZodString>
+	loccityid: z.ZodOptional<z.ZodNumber>
+}> = z.object({
 	steamid: z.string(),
 	communityvisibilitystate: z.number(),
 	profilestate: z.number(),
@@ -33,13 +72,75 @@ const PlayerSchema = z.object({
 	loccityid: z.number().optional(),
 })
 
-const ListUsersResponseSchema = z.object({
+const ListUsersResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			players: z.ZodArray<
+				z.ZodObject<
+					{
+						steamid: z.ZodString
+						communityvisibilitystate: z.ZodNumber
+						profilestate: z.ZodNumber
+						personaname: z.ZodString
+						profileurl: z.ZodString
+						avatar: z.ZodString
+						avatarmedium: z.ZodString
+						avatarfull: z.ZodString
+						avatarhash: z.ZodString
+						lastlogoff: z.ZodOptional<z.ZodNumber>
+						personastate: z.ZodOptional<z.ZodNumber>
+						realname: z.ZodOptional<z.ZodString>
+						primaryclanid: z.ZodOptional<z.ZodString>
+						timecreated: z.ZodOptional<z.ZodNumber>
+						personastateflags: z.ZodOptional<z.ZodNumber>
+						loccountrycode: z.ZodOptional<z.ZodString>
+						locstatecode: z.ZodOptional<z.ZodString>
+						loccityid: z.ZodOptional<z.ZodNumber>
+					},
+					z.core.$strip
+				>
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		players: z.array(PlayerSchema),
 	}),
 })
 
-const PlayerSummaryResponseSchema = z.object({
+const PlayerSummaryResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			players: z.ZodArray<
+				z.ZodObject<
+					{
+						steamid: z.ZodString
+						communityvisibilitystate: z.ZodNumber
+						profilestate: z.ZodNumber
+						personaname: z.ZodString
+						profileurl: z.ZodString
+						avatar: z.ZodString
+						avatarmedium: z.ZodString
+						avatarfull: z.ZodString
+						avatarhash: z.ZodString
+						lastlogoff: z.ZodOptional<z.ZodNumber>
+						personastate: z.ZodOptional<z.ZodNumber>
+						realname: z.ZodOptional<z.ZodString>
+						primaryclanid: z.ZodOptional<z.ZodString>
+						timecreated: z.ZodOptional<z.ZodNumber>
+						personastateflags: z.ZodOptional<z.ZodNumber>
+						loccountrycode: z.ZodOptional<z.ZodString>
+						locstatecode: z.ZodOptional<z.ZodString>
+						loccityid: z.ZodOptional<z.ZodNumber>
+					},
+					z.core.$strip
+				>
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		players: z.array(PlayerSchema),
 	}),
@@ -51,7 +152,24 @@ const UserGroupSchema: z.ZodObject<{
 	gid: z.string(),
 })
 
-const UserGroupListResponseSchema = z.object({
+const UserGroupListResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			success: z.ZodBoolean
+			groups: z.ZodOptional<
+				z.ZodArray<
+					z.ZodObject<
+						{
+							gid: z.ZodString
+						},
+						z.core.$strip
+					>
+				>
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		success: z.boolean(),
 		groups: z.array(UserGroupSchema).optional(),

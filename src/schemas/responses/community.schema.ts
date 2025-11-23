@@ -1,6 +1,15 @@
 import { z } from 'zod'
 
-const CommunityAppSchema = z.object({
+const CommunityAppSchema: z.ZodObject<{
+	appid: z.ZodNumber
+	name: z.ZodString
+	icon: z.ZodString
+	community_visible_stats: z.ZodBoolean
+	propagation: z.ZodString
+	app_type: z.ZodNumber
+	content_descriptorids: z.ZodArray<z.ZodNumber>
+	content_descriptorids_including_dlc: z.ZodArray<z.ZodNumber>
+}> = z.object({
 	appid: z.number(),
 	name: z.string(),
 	icon: z.string(),
@@ -10,7 +19,28 @@ const CommunityAppSchema = z.object({
 	content_descriptorids: z.array(z.number()),
 	content_descriptorids_including_dlc: z.array(z.number()),
 })
-const CommunityAppsResponseSchema = z.object({
+const CommunityAppsResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			apps: z.ZodArray<
+				z.ZodObject<
+					{
+						appid: z.ZodNumber
+						name: z.ZodString
+						icon: z.ZodString
+						community_visible_stats: z.ZodBoolean
+						propagation: z.ZodString
+						app_type: z.ZodNumber
+						content_descriptorids: z.ZodArray<z.ZodNumber>
+						content_descriptorids_including_dlc: z.ZodArray<z.ZodNumber>
+					},
+					z.core.$strip
+				>
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		apps: z.array(CommunityAppSchema),
 	}),

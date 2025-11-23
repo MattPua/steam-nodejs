@@ -1,6 +1,15 @@
 import { z } from 'zod'
 
-const BadgeSchema = z.object({
+const BadgeSchema: z.ZodObject<{
+	badgeid: z.ZodNumber
+	level: z.ZodNumber
+	completion_time: z.ZodNumber
+	xp: z.ZodNumber
+	scarcity: z.ZodNumber
+	appid: z.ZodOptional<z.ZodNumber>
+	communityitemid: z.ZodOptional<z.ZodString>
+	border_color: z.ZodOptional<z.ZodNumber>
+}> = z.object({
 	badgeid: z.number(),
 	level: z.number(),
 	completion_time: z.number(),
@@ -11,12 +20,35 @@ const BadgeSchema = z.object({
 	border_color: z.number().optional(),
 })
 
-const BadgesResponseSchema = z.object({
+const BadgesResponseSchema: z.ZodObject<{
+	player_level: z.ZodOptional<z.ZodNumber>
+	badges: z.ZodArray<
+		z.ZodObject<
+			{
+				badgeid: z.ZodNumber
+				level: z.ZodNumber
+				completion_time: z.ZodNumber
+				xp: z.ZodNumber
+				scarcity: z.ZodNumber
+				appid: z.ZodOptional<z.ZodNumber>
+				communityitemid: z.ZodOptional<z.ZodString>
+				border_color: z.ZodOptional<z.ZodNumber>
+			},
+			z.core.$strip
+		>
+	>
+}> = z.object({
 	player_level: z.number().optional(),
 	badges: z.array(BadgeSchema),
 })
 
-const GameAppInfoSchema = z
+const GameAppInfoSchema: z.ZodObject<{
+	name: z.ZodOptional<z.ZodString>
+	img_icon_url: z.ZodOptional<z.ZodString>
+	img_logo_url: z.ZodOptional<z.ZodString>
+	has_community_visible_stats: z.ZodOptional<z.ZodBoolean>
+	content_descriptorids: z.ZodOptional<z.ZodArray<z.ZodNumber>>
+}> = z
 	.object({
 		name: z.string().optional(),
 		img_icon_url: z.string().optional(),
@@ -49,27 +81,157 @@ const PlaytimeSchema = z.object({
 		.describe('Only applicable for recently played games'),
 })
 
-const GameSchema = GameAppInfoSchema.extend(ExtendedGameAppInfoSchema)
-	.extend(PlaytimeSchema)
-	.extend({
-		appid: z.number(),
-		playtime_forever: z.number(),
-		playtime_windows_forever: z.number(),
-		playtime_mac_forever: z.number(),
-		playtime_linux_forever: z.number(),
-		playtime_deck_forever: z.number(),
-		rtime_last_played: z.number(),
-		playtime_disconnected: z.number(),
-	})
+const GameSchema: z.ZodIntersection<
+	z.ZodIntersection<
+		z.ZodIntersection<
+			z.ZodObject<
+				{
+					name: z.ZodOptional<z.ZodString>
+					img_icon_url: z.ZodOptional<z.ZodString>
+					img_logo_url: z.ZodOptional<z.ZodString>
+					has_community_visible_stats: z.ZodOptional<z.ZodBoolean>
+					content_descriptorids: z.ZodOptional<z.ZodArray<z.ZodNumber>>
+				},
+				z.core.$strip
+			>,
+			z.ZodObject<
+				{
+					capsule_filename: z.ZodString
+					has_workshop: z.ZodBoolean
+					has_marketplace: z.ZodBoolean
+					has_dlc: z.ZodBoolean
+				},
+				z.core.$strip
+			>
+		>,
+		z.ZodObject<
+			{
+				playtime_windows_forever: z.ZodNumber
+				playtime_mac_forever: z.ZodNumber
+				playtime_linux_forever: z.ZodNumber
+				playtime_deck_forever: z.ZodNumber
+				playtime_forever: z.ZodNumber
+				playtime_2weeks: z.ZodOptional<z.ZodNumber>
+			},
+			z.core.$strip
+		>
+	>,
+	z.ZodObject<
+		{
+			appid: z.ZodNumber
+			playtime_forever: z.ZodNumber
+			playtime_windows_forever: z.ZodNumber
+			playtime_mac_forever: z.ZodNumber
+			playtime_linux_forever: z.ZodNumber
+			playtime_deck_forever: z.ZodNumber
+			rtime_last_played: z.ZodNumber
+			playtime_disconnected: z.ZodNumber
+		},
+		z.core.$strip
+	>
+> = GameAppInfoSchema.and(ExtendedGameAppInfoSchema)
+	.and(PlaytimeSchema)
+	.and(
+		z.object({
+			appid: z.number(),
+			playtime_forever: z.number(),
+			playtime_windows_forever: z.number(),
+			playtime_mac_forever: z.number(),
+			playtime_linux_forever: z.number(),
+			playtime_deck_forever: z.number(),
+			rtime_last_played: z.number(),
+			playtime_disconnected: z.number(),
+		}),
+	)
 
-const OwnedGamesResponseSchema = z.object({
+const OwnedGamesResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			game_count: z.ZodNumber
+			games: z.ZodArray<
+				z.ZodIntersection<
+					z.ZodIntersection<
+						z.ZodIntersection<
+							z.ZodObject<
+								{
+									name: z.ZodOptional<z.ZodString>
+									img_icon_url: z.ZodOptional<z.ZodString>
+									img_logo_url: z.ZodOptional<z.ZodString>
+									has_community_visible_stats: z.ZodOptional<z.ZodBoolean>
+									content_descriptorids: z.ZodOptional<z.ZodArray<z.ZodNumber>>
+								},
+								z.core.$strip
+							>,
+							z.ZodObject<
+								{
+									capsule_filename: z.ZodString
+									has_workshop: z.ZodBoolean
+									has_marketplace: z.ZodBoolean
+									has_dlc: z.ZodBoolean
+								},
+								z.core.$strip
+							>
+						>,
+						z.ZodObject<
+							{
+								playtime_windows_forever: z.ZodNumber
+								playtime_mac_forever: z.ZodNumber
+								playtime_linux_forever: z.ZodNumber
+								playtime_deck_forever: z.ZodNumber
+								playtime_forever: z.ZodNumber
+								playtime_2weeks: z.ZodOptional<z.ZodNumber>
+							},
+							z.core.$strip
+						>
+					>,
+					z.ZodObject<
+						{
+							appid: z.ZodNumber
+							playtime_forever: z.ZodNumber
+							playtime_windows_forever: z.ZodNumber
+							playtime_mac_forever: z.ZodNumber
+							playtime_linux_forever: z.ZodNumber
+							playtime_deck_forever: z.ZodNumber
+							rtime_last_played: z.ZodNumber
+							playtime_disconnected: z.ZodNumber
+						},
+						z.core.$strip
+					>
+				>
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		game_count: z.number(),
 		games: z.array(GameSchema),
 	}),
 })
 
-const RecentlyPlayedGameSchema = z
+const RecentlyPlayedGameSchema: z.ZodIntersection<
+	z.ZodObject<
+		{
+			appid: z.ZodNumber
+			name: z.ZodString
+			playtime_2weeks: z.ZodOptional<z.ZodNumber>
+			img_icon_url: z.ZodOptional<z.ZodString>
+			img_logo_url: z.ZodOptional<z.ZodString>
+		},
+		z.core.$strip
+	>,
+	z.ZodObject<
+		{
+			playtime_windows_forever: z.ZodNumber
+			playtime_mac_forever: z.ZodNumber
+			playtime_linux_forever: z.ZodNumber
+			playtime_deck_forever: z.ZodNumber
+			playtime_forever: z.ZodNumber
+			playtime_2weeks: z.ZodOptional<z.ZodNumber>
+		},
+		z.core.$strip
+	>
+> = z
 	.object({
 		appid: z.number(),
 		name: z.string(),
@@ -77,22 +239,99 @@ const RecentlyPlayedGameSchema = z
 		img_icon_url: z.string().optional(),
 		img_logo_url: z.string().optional(),
 	})
-	.extend(PlaytimeSchema)
+	.and(PlaytimeSchema)
 
-const RecentlyPlayedGamesResponseSchema = z.object({
+const RecentlyPlayedGamesResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			total_count: z.ZodOptional<z.ZodNumber>
+			games: z.ZodArray<
+				z.ZodIntersection<
+					z.ZodObject<
+						{
+							appid: z.ZodNumber
+							name: z.ZodString
+							playtime_2weeks: z.ZodOptional<z.ZodNumber>
+							img_icon_url: z.ZodOptional<z.ZodString>
+							img_logo_url: z.ZodOptional<z.ZodString>
+						},
+						z.core.$strip
+					>,
+					z.ZodObject<
+						{
+							playtime_windows_forever: z.ZodNumber
+							playtime_mac_forever: z.ZodNumber
+							playtime_linux_forever: z.ZodNumber
+							playtime_deck_forever: z.ZodNumber
+							playtime_forever: z.ZodNumber
+							playtime_2weeks: z.ZodOptional<z.ZodNumber>
+						},
+						z.core.$strip
+					>
+				>
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		total_count: z.number().optional(),
 		games: z.array(RecentlyPlayedGameSchema),
 	}),
 })
 
-const SteamLevelResponseSchema = z.object({
+const SteamLevelResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			player_level: z.ZodNumber
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		player_level: z.number(),
 	}),
 })
 
-const LastPlayedTimesResponseSchema = z.object({
+const LastPlayedTimesResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			games: z.ZodArray<
+				z.ZodIntersection<
+					z.ZodObject<
+						{
+							appid: z.ZodNumber
+							last_playtime: z.ZodNumber
+							first_playtime: z.ZodNumber
+							first_windows_playtime: z.ZodNumber
+							first_mac_playtime: z.ZodNumber
+							first_linux_playtime: z.ZodNumber
+							first_deck_playtime: z.ZodNumber
+							last_windows_playtime: z.ZodNumber
+							last_mac_playtime: z.ZodNumber
+							last_linux_playtime: z.ZodNumber
+							last_deck_playtime: z.ZodNumber
+							playtime_disconnected: z.ZodNumber
+						},
+						z.core.$strip
+					>,
+					z.ZodObject<
+						{
+							playtime_windows_forever: z.ZodNumber
+							playtime_mac_forever: z.ZodNumber
+							playtime_linux_forever: z.ZodNumber
+							playtime_deck_forever: z.ZodNumber
+							playtime_forever: z.ZodNumber
+							playtime_2weeks: z.ZodOptional<z.ZodNumber>
+						},
+						z.core.$strip
+					>
+				>
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		games: z.array(
 			z
@@ -110,7 +349,7 @@ const LastPlayedTimesResponseSchema = z.object({
 					last_deck_playtime: z.number(),
 					playtime_disconnected: z.number(),
 				})
-				.extend(PlaytimeSchema),
+				.and(PlaytimeSchema),
 		),
 	}),
 })
@@ -127,19 +366,81 @@ const ProfileItemSchema = z.object({
 	item_class: z.number(),
 })
 
-const AnimatedAvatarResponseSchema = z.object({
+const AnimatedAvatarResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			avatar: z.ZodObject<
+				{
+					communityitemid: z.ZodString
+					image_small: z.ZodOptional<z.ZodString>
+					image_large: z.ZodString
+					name: z.ZodString
+					item_title: z.ZodString
+					item_description: z.ZodString
+					appid: z.ZodNumber
+					item_type: z.ZodNumber
+					item_class: z.ZodNumber
+				},
+				z.core.$strip
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		avatar: ProfileItemSchema,
 	}),
 })
 
-const AvatarFrameResponseSchema = z.object({
+const AvatarFrameResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			avatar_frame: z.ZodObject<
+				{
+					communityitemid: z.ZodString
+					image_small: z.ZodOptional<z.ZodString>
+					image_large: z.ZodString
+					name: z.ZodString
+					item_title: z.ZodString
+					item_description: z.ZodString
+					appid: z.ZodNumber
+					item_type: z.ZodNumber
+					item_class: z.ZodNumber
+				},
+				z.core.$strip
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		avatar_frame: ProfileItemSchema,
 	}),
 })
 
-const ProfileBackgroundResponseSchema = z.object({
+const ProfileBackgroundResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			profile_background: z.ZodObject<
+				{
+					communityitemid: z.ZodString
+					image_small: z.ZodOptional<z.ZodString>
+					image_large: z.ZodString
+					name: z.ZodString
+					item_title: z.ZodString
+					item_description: z.ZodString
+					appid: z.ZodNumber
+					item_type: z.ZodNumber
+					item_class: z.ZodNumber
+					movie_webm: z.ZodString
+					movie_mp4: z.ZodString
+				},
+				z.core.$strip
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		profile_background: ProfileItemSchema.extend({
 			movie_webm: z.string(),
@@ -148,7 +449,40 @@ const ProfileBackgroundResponseSchema = z.object({
 	}),
 })
 
-const PlayerLinkDetailsResponseSchema = z.object({
+const PlayerLinkDetailsResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			accounts: z.ZodArray<
+				z.ZodObject<
+					{
+						public_data: z.ZodObject<
+							{
+								steamid: z.ZodString
+								visibility_state: z.ZodNumber
+								profile_state: z.ZodNumber
+								sha_digest_avatar: z.ZodString
+								persona_name: z.ZodString
+								profile_url: z.ZodString
+								content_country_restricted: z.ZodBoolean
+							},
+							z.core.$strip
+						>
+						private_data: z.ZodObject<
+							{
+								time_created: z.ZodNumber
+								last_logoff_time: z.ZodNumber
+								last_seen_online: z.ZodNumber
+							},
+							z.core.$strip
+						>
+					},
+					z.core.$strip
+				>
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		accounts: z.array(
 			z.object({
@@ -171,7 +505,27 @@ const PlayerLinkDetailsResponseSchema = z.object({
 	}),
 })
 
-const ProfileCustomizationResponseSchema = z.object({
+const ProfileCustomizationResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			slots_available: z.ZodNumber
+			profile_theme: z.ZodObject<
+				{
+					theme_id: z.ZodString
+					title: z.ZodString
+				},
+				z.core.$strip
+			>
+			profile_preferences: z.ZodObject<
+				{
+					hide_profile_awards: z.ZodBoolean
+				},
+				z.core.$strip
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		slots_available: z.number(),
 		profile_theme: z.object({
@@ -184,7 +538,93 @@ const ProfileCustomizationResponseSchema = z.object({
 	}),
 })
 
-const ProfileItemsEquippedResponseSchema = z.object({
+const ProfileItemsEquippedResponseSchema: z.ZodObject<{
+	profile_background: z.ZodObject<
+		{
+			communityitemid: z.ZodString
+			image_small: z.ZodOptional<z.ZodString>
+			image_large: z.ZodString
+			name: z.ZodString
+			item_title: z.ZodString
+			item_description: z.ZodString
+			appid: z.ZodNumber
+			item_type: z.ZodNumber
+			item_class: z.ZodNumber
+			movie_webm: z.ZodString
+			movie_mp4: z.ZodString
+			movie_webm_small: z.ZodString
+			movie_mp4_small: z.ZodString
+		},
+		z.core.$strip
+	>
+	mini_profile_background: z.ZodObject<
+		{
+			communityitemid: z.ZodString
+			image_small: z.ZodOptional<z.ZodString>
+			image_large: z.ZodString
+			name: z.ZodString
+			item_title: z.ZodString
+			item_description: z.ZodString
+			appid: z.ZodNumber
+			item_type: z.ZodNumber
+			item_class: z.ZodNumber
+			movie_webm: z.ZodString
+			movie_mp4: z.ZodString
+		},
+		z.core.$strip
+	>
+	avatar_frame: z.ZodObject<
+		{
+			communityitemid: z.ZodString
+			image_small: z.ZodOptional<z.ZodString>
+			image_large: z.ZodString
+			name: z.ZodString
+			item_title: z.ZodString
+			item_description: z.ZodString
+			appid: z.ZodNumber
+			item_type: z.ZodNumber
+			item_class: z.ZodNumber
+		},
+		z.core.$strip
+	>
+	animated_avatar: z.ZodObject<
+		{
+			communityitemid: z.ZodString
+			image_small: z.ZodOptional<z.ZodString>
+			image_large: z.ZodString
+			name: z.ZodString
+			item_title: z.ZodString
+			item_description: z.ZodString
+			appid: z.ZodNumber
+			item_type: z.ZodNumber
+			item_class: z.ZodNumber
+		},
+		z.core.$strip
+	>
+	profile_modifier: z.ZodObject<
+		{
+			communityitemid: z.ZodString
+			image_small: z.ZodOptional<z.ZodString>
+			image_large: z.ZodString
+			name: z.ZodString
+			item_title: z.ZodString
+			item_description: z.ZodString
+			appid: z.ZodNumber
+			item_type: z.ZodNumber
+			item_class: z.ZodNumber
+			profile_colors: z.ZodArray<
+				z.ZodObject<
+					{
+						style_name: z.ZodString
+						color: z.ZodString
+					},
+					z.core.$strip
+				>
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	profile_background: ProfileItemSchema.extend({
 		movie_webm: z.string(),
 		movie_mp4: z.string(),
@@ -210,13 +650,49 @@ const ProfileItemsEquippedResponseSchema = z.object({
 /**
  * TODO: need to type correctly
  */
-const SteamDeckKeyboardSkinsResponseSchema = z.object({
+const SteamDeckKeyboardSkinsResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			steam_deck_keyboard_skin: z.ZodUnknown
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
-		steam_deck_keyboard_skin: z.object(z.any()),
+		steam_deck_keyboard_skin: z.unknown(),
 	}),
 })
 
-const TopAchievementsForGamesResponseSchema = z.object({
+const TopAchievementsForGamesResponseSchema: z.ZodObject<{
+	response: z.ZodObject<
+		{
+			games: z.ZodArray<
+				z.ZodObject<
+					{
+						appid: z.ZodNumber
+						achievements: z.ZodArray<
+							z.ZodObject<
+								{
+									statid: z.ZodNumber
+									bit: z.ZodNumber
+									name: z.ZodString
+									desc: z.ZodString
+									icon: z.ZodString
+									icon_gray: z.ZodString
+									hidden: z.ZodBoolean
+									player_percent_unlocked: z.ZodString
+								},
+								z.core.$strip
+							>
+						>
+					},
+					z.core.$strip
+				>
+			>
+		},
+		z.core.$strip
+	>
+}> = z.object({
 	response: z.object({
 		games: z.array(
 			z.object({
