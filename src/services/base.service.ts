@@ -1,6 +1,6 @@
 export abstract class BaseService {
 	protected readonly apiKey: string
-	protected readonly baseUrl: string = 'https://api.steampowered.com'
+	protected baseUrl: string = 'https://api.steampowered.com'
 
 	constructor(apiKey: string) {
 		this.apiKey = apiKey
@@ -9,6 +9,9 @@ export abstract class BaseService {
 	protected async sendSteamRequest<T>(url: string): Promise<T> {
 		try {
 			const response = await fetch(url)
+			if (!response.ok) {
+				throw new Error(`Failed to fetch ${url}: ${response.statusText}.`)
+			}
 			return response.json()
 		} catch (error) {
 			console.error(error)
@@ -18,18 +21,15 @@ export abstract class BaseService {
 
 	protected generateSteamUrl(
 		link: string,
-		params: Record<string, string | number | boolean | undefined>,
-		dataRequest?: Record<string, string | number | boolean | undefined>,
+		params?: Record<string, string | number | boolean | undefined>,
 	): string {
-		const url = new URL(link)
-		for (const [key, value] of Object.entries(params)) {
+		const url = new URL(this.baseUrl + link)
+		for (const [key, value] of Object.entries(params ?? {})) {
 			if (value !== undefined) {
 				url.searchParams.set(key, value.toString())
 			}
 		}
-		if (dataRequest) {
-			url.searchParams.set('data_request', JSON.stringify(dataRequest))
-		}
+		url.searchParams.set('key', this.apiKey)
 		return url.toString()
 	}
 }

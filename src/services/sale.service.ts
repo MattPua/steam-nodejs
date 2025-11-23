@@ -2,26 +2,27 @@ import type { UserYearInReviewResponse } from '../schemas/responses'
 import { BaseService } from './base.service'
 
 export class SaleService extends BaseService {
+	constructor(apiKey: string) {
+		super(apiKey)
+		this.baseUrl = `${this.baseUrl}/ISaleFeatureService`
+	}
+
 	/**
 	 *
 	 * @param appId Gets the year in review for a user (for past years only)
 	 * @returns
 	 */
 	async getUserYearInReview(
-		appId: number,
+		steamUserId: string,
 		config: {
 			year: number
 		},
 	): Promise<UserYearInReviewResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/ISteamSale/GetSaleForApp/v1`,
-			{
-				key: this.apiKey,
-				appid: appId,
-				year: config.year,
-				force_regenerate: true,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetUserYearInReview/v1`, {
+			steamid: steamUserId,
+			year: config.year,
+			force_regenerate: true,
+		})
 		return await this.sendSteamRequest<UserYearInReviewResponse>(url)
 	}
 }

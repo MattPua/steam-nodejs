@@ -2,6 +2,11 @@ import type { GetMostVisitedItemsOnStoreResponse } from '../schemas/responses/us
 import { BaseService } from './base.service'
 
 export class UserStoreVisitService extends BaseService {
+	constructor(apiKey: string) {
+		super(apiKey)
+		this.baseUrl = `${this.baseUrl}/IUserStoreVisitService`
+	}
+
 	async getMostVisitedItemsOnStore(
 		steamUserId: string,
 		config: {
@@ -28,14 +33,10 @@ export class UserStoreVisitService extends BaseService {
 			include_full_description: false,
 		},
 	): Promise<GetMostVisitedItemsOnStoreResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/ISteamUserStore/GetFrequencyVisitedPage/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-			config,
-		)
+		const url = this.generateSteamUrl(`/GetMostVisitedItemsOnStore/v1`, {
+			steamid: steamUserId,
+			input_json: JSON.stringify(config),
+		})
 		return await this.sendSteamRequest<GetMostVisitedItemsOnStoreResponse>(url)
 	}
 }

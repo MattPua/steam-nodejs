@@ -7,6 +7,11 @@ import type {
 import { BaseService } from './base.service'
 
 export class StoreService extends BaseService {
+	constructor(apiKey: string) {
+		super(apiKey)
+		this.baseUrl = `${this.baseUrl}/IStoreService`
+	}
+
 	/**
 	 * Gets list of apps in the store
 	 * @param config.if_modified_since - Return only items that have been modified since this date.
@@ -37,13 +42,9 @@ export class StoreService extends BaseService {
 			max_results: 100,
 		},
 	): Promise<GetAppListResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/ISteamStore/GetStoreApps/v1`,
-			{
-				key: this.apiKey,
-				...config,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetAppList/v1`, {
+			...config,
+		})
 		return await this.sendSteamRequest<GetAppListResponse>(url)
 	}
 
@@ -54,13 +55,9 @@ export class StoreService extends BaseService {
 	async getGamesFollowed(
 		steamUserId: string,
 	): Promise<GetGamesFollowedResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/ISteamStore/GetGamesFollowed/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetGamesFollowed/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<GetGamesFollowedResponse>(url)
 	}
 
@@ -71,23 +68,14 @@ export class StoreService extends BaseService {
 	async getGamesFollowedCount(
 		steamUserId: string,
 	): Promise<GetGamesFollowedCountResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/ISteamStore/GetGamesFollowedCount/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetGamesFollowedCount/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<GetGamesFollowedCountResponse>(url)
 	}
 
 	async getMostPopularTags() {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/ISteamStore/GetMostPopularTags/v1`,
-			{
-				key: this.apiKey,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetMostPopularTags/v1`)
 		return await this.sendSteamRequest<GetMostPopularTagsResponse>(url)
 	}
 }

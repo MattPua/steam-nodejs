@@ -5,17 +5,17 @@ import type {
 import { BaseService } from './base.service'
 
 export class WishlistService extends BaseService {
+	constructor(apiKey: string) {
+		super(apiKey)
+		this.baseUrl = `${this.baseUrl}/IWishlistService`
+	}
 	/**
 	 * Get a users wishlist
 	 */
 	async getWishlist(steamUserId: string): Promise<WishlistResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IWishlistService/GetWishlist/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetWishlist/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<WishlistResponse>(url)
 	}
 
@@ -25,13 +25,9 @@ export class WishlistService extends BaseService {
 	async getWishlistItemCount(
 		steamUserId: string,
 	): Promise<WishlistItemCountResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IWishlistService/GetWishlistItemCount/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetWishlistItemCount/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<WishlistItemCountResponse>(url)
 	}
 }

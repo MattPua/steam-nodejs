@@ -16,17 +16,18 @@ import type {
 import { BaseService } from './base.service'
 
 export class PlayerService extends BaseService {
+	constructor(apiKey: string) {
+		super(apiKey)
+		this.baseUrl = `${this.baseUrl}/IPlayerService`
+	}
+
 	/**
 	 * Gets the steam level for a user
 	 */
 	async getSteamLevel(steamUserId: string): Promise<SteamLevelResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetSteamLevel/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetSteamLevel/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<SteamLevelResponse>(url)
 	}
 
@@ -34,13 +35,9 @@ export class PlayerService extends BaseService {
 	 * Gets the badges for a user
 	 */
 	async getBadges(steamUserId: string): Promise<BadgesResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetBadges/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetBadges/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<BadgesResponse>(url)
 	}
 
@@ -68,14 +65,10 @@ export class PlayerService extends BaseService {
 			include_extended_appinfo: true,
 		},
 	): Promise<OwnedGamesResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetOwnedGames/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-				...config,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetOwnedGames/v1`, {
+			steamid: steamUserId,
+			...config,
+		})
 		return await this.sendSteamRequest<OwnedGamesResponse>(url)
 	}
 
@@ -85,13 +78,9 @@ export class PlayerService extends BaseService {
 	async getRecentlyPlayedGames(
 		steamUserId: string,
 	): Promise<RecentlyPlayedGamesResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetRecentlyPlayedGames/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetRecentlyPlayedGames/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<RecentlyPlayedGamesResponse>(url)
 	}
 
@@ -103,13 +92,9 @@ export class PlayerService extends BaseService {
 	async getLastPlayedTimes(
 		minLastPlayedTime: number | undefined,
 	): Promise<LastPlayedTimesResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetLastPlayedTimes/v1`,
-			{
-				key: this.apiKey,
-				minlastplayedtime: minLastPlayedTime,
-			},
-		)
+		const url = this.generateSteamUrl(`/ClientGetLastPlayedTimes/v1`, {
+			minlastplayedtime: minLastPlayedTime,
+		})
 		return await this.sendSteamRequest<LastPlayedTimesResponse>(url)
 	}
 
@@ -119,13 +104,9 @@ export class PlayerService extends BaseService {
 	async getAnimatedAvatar(
 		steamUserId: string,
 	): Promise<AnimatedAvatarResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetAnimatedAvatar/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetAnimatedAvatar/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<AnimatedAvatarResponse>(url)
 	}
 
@@ -133,13 +114,9 @@ export class PlayerService extends BaseService {
 	 * Gets which avatar frame is active for a specific user
 	 */
 	async getAvatarFrame(steamUserId: string): Promise<AvatarFrameResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetAvatarFrame/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetAvatarFrame/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<AvatarFrameResponse>(url)
 	}
 
@@ -149,13 +126,9 @@ export class PlayerService extends BaseService {
 	async getMiniProfileBackground(
 		steamUserId: string,
 	): Promise<ProfileBackgroundResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetMiniProfileBackground/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetMiniProfileBackground/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<ProfileBackgroundResponse>(url)
 	}
 
@@ -168,13 +141,9 @@ export class PlayerService extends BaseService {
 			has_favorite_badge: boolean
 		}
 	}> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetFavouriteBadge/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetFavoriteBadge/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<any>(url)
 	}
 
@@ -184,13 +153,9 @@ export class PlayerService extends BaseService {
 	async getPlayerLinkDetails(
 		steamUserId: string,
 	): Promise<PlayerLinkDetailsResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetPlayerLinkDetails/v1`,
-			{
-				key: this.apiKey,
-				'steamids[0]': steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetPlayerLinkDetails/v1`, {
+			'steamids[0]': steamUserId,
+		})
 		return await this.sendSteamRequest<PlayerLinkDetailsResponse>(url)
 	}
 
@@ -200,13 +165,9 @@ export class PlayerService extends BaseService {
 	async getProfileBackground(
 		steamUserId: string,
 	): Promise<ProfileBackgroundResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetProfileBackground/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetProfileBackground/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<ProfileBackgroundResponse>(url)
 	}
 
@@ -226,14 +187,10 @@ export class PlayerService extends BaseService {
 			include_inactive_customizations: false,
 		},
 	): Promise<ProfileCustomizationResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetProfileCustomization/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-				...config,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetProfileCustomization/v1`, {
+			steamid: steamUserId,
+			...config,
+		})
 		return await this.sendSteamRequest<ProfileCustomizationResponse>(url)
 	}
 
@@ -243,13 +200,9 @@ export class PlayerService extends BaseService {
 	async getProfileItemsEquipped(
 		steamUserId: string,
 	): Promise<ProfileItemsEquippedResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetProfileItemsEquipped/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetProfileItemsEquipped/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<ProfileItemsEquippedResponse>(url)
 	}
 
@@ -259,13 +212,9 @@ export class PlayerService extends BaseService {
 	async getSteamDeckKeyboardSkin(
 		steamUserId: string,
 	): Promise<SteamDeckKeyboardSkinsResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetSteamDeckKeyboardSkins/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetSteamDeckKeyboardSkin/v1`, {
+			steamid: steamUserId,
+		})
 		return await this.sendSteamRequest<SteamDeckKeyboardSkinsResponse>(url)
 	}
 
@@ -282,15 +231,11 @@ export class PlayerService extends BaseService {
 			max_achievements: 20,
 		},
 	): Promise<TopAchievementsForGamesResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/IPlayerService/GetTopAchievementsForGames/v1`,
-			{
-				key: this.apiKey,
-				steamid: steamUserId,
-				'appids[0]': appId,
-				...config,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetTopAchievementsForGames/v1`, {
+			steamid: steamUserId,
+			'appids[0]': appId,
+			...config,
+		})
 		return await this.sendSteamRequest<TopAchievementsForGamesResponse>(url)
 	}
 }

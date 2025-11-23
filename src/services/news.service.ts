@@ -2,6 +2,11 @@ import type { NewsForAppResponse } from '../schemas/responses'
 import { BaseService } from './base.service'
 
 export class NewsService extends BaseService {
+	constructor(apiKey: string) {
+		super(apiKey)
+		this.baseUrl = `${this.baseUrl}/ISteamNews`
+	}
+
 	/**
 	 * Returns the latest news for a game
 	 * @param config.count - The number of news items to return. If not set, will return the default number of 20.
@@ -17,14 +22,10 @@ export class NewsService extends BaseService {
 			maxlength: undefined,
 		},
 	): Promise<NewsForAppResponse> {
-		const url = this.generateSteamUrl(
-			`${this.baseUrl}/ISteamNews/GetNewsForApp/v1`,
-			{
-				key: this.apiKey,
-				appid: appId,
-				...config,
-			},
-		)
+		const url = this.generateSteamUrl(`/GetNewsForApp/v1`, {
+			appid: appId,
+			...config,
+		})
 		return await this.sendSteamRequest<NewsForAppResponse>(url)
 	}
 }

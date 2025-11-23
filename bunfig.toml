@@ -1,2 +1,12 @@
 [install]
 linker = "hoisted"
+
+[test]
+timeout = 2000
+randomize = true
+coverage = true
+coverageSkipTestFiles = true
+coveragePathIgnorePatterns = ["test/setup.ts"]
+
+[env]
+NODE_ENV ="test"
