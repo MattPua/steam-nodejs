@@ -1,5 +1,10 @@
 # Steam Node.js Library (Unofficial)
 
+[![npm version](https://img.shields.io/npm/v/steam-nodejs.svg?style=flat-square)](https://www.npmjs.com/package/steam-nodejs)
+[![npm downloads](https://img.shields.io/npm/dm/steam-nodejs.svg?style=flat-square)](https://www.npmjs.com/package/steam-nodejs)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/mattpua/steam-nodejs/issues)
+
 An unofficial Node.js library for the Steam Web API. This library is built with [Bun](https://bun.sh) and [Zod](https://zod.dev).
 
 Based on the also unofficial [Steam API documentation](https://steamapi.xpaw.me/#) by [XPaw](https://xpaw.me/).
