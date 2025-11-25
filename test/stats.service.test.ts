@@ -9,6 +9,8 @@ describe('StatsService', () => {
 			getTestAppId(),
 		)
 		expect(playerCount).toBeDefined()
+		expect(playerCount.player_count).toBeDefined()
+		expect(playerCount.result).toBeDefined()
 	})
 
 	test('should get player achievements correctly', async () => {
@@ -26,13 +28,19 @@ describe('StatsService', () => {
 			await steamClient.stats.getGlobalAchievementPercentagesForApp(
 				getTestAppId(),
 			)
-		expect(percentages).toBeDefined()
+		expect(percentages.achievements).toBeDefined()
+		expect(percentages.achievements.length).toBeGreaterThan(0)
 	})
 
 	test('should get schema for game correctly', async () => {
 		const steamClient = new SteamClient(getApiKey())
 		const schema = await steamClient.stats.getSchemaForGame(getTestAppId())
 		expect(schema).toBeDefined()
+		expect(schema.gameName).toBeDefined()
+		expect(schema.gameVersion).toBeDefined()
+		expect(schema.availableGameStats.achievements).toBeDefined()
+		expect(schema.availableGameStats.achievements.length).toBeGreaterThan(0)
+		expect(schema.availableGameStats.stats).toBeDefined()
 	})
 
 	test('should get user stats for game correctly', async () => {
@@ -42,5 +50,12 @@ describe('StatsService', () => {
 			getTestAppId(),
 		)
 		expect(userStats).toBeDefined()
+		expect(userStats.gameName).toBeDefined()
+		expect(userStats.achievements).toBeDefined()
+		expect(userStats.achievements.length).toBeGreaterThan(0)
+		userStats.achievements.forEach((achievement) => {
+			expect(achievement.name).toBeDefined()
+			expect(achievement.achieved).toBeDefined()
+		})
 	})
 })

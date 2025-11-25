@@ -1,15 +1,38 @@
-import type { UserYearInReviewResponse } from '../schemas/responses'
+import type {
+	UserYearAchievementsResponse,
+	UserYearInReviewResponse,
+} from '../schemas/responses'
 import { BaseService } from './base.service'
 
 export class SaleService extends BaseService {
 	constructor(apiKey: string) {
-		super(apiKey)
-		this.baseUrl = `${this.baseUrl}/ISaleFeatureService`
+		super(apiKey, 'api', 'ISaleFeatureService')
 	}
 
 	/**
-	 *
-	 * @param appId Gets the year in review for a user (for past years only)
+	 * Attempts to retrieve the achivements for a given app, achieved in that year
+	 */
+	async getUserYearAchivements(
+		steamUserId: string,
+		appid: number,
+		config: {
+			year: number
+		},
+	): Promise<UserYearAchievementsResponse> {
+		const url = this.generateSteamUrl(`/GetUserYearAchievements/v1`, {
+			steamid: steamUserId,
+			'appids[0]': appid,
+			year: config.year,
+		})
+		const response = await this.sendSteamRequest<{
+			response: UserYearAchievementsResponse
+		}>(url)
+		return response.response
+	}
+
+	/**
+	 * Gets the year in review for a user (for past years only) Attempting to get the current year will return an empty response
+	 * @param appId
 	 * @returns
 	 */
 	async getUserYearInReview(
@@ -22,7 +45,11 @@ export class SaleService extends BaseService {
 			steamid: steamUserId,
 			year: config.year,
 			force_regenerate: true,
+			fetch_previous_year_summary: true,
 		})
-		return await this.sendSteamRequest<UserYearInReviewResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: UserYearInReviewResponse
+		}>(url)
+		return response.response
 	}
 }

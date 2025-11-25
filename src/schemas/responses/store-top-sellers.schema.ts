@@ -1,20 +1,27 @@
 import { z } from 'zod'
+import { AppDataSchema } from './common.schemas'
 
 const StoreTopSellersResponseSchema: z.ZodObject<{
-	countries: z.ZodArray<
+	start_date: z.ZodNumber
+	ranks: z.ZodArray<
 		z.ZodObject<
 			{
-				country_code: z.ZodString
-				name: z.ZodArray<z.ZodNumber>
+				rank: z.ZodNumber
+				last_week_rank: z.ZodNumber
+				consecutive_weeks: z.ZodNumber
+				item: typeof AppDataSchema
 			},
 			z.core.$strip
 		>
 	>
 }> = z.object({
-	countries: z.array(
+	start_date: z.number(),
+	ranks: z.array(
 		z.object({
-			country_code: z.string(),
-			name: z.array(z.number()),
+			rank: z.number(),
+			last_week_rank: z.number(),
+			consecutive_weeks: z.number(),
+			item: AppDataSchema,
 		}),
 	),
 })

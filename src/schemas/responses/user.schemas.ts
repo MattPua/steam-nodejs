@@ -73,77 +73,63 @@ const PlayerSchema: z.ZodObject<{
 })
 
 const ListUsersResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			players: z.ZodArray<
-				z.ZodObject<
-					{
-						steamid: z.ZodString
-						communityvisibilitystate: z.ZodNumber
-						profilestate: z.ZodNumber
-						personaname: z.ZodString
-						profileurl: z.ZodString
-						avatar: z.ZodString
-						avatarmedium: z.ZodString
-						avatarfull: z.ZodString
-						avatarhash: z.ZodString
-						lastlogoff: z.ZodOptional<z.ZodNumber>
-						personastate: z.ZodOptional<z.ZodNumber>
-						realname: z.ZodOptional<z.ZodString>
-						primaryclanid: z.ZodOptional<z.ZodString>
-						timecreated: z.ZodOptional<z.ZodNumber>
-						personastateflags: z.ZodOptional<z.ZodNumber>
-						loccountrycode: z.ZodOptional<z.ZodString>
-						locstatecode: z.ZodOptional<z.ZodString>
-						loccityid: z.ZodOptional<z.ZodNumber>
-					},
-					z.core.$strip
-				>
-			>
-		},
-		z.core.$strip
+	players: z.ZodArray<
+		z.ZodObject<
+			{
+				steamid: z.ZodString
+				communityvisibilitystate: z.ZodNumber
+				profilestate: z.ZodNumber
+				personaname: z.ZodString
+				profileurl: z.ZodString
+				avatar: z.ZodString
+				avatarmedium: z.ZodString
+				avatarfull: z.ZodString
+				avatarhash: z.ZodString
+				lastlogoff: z.ZodOptional<z.ZodNumber>
+				personastate: z.ZodOptional<z.ZodNumber>
+				realname: z.ZodOptional<z.ZodString>
+				primaryclanid: z.ZodOptional<z.ZodString>
+				timecreated: z.ZodOptional<z.ZodNumber>
+				personastateflags: z.ZodOptional<z.ZodNumber>
+				loccountrycode: z.ZodOptional<z.ZodString>
+				locstatecode: z.ZodOptional<z.ZodString>
+				loccityid: z.ZodOptional<z.ZodNumber>
+			},
+			z.core.$strip
+		>
 	>
 }> = z.object({
-	response: z.object({
-		players: z.array(PlayerSchema),
-	}),
+	players: z.array(PlayerSchema),
 })
 
 const PlayerSummaryResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			players: z.ZodArray<
-				z.ZodObject<
-					{
-						steamid: z.ZodString
-						communityvisibilitystate: z.ZodNumber
-						profilestate: z.ZodNumber
-						personaname: z.ZodString
-						profileurl: z.ZodString
-						avatar: z.ZodString
-						avatarmedium: z.ZodString
-						avatarfull: z.ZodString
-						avatarhash: z.ZodString
-						lastlogoff: z.ZodOptional<z.ZodNumber>
-						personastate: z.ZodOptional<z.ZodNumber>
-						realname: z.ZodOptional<z.ZodString>
-						primaryclanid: z.ZodOptional<z.ZodString>
-						timecreated: z.ZodOptional<z.ZodNumber>
-						personastateflags: z.ZodOptional<z.ZodNumber>
-						loccountrycode: z.ZodOptional<z.ZodString>
-						locstatecode: z.ZodOptional<z.ZodString>
-						loccityid: z.ZodOptional<z.ZodNumber>
-					},
-					z.core.$strip
-				>
-			>
-		},
-		z.core.$strip
+	players: z.ZodArray<
+		z.ZodObject<
+			{
+				steamid: z.ZodString
+				communityvisibilitystate: z.ZodNumber
+				profilestate: z.ZodNumber
+				personaname: z.ZodString
+				profileurl: z.ZodString
+				avatar: z.ZodString
+				avatarmedium: z.ZodString
+				avatarfull: z.ZodString
+				avatarhash: z.ZodString
+				lastlogoff: z.ZodOptional<z.ZodNumber>
+				personastate: z.ZodOptional<z.ZodNumber>
+				realname: z.ZodOptional<z.ZodString>
+				primaryclanid: z.ZodOptional<z.ZodString>
+				timecreated: z.ZodOptional<z.ZodNumber>
+				personastateflags: z.ZodOptional<z.ZodNumber>
+				loccountrycode: z.ZodOptional<z.ZodString>
+				locstatecode: z.ZodOptional<z.ZodString>
+				loccityid: z.ZodOptional<z.ZodNumber>
+			},
+			z.core.$strip
+		>
 	>
 }> = z.object({
-	response: z.object({
-		players: z.array(PlayerSchema),
-	}),
+	players: z.array(PlayerSchema),
 })
 
 const UserGroupSchema: z.ZodObject<{
@@ -153,27 +139,20 @@ const UserGroupSchema: z.ZodObject<{
 })
 
 const UserGroupListResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			success: z.ZodBoolean
-			groups: z.ZodOptional<
-				z.ZodArray<
-					z.ZodObject<
-						{
-							gid: z.ZodString
-						},
-						z.core.$strip
-					>
-				>
+	success: z.ZodBoolean
+	groups: z.ZodOptional<
+		z.ZodArray<
+			z.ZodObject<
+				{
+					gid: z.ZodString
+				},
+				z.core.$strip
 			>
-		},
-		z.core.$strip
+		>
 	>
 }> = z.object({
-	response: z.object({
-		success: z.boolean(),
-		groups: z.array(UserGroupSchema).optional(),
-	}),
+	success: z.boolean(),
+	groups: z.array(UserGroupSchema).optional(),
 })
 
 export type Friend = z.infer<typeof FriendSchema>

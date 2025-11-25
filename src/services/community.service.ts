@@ -3,18 +3,26 @@ import { BaseService } from './base.service'
 
 export class CommunityService extends BaseService {
 	constructor(apiKey: string) {
-		super(apiKey)
-		this.baseUrl = `${this.baseUrl}/ICommunityService`
+		super(apiKey, 'api', 'ICommunityService')
 	}
 
+	/**
+	 * Gets the information for a given app id
+	 * @param steamUserId
+	 * @param appid
+	 * @returns
+	 */
 	async getApps(
 		steamUserId: string,
-		appids: number,
+		appid: number,
 	): Promise<CommunityAppsResponse> {
 		const url = this.generateSteamUrl(`/GetApps/v1`, {
 			steamid: steamUserId,
-			'appids[0]': appids,
+			'appids[0]': appid,
 		})
-		return await this.sendSteamRequest<CommunityAppsResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: CommunityAppsResponse
+		}>(url)
+		return response.response
 	}
 }

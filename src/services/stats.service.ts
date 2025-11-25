@@ -9,8 +9,7 @@ import { BaseService } from './base.service'
 
 export class StatsService extends BaseService {
 	constructor(apiKey: string) {
-		super(apiKey)
-		this.baseUrl = `${this.baseUrl}/ISteamUserStats`
+		super(apiKey, 'api', 'ISteamUserStats')
 	}
 
 	async getNumberOfCurrentPlayers(
@@ -19,7 +18,10 @@ export class StatsService extends BaseService {
 		const url = this.generateSteamUrl(`/GetNumberOfCurrentPlayers/v1`, {
 			appid: appId,
 		})
-		return await this.sendSteamRequest<NumberOfCurrentPlayersResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: NumberOfCurrentPlayersResponse
+		}>(url)
+		return response.response
 	}
 
 	async getPlayerAchievements(
@@ -42,16 +44,23 @@ export class StatsService extends BaseService {
 				gameid: appId,
 			},
 		)
-		return await this.sendSteamRequest<GlobalAchievementPercentagesForAppResponse>(
-			url,
-		)
+		const response = await this.sendSteamRequest<{
+			achievementpercentages: GlobalAchievementPercentagesForAppResponse
+		}>(url)
+		return response.achievementpercentages
 	}
 
+	/**
+	 * Gets available game achivements and stats for the given app
+	 */
 	async getSchemaForGame(appId: number): Promise<SchemaForGameResponse> {
 		const url = this.generateSteamUrl(`/GetSchemaForGame/v2`, {
 			appid: appId,
 		})
-		return await this.sendSteamRequest<SchemaForGameResponse>(url)
+		const response = await this.sendSteamRequest<{
+			game: SchemaForGameResponse
+		}>(url)
+		return response.game
 	}
 
 	/**
@@ -65,6 +74,9 @@ export class StatsService extends BaseService {
 			steamid: steamUserId,
 			appid: appId,
 		})
-		return await this.sendSteamRequest<UserStatsForGameResponse>(url)
+		const response = await this.sendSteamRequest<{
+			playerstats: UserStatsForGameResponse
+		}>(url)
+		return response.playerstats
 	}
 }

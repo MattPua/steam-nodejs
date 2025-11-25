@@ -29,10 +29,10 @@ const NewsItemSchema: z.ZodObject<{
 })
 
 const NewsForAppResponseSchema: z.ZodObject<{
-	appnews: z.ZodObject<
+	appid: z.ZodNumber
+	newsitems: z.ZodObject<
 		{
-			appid: z.ZodNumber
-			newsitems: z.ZodArray<
+			newsitem: z.ZodArray<
 				z.ZodObject<
 					{
 						gid: z.ZodString
@@ -51,16 +51,16 @@ const NewsForAppResponseSchema: z.ZodObject<{
 					z.core.$strip
 				>
 			>
-			count: z.ZodOptional<z.ZodNumber>
 		},
 		z.core.$strip
 	>
+	count: z.ZodOptional<z.ZodNumber>
 }> = z.object({
-	appnews: z.object({
-		appid: z.number(),
-		newsitems: z.array(NewsItemSchema),
-		count: z.number().optional(),
+	appid: z.number(),
+	newsitems: z.object({
+		newsitem: z.array(NewsItemSchema),
 	}),
+	count: z.number().optional(),
 })
 
 export type NewsItem = z.infer<typeof NewsItemSchema>

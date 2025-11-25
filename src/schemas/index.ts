@@ -1,3 +1,4 @@
+export * from './requests/common.schemas'
 export * from './responses/common.schemas'
 export * from './responses/community.schema'
 export * from './responses/econ.schemas'

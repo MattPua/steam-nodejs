@@ -3,8 +3,7 @@ import { BaseService } from './base.service'
 
 export class NewsService extends BaseService {
 	constructor(apiKey: string) {
-		super(apiKey)
-		this.baseUrl = `${this.baseUrl}/ISteamNews`
+		super(apiKey, 'api', 'ISteamNews')
 	}
 
 	/**
@@ -26,6 +25,9 @@ export class NewsService extends BaseService {
 			appid: appId,
 			...config,
 		})
-		return await this.sendSteamRequest<NewsForAppResponse>(url)
+		const response = await this.sendSteamRequest<{
+			appnews: NewsForAppResponse
+		}>(url)
+		return response.appnews
 	}
 }

@@ -17,8 +17,7 @@ import { BaseService } from './base.service'
 
 export class PlayerService extends BaseService {
 	constructor(apiKey: string) {
-		super(apiKey)
-		this.baseUrl = `${this.baseUrl}/IPlayerService`
+		super(apiKey, 'api', 'IPlayerService')
 	}
 
 	/**
@@ -28,7 +27,10 @@ export class PlayerService extends BaseService {
 		const url = this.generateSteamUrl(`/GetSteamLevel/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<SteamLevelResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: SteamLevelResponse
+		}>(url)
+		return response.response
 	}
 
 	/**
@@ -38,7 +40,10 @@ export class PlayerService extends BaseService {
 		const url = this.generateSteamUrl(`/GetBadges/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<BadgesResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: BadgesResponse
+		}>(url)
+		return response.response
 	}
 
 	/**
@@ -69,7 +74,10 @@ export class PlayerService extends BaseService {
 			steamid: steamUserId,
 			...config,
 		})
-		return await this.sendSteamRequest<OwnedGamesResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: OwnedGamesResponse
+		}>(url)
+		return response.response
 	}
 
 	/**
@@ -81,7 +89,10 @@ export class PlayerService extends BaseService {
 		const url = this.generateSteamUrl(`/GetRecentlyPlayedGames/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<RecentlyPlayedGamesResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: RecentlyPlayedGamesResponse
+		}>(url)
+		return response.response
 	}
 
 	/**
@@ -95,7 +106,10 @@ export class PlayerService extends BaseService {
 		const url = this.generateSteamUrl(`/ClientGetLastPlayedTimes/v1`, {
 			minlastplayedtime: minLastPlayedTime,
 		})
-		return await this.sendSteamRequest<LastPlayedTimesResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: LastPlayedTimesResponse
+		}>(url)
+		return response.response
 	}
 
 	/**
@@ -107,7 +121,10 @@ export class PlayerService extends BaseService {
 		const url = this.generateSteamUrl(`/GetAnimatedAvatar/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<AnimatedAvatarResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: { avatar: AnimatedAvatarResponse }
+		}>(url)
+		return response.response.avatar
 	}
 
 	/**
@@ -117,7 +134,10 @@ export class PlayerService extends BaseService {
 		const url = this.generateSteamUrl(`/GetAvatarFrame/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<AvatarFrameResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: { avatar_frame: AvatarFrameResponse }
+		}>(url)
+		return response.response.avatar_frame
 	}
 
 	/**
@@ -129,22 +149,28 @@ export class PlayerService extends BaseService {
 		const url = this.generateSteamUrl(`/GetMiniProfileBackground/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<ProfileBackgroundResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: { profile_background: ProfileBackgroundResponse }
+		}>(url)
+		return response.response.profile_background
 	}
 
 	/**
 	 * Gets the favourite badge for a user
 	 * TODO: Not yet typed correctly
 	 */
-	async getFavouriteBadge(steamUserId: string): Promise<{
-		response: {
-			has_favorite_badge: boolean
-		}
-	}> {
+	async getFavouriteBadge(
+		steamUserId: string,
+	): Promise<{ has_favorite_badge: boolean }> {
 		const url = this.generateSteamUrl(`/GetFavoriteBadge/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<any>(url)
+		const response = await this.sendSteamRequest<{
+			response: {
+				has_favorite_badge: boolean
+			}
+		}>(url)
+		return response.response
 	}
 
 	/**
@@ -156,7 +182,10 @@ export class PlayerService extends BaseService {
 		const url = this.generateSteamUrl(`/GetPlayerLinkDetails/v1`, {
 			'steamids[0]': steamUserId,
 		})
-		return await this.sendSteamRequest<PlayerLinkDetailsResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: { accounts: PlayerLinkDetailsResponse }
+		}>(url)
+		return response.response.accounts
 	}
 
 	/**
@@ -168,7 +197,10 @@ export class PlayerService extends BaseService {
 		const url = this.generateSteamUrl(`/GetProfileBackground/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<ProfileBackgroundResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: { profile_background: ProfileBackgroundResponse }
+		}>(url)
+		return response.response.profile_background
 	}
 
 	/**
@@ -191,7 +223,10 @@ export class PlayerService extends BaseService {
 			steamid: steamUserId,
 			...config,
 		})
-		return await this.sendSteamRequest<ProfileCustomizationResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: ProfileCustomizationResponse
+		}>(url)
+		return response.response
 	}
 
 	/**
@@ -203,7 +238,10 @@ export class PlayerService extends BaseService {
 		const url = this.generateSteamUrl(`/GetProfileItemsEquipped/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<ProfileItemsEquippedResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: ProfileItemsEquippedResponse
+		}>(url)
+		return response.response
 	}
 
 	/**
@@ -215,7 +253,10 @@ export class PlayerService extends BaseService {
 		const url = this.generateSteamUrl(`/GetSteamDeckKeyboardSkin/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<SteamDeckKeyboardSkinsResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: SteamDeckKeyboardSkinsResponse
+		}>(url)
+		return response.response
 	}
 
 	/**
@@ -230,12 +271,15 @@ export class PlayerService extends BaseService {
 		} = {
 			max_achievements: 20,
 		},
-	): Promise<TopAchievementsForGamesResponse> {
+	): Promise<Array<TopAchievementsForGamesResponse>> {
 		const url = this.generateSteamUrl(`/GetTopAchievementsForGames/v1`, {
 			steamid: steamUserId,
 			'appids[0]': appId,
 			...config,
 		})
-		return await this.sendSteamRequest<TopAchievementsForGamesResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: { games: Array<TopAchievementsForGamesResponse> }
+		}>(url)
+		return response.response.games
 	}
 }

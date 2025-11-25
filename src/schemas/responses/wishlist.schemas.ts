@@ -11,38 +11,21 @@ const WishlistItemSchema: z.ZodObject<{
 })
 
 const WishlistResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			items: z.ZodArray<
-				z.ZodObject<
-					{
-						appid: z.ZodNumber
-						priority: z.ZodNumber
-						date_added: z.ZodNumber
-					},
-					z.core.$strip
-				>
-			>
-		},
-		z.core.$strip
+	items: z.ZodArray<
+		z.ZodObject<{
+			appid: z.ZodNumber
+			priority: z.ZodNumber
+			date_added: z.ZodNumber
+		}>
 	>
 }> = z.object({
-	response: z.object({
-		items: z.array(WishlistItemSchema),
-	}),
+	items: z.array(WishlistItemSchema),
 })
 
 const WishlistItemCountResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			count: z.ZodNumber
-		},
-		z.core.$strip
-	>
+	count: z.ZodNumber
 }> = z.object({
-	response: z.object({
-		count: z.number(),
-	}),
+	count: z.number(),
 })
 
 export type WishlistItem = z.infer<typeof WishlistItemSchema>

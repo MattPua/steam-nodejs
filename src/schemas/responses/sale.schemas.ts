@@ -183,483 +183,524 @@ const PreviousYearSummarySchema = z.object({
 })
 
 const UserYearInReviewResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
+	stats: z.ZodObject<
 		{
-			stats: z.ZodObject<
+			account_id: z.ZodNumber
+			year: z.ZodNumber
+			playtime_stats: z.ZodObject<
 				{
-					account_id: z.ZodNumber
-					year: z.ZodNumber
-					playtime_stats: z.ZodObject<
+					total_stats: z.ZodObject<
 						{
-							total_stats: z.ZodObject<
-								{
-									total_playtime_seconds: z.ZodNumber
-									total_sessions: z.ZodNumber
-									vr_sessions: z.ZodNumber
-									deck_sessions: z.ZodNumber
-									controller_sessions: z.ZodNumber
-									linux_sessions: z.ZodNumber
-									macos_sessions: z.ZodNumber
-									windows_sessions: z.ZodNumber
-									total_playtime_percentagex100: z.ZodNumber
-									vr_playtime_percentagex100: z.ZodNumber
-									deck_playtime_percentagex100: z.ZodNumber
-									controller_playtime_percentagex100: z.ZodNumber
-									linux_playtime_percentagex100: z.ZodNumber
-									macos_playtime_percentagex100: z.ZodNumber
-									windows_playtime_percentagex100: z.ZodNumber
-								},
-								z.core.$strip
-							>
-							games: z.ZodArray<
-								z.ZodObject<
+							total_playtime_seconds: z.ZodNumber
+							total_sessions: z.ZodNumber
+							vr_sessions: z.ZodNumber
+							deck_sessions: z.ZodNumber
+							controller_sessions: z.ZodNumber
+							linux_sessions: z.ZodNumber
+							macos_sessions: z.ZodNumber
+							windows_sessions: z.ZodNumber
+							total_playtime_percentagex100: z.ZodNumber
+							vr_playtime_percentagex100: z.ZodNumber
+							deck_playtime_percentagex100: z.ZodNumber
+							controller_playtime_percentagex100: z.ZodNumber
+							linux_playtime_percentagex100: z.ZodNumber
+							macos_playtime_percentagex100: z.ZodNumber
+							windows_playtime_percentagex100: z.ZodNumber
+						},
+						z.core.$strip
+					>
+					games: z.ZodArray<
+						z.ZodObject<
+							{
+								appid: z.ZodNumber
+								stats: z.ZodObject<
 									{
-										appid: z.ZodNumber
-										stats: z.ZodObject<
-											{
-												total_playtime_seconds: z.ZodNumber
-												total_sessions: z.ZodNumber
-												vr_sessions: z.ZodNumber
-												deck_sessions: z.ZodNumber
-												controller_sessions: z.ZodNumber
-												linux_sessions: z.ZodNumber
-												macos_sessions: z.ZodNumber
-												windows_sessions: z.ZodNumber
-												total_playtime_percentagex100: z.ZodNumber
-												vr_playtime_percentagex100: z.ZodNumber
-												deck_playtime_percentagex100: z.ZodNumber
-												controller_playtime_percentagex100: z.ZodNumber
-												linux_playtime_percentagex100: z.ZodNumber
-												macos_playtime_percentagex100: z.ZodNumber
-												windows_playtime_percentagex100: z.ZodNumber
-											},
-											z.core.$strip
-										>
-										playtime_streak: z.ZodObject<
-											{
-												longest_consecutive_days: z.ZodNumber
-												rtime_start: z.ZodNumber
-												streak_games: z.ZodOptional<
-													z.ZodArray<
-														z.ZodObject<
-															{
-																appid: z.ZodNumber
-															},
-															z.core.$strip
-														>
-													>
-												>
-											},
-											z.core.$strip
-										>
-										playtime_ranks: z.ZodObject<
-											{
-												overall_rank: z.ZodOptional<z.ZodNumber>
-												vr_rank: z.ZodOptional<z.ZodNumber>
-												deck_rank: z.ZodOptional<z.ZodNumber>
-												controller_rank: z.ZodOptional<z.ZodNumber>
-												linux_rank: z.ZodOptional<z.ZodNumber>
-												mac_rank: z.ZodOptional<z.ZodNumber>
-												windows_rank: z.ZodOptional<z.ZodNumber>
-											},
-											z.core.$strip
-										>
-										rtime_first_played: z.ZodNumber
-										relative_game_stats: z.ZodObject<
-											{
-												total_playtime_seconds: z.ZodNumber
-												total_sessions: z.ZodNumber
-												vr_sessions: z.ZodNumber
-												deck_sessions: z.ZodNumber
-												controller_sessions: z.ZodNumber
-												linux_sessions: z.ZodNumber
-												macos_sessions: z.ZodNumber
-												windows_sessions: z.ZodNumber
-												total_playtime_percentagex100: z.ZodNumber
-												vr_playtime_percentagex100: z.ZodNumber
-												deck_playtime_percentagex100: z.ZodNumber
-												controller_playtime_percentagex100: z.ZodNumber
-												linux_playtime_percentagex100: z.ZodNumber
-												macos_playtime_percentagex100: z.ZodNumber
-												windows_playtime_percentagex100: z.ZodNumber
-											},
-											z.core.$strip
-										>
-									},
-									z.core.$strip
-								>
-							>
-							playtime_streak: z.ZodObject<
-								{
-									longest_consecutive_days: z.ZodNumber
-									rtime_start: z.ZodNumber
-									streak_games: z.ZodOptional<
-										z.ZodArray<
-											z.ZodObject<
-												{
-													appid: z.ZodNumber
-												},
-												z.core.$strip
-											>
-										>
-									>
-								},
-								z.core.$strip
-							>
-							months: z.ZodArray<
-								z.ZodObject<
-									{
-										rtime_month: z.ZodNumber
-										stats: z.ZodObject<
-											{
-												total_playtime_seconds: z.ZodNumber
-												total_sessions: z.ZodNumber
-												vr_sessions: z.ZodNumber
-												deck_sessions: z.ZodNumber
-												controller_sessions: z.ZodNumber
-												linux_sessions: z.ZodNumber
-												macos_sessions: z.ZodNumber
-												windows_sessions: z.ZodNumber
-												total_playtime_percentagex100: z.ZodNumber
-												vr_playtime_percentagex100: z.ZodNumber
-												deck_playtime_percentagex100: z.ZodNumber
-												controller_playtime_percentagex100: z.ZodNumber
-												linux_playtime_percentagex100: z.ZodNumber
-												macos_playtime_percentagex100: z.ZodNumber
-												windows_playtime_percentagex100: z.ZodNumber
-											},
-											z.core.$strip
-										>
-										appid: z.ZodArray<
-											z.ZodObject<
-												{
-													appid: z.ZodNumber
-													stats: z.ZodObject<
-														{
-															total_playtime_seconds: z.ZodNumber
-															total_sessions: z.ZodNumber
-															vr_sessions: z.ZodNumber
-															deck_sessions: z.ZodNumber
-															controller_sessions: z.ZodNumber
-															linux_sessions: z.ZodNumber
-															macos_sessions: z.ZodNumber
-															windows_sessions: z.ZodNumber
-															total_playtime_percentagex100: z.ZodNumber
-															vr_playtime_percentagex100: z.ZodNumber
-															deck_playtime_percentagex100: z.ZodNumber
-															controller_playtime_percentagex100: z.ZodNumber
-															linux_playtime_percentagex100: z.ZodNumber
-															macos_playtime_percentagex100: z.ZodNumber
-															windows_playtime_percentagex100: z.ZodNumber
-														},
-														z.core.$strip
-													>
-													rtime_first_played: z.ZodNumber
-													relative_game_stats: z.ZodObject<
-														{
-															total_playtime_seconds: z.ZodNumber
-															total_sessions: z.ZodNumber
-															vr_sessions: z.ZodNumber
-															deck_sessions: z.ZodNumber
-															controller_sessions: z.ZodNumber
-															linux_sessions: z.ZodNumber
-															macos_sessions: z.ZodNumber
-															windows_sessions: z.ZodNumber
-															total_playtime_percentagex100: z.ZodNumber
-															vr_playtime_percentagex100: z.ZodNumber
-															deck_playtime_percentagex100: z.ZodNumber
-															controller_playtime_percentagex100: z.ZodNumber
-															linux_playtime_percentagex100: z.ZodNumber
-															macos_playtime_percentagex100: z.ZodNumber
-															windows_playtime_percentagex100: z.ZodNumber
-														},
-														z.core.$strip
-													>
-												},
-												z.core.$strip
-											>
-										>
-										relative_monthly_stats: z.ZodObject<
-											{
-												total_playtime_seconds: z.ZodNumber
-												total_sessions: z.ZodNumber
-												vr_sessions: z.ZodNumber
-												deck_sessions: z.ZodNumber
-												controller_sessions: z.ZodNumber
-												linux_sessions: z.ZodNumber
-												macos_sessions: z.ZodNumber
-												windows_sessions: z.ZodNumber
-												total_playtime_percentagex100: z.ZodNumber
-												vr_playtime_percentagex100: z.ZodNumber
-												deck_playtime_percentagex100: z.ZodNumber
-												controller_playtime_percentagex100: z.ZodNumber
-												linux_playtime_percentagex100: z.ZodNumber
-												macos_playtime_percentagex100: z.ZodNumber
-												windows_playtime_percentagex100: z.ZodNumber
-											},
-											z.core.$strip
-										>
-										game_summary: z.ZodArray<
-											z.ZodObject<
-												{
-													appid: z.ZodNumber
-													total_playtime_percentagex100: z.ZodNumber
-													relative_playtime_percentagex100: z.ZodNumber
-												},
-												z.core.$strip
-											>
-										>
-									},
-									z.core.$strip
-								>
-							>
-							game_summary: z.ZodArray<
-								z.ZodObject<
-									{
-										appid: z.ZodNumber
-										new_this_year: z.ZodBoolean
-										rtime_first_played_lifetime: z.ZodNumber
-										demo: z.ZodBoolean
-										playtest: z.ZodBoolean
-										played_vr: z.ZodBoolean
-										played_deck: z.ZodBoolean
-										played_controller: z.ZodBoolean
-										played_linux: z.ZodBoolean
-										played_mac: z.ZodBoolean
-										played_windows: z.ZodBoolean
-										total_playtime_percentagex100: z.ZodNumber
+										total_playtime_seconds: z.ZodNumber
 										total_sessions: z.ZodNumber
-										rtime_release_date: z.ZodNumber
+										vr_sessions: z.ZodNumber
+										deck_sessions: z.ZodNumber
+										controller_sessions: z.ZodNumber
+										linux_sessions: z.ZodNumber
+										macos_sessions: z.ZodNumber
+										windows_sessions: z.ZodNumber
+										total_playtime_percentagex100: z.ZodNumber
+										vr_playtime_percentagex100: z.ZodNumber
+										deck_playtime_percentagex100: z.ZodNumber
+										controller_playtime_percentagex100: z.ZodNumber
+										linux_playtime_percentagex100: z.ZodNumber
+										macos_playtime_percentagex100: z.ZodNumber
+										windows_playtime_percentagex100: z.ZodNumber
 									},
 									z.core.$strip
 								>
-							>
-						},
-						z.core.$strip
-					>
-					demos_played: z.ZodNumber
-					game_rankings: z.ZodObject<
-						{
-							overall_ranking: z.ZodObject<
-								{
-									category: z.ZodString
-									rankings: z.ZodOptional<
-										z.ZodArray<
-											z.ZodObject<
-												{
-													appid: z.ZodNumber
-													rank: z.ZodNumber
-													relative_playtime_percentagex100: z.ZodNumber
-												},
-												z.core.$strip
-											>
-										>
-									>
-								},
-								z.core.$strip
-							>
-							vr_ranking: z.ZodObject<
-								{
-									category: z.ZodString
-									rankings: z.ZodOptional<
-										z.ZodArray<
-											z.ZodObject<
-												{
-													appid: z.ZodNumber
-													rank: z.ZodNumber
-													relative_playtime_percentagex100: z.ZodNumber
-												},
-												z.core.$strip
-											>
-										>
-									>
-								},
-								z.core.$strip
-							>
-							deck_ranking: z.ZodObject<
-								{
-									category: z.ZodString
-									rankings: z.ZodOptional<
-										z.ZodArray<
-											z.ZodObject<
-												{
-													appid: z.ZodNumber
-													rank: z.ZodNumber
-													relative_playtime_percentagex100: z.ZodNumber
-												},
-												z.core.$strip
-											>
-										>
-									>
-								},
-								z.core.$strip
-							>
-							controller_ranking: z.ZodObject<
-								{
-									category: z.ZodString
-									rankings: z.ZodOptional<
-										z.ZodArray<
-											z.ZodObject<
-												{
-													appid: z.ZodNumber
-													rank: z.ZodNumber
-													relative_playtime_percentagex100: z.ZodNumber
-												},
-												z.core.$strip
-											>
-										>
-									>
-								},
-								z.core.$strip
-							>
-							linux_ranking: z.ZodObject<
-								{
-									category: z.ZodString
-									rankings: z.ZodOptional<
-										z.ZodArray<
-											z.ZodObject<
-												{
-													appid: z.ZodNumber
-													rank: z.ZodNumber
-													relative_playtime_percentagex100: z.ZodNumber
-												},
-												z.core.$strip
-											>
-										>
-									>
-								},
-								z.core.$strip
-							>
-							mac_ranking: z.ZodObject<
-								{
-									category: z.ZodString
-									rankings: z.ZodOptional<
-										z.ZodArray<
-											z.ZodObject<
-												{
-													appid: z.ZodNumber
-													rank: z.ZodNumber
-													relative_playtime_percentagex100: z.ZodNumber
-												},
-												z.core.$strip
-											>
-										>
-									>
-								},
-								z.core.$strip
-							>
-							windows_ranking: z.ZodObject<
-								{
-									category: z.ZodString
-									rankings: z.ZodOptional<
-										z.ZodArray<
-											z.ZodObject<
-												{
-													appid: z.ZodNumber
-													rank: z.ZodNumber
-													relative_playtime_percentagex100: z.ZodNumber
-												},
-												z.core.$strip
-											>
-										>
-									>
-								},
-								z.core.$strip
-							>
-						},
-						z.core.$strip
-					>
-					playtests_played: z.ZodNumber
-					summary_stats: z.ZodObject<
-						{
-							total_achievements: z.ZodNumber
-							total_games_with_achievements: z.ZodNumber
-							total_rare_achievements: z.ZodNumber
-						},
-						z.core.$strip
-					>
-					substantial: z.ZodBoolean
-					tag_stats: z.ZodObject<
-						{
-							stats: z.ZodArray<
-								z.ZodObject<
+								playtime_streak: z.ZodObject<
 									{
-										tag_id: z.ZodNumber
-										tag_weight: z.ZodNumber
-										tag_weight_pre_selection: z.ZodNumber
+										longest_consecutive_days: z.ZodNumber
+										rtime_start: z.ZodNumber
+										streak_games: z.ZodOptional<
+											z.ZodArray<
+												z.ZodObject<
+													{
+														appid: z.ZodNumber
+													},
+													z.core.$strip
+												>
+											>
+										>
 									},
 									z.core.$strip
+								>
+								playtime_ranks: z.ZodObject<
+									{
+										overall_rank: z.ZodOptional<z.ZodNumber>
+										vr_rank: z.ZodOptional<z.ZodNumber>
+										deck_rank: z.ZodOptional<z.ZodNumber>
+										controller_rank: z.ZodOptional<z.ZodNumber>
+										linux_rank: z.ZodOptional<z.ZodNumber>
+										mac_rank: z.ZodOptional<z.ZodNumber>
+										windows_rank: z.ZodOptional<z.ZodNumber>
+									},
+									z.core.$strip
+								>
+								rtime_first_played: z.ZodNumber
+								relative_game_stats: z.ZodObject<
+									{
+										total_playtime_seconds: z.ZodNumber
+										total_sessions: z.ZodNumber
+										vr_sessions: z.ZodNumber
+										deck_sessions: z.ZodNumber
+										controller_sessions: z.ZodNumber
+										linux_sessions: z.ZodNumber
+										macos_sessions: z.ZodNumber
+										windows_sessions: z.ZodNumber
+										total_playtime_percentagex100: z.ZodNumber
+										vr_playtime_percentagex100: z.ZodNumber
+										deck_playtime_percentagex100: z.ZodNumber
+										controller_playtime_percentagex100: z.ZodNumber
+										linux_playtime_percentagex100: z.ZodNumber
+										macos_playtime_percentagex100: z.ZodNumber
+										windows_playtime_percentagex100: z.ZodNumber
+									},
+									z.core.$strip
+								>
+							},
+							z.core.$strip
+						>
+					>
+					playtime_streak: z.ZodObject<
+						{
+							longest_consecutive_days: z.ZodNumber
+							rtime_start: z.ZodNumber
+							streak_games: z.ZodOptional<
+								z.ZodArray<
+									z.ZodObject<
+										{
+											appid: z.ZodNumber
+										},
+										z.core.$strip
+									>
 								>
 							>
 						},
 						z.core.$strip
 					>
-					by_numbers: z.ZodObject<
+					months: z.ZodArray<
+						z.ZodObject<
+							{
+								rtime_month: z.ZodNumber
+								stats: z.ZodObject<
+									{
+										total_playtime_seconds: z.ZodNumber
+										total_sessions: z.ZodNumber
+										vr_sessions: z.ZodNumber
+										deck_sessions: z.ZodNumber
+										controller_sessions: z.ZodNumber
+										linux_sessions: z.ZodNumber
+										macos_sessions: z.ZodNumber
+										windows_sessions: z.ZodNumber
+										total_playtime_percentagex100: z.ZodNumber
+										vr_playtime_percentagex100: z.ZodNumber
+										deck_playtime_percentagex100: z.ZodNumber
+										controller_playtime_percentagex100: z.ZodNumber
+										linux_playtime_percentagex100: z.ZodNumber
+										macos_playtime_percentagex100: z.ZodNumber
+										windows_playtime_percentagex100: z.ZodNumber
+									},
+									z.core.$strip
+								>
+								appid: z.ZodArray<
+									z.ZodObject<
+										{
+											appid: z.ZodNumber
+											stats: z.ZodObject<
+												{
+													total_playtime_seconds: z.ZodNumber
+													total_sessions: z.ZodNumber
+													vr_sessions: z.ZodNumber
+													deck_sessions: z.ZodNumber
+													controller_sessions: z.ZodNumber
+													linux_sessions: z.ZodNumber
+													macos_sessions: z.ZodNumber
+													windows_sessions: z.ZodNumber
+													total_playtime_percentagex100: z.ZodNumber
+													vr_playtime_percentagex100: z.ZodNumber
+													deck_playtime_percentagex100: z.ZodNumber
+													controller_playtime_percentagex100: z.ZodNumber
+													linux_playtime_percentagex100: z.ZodNumber
+													macos_playtime_percentagex100: z.ZodNumber
+													windows_playtime_percentagex100: z.ZodNumber
+												},
+												z.core.$strip
+											>
+											rtime_first_played: z.ZodNumber
+											relative_game_stats: z.ZodObject<
+												{
+													total_playtime_seconds: z.ZodNumber
+													total_sessions: z.ZodNumber
+													vr_sessions: z.ZodNumber
+													deck_sessions: z.ZodNumber
+													controller_sessions: z.ZodNumber
+													linux_sessions: z.ZodNumber
+													macos_sessions: z.ZodNumber
+													windows_sessions: z.ZodNumber
+													total_playtime_percentagex100: z.ZodNumber
+													vr_playtime_percentagex100: z.ZodNumber
+													deck_playtime_percentagex100: z.ZodNumber
+													controller_playtime_percentagex100: z.ZodNumber
+													linux_playtime_percentagex100: z.ZodNumber
+													macos_playtime_percentagex100: z.ZodNumber
+													windows_playtime_percentagex100: z.ZodNumber
+												},
+												z.core.$strip
+											>
+										},
+										z.core.$strip
+									>
+								>
+								relative_monthly_stats: z.ZodObject<
+									{
+										total_playtime_seconds: z.ZodNumber
+										total_sessions: z.ZodNumber
+										vr_sessions: z.ZodNumber
+										deck_sessions: z.ZodNumber
+										controller_sessions: z.ZodNumber
+										linux_sessions: z.ZodNumber
+										macos_sessions: z.ZodNumber
+										windows_sessions: z.ZodNumber
+										total_playtime_percentagex100: z.ZodNumber
+										vr_playtime_percentagex100: z.ZodNumber
+										deck_playtime_percentagex100: z.ZodNumber
+										controller_playtime_percentagex100: z.ZodNumber
+										linux_playtime_percentagex100: z.ZodNumber
+										macos_playtime_percentagex100: z.ZodNumber
+										windows_playtime_percentagex100: z.ZodNumber
+									},
+									z.core.$strip
+								>
+								game_summary: z.ZodArray<
+									z.ZodObject<
+										{
+											appid: z.ZodNumber
+											total_playtime_percentagex100: z.ZodNumber
+											relative_playtime_percentagex100: z.ZodNumber
+										},
+										z.core.$strip
+									>
+								>
+							},
+							z.core.$strip
+						>
+					>
+					game_summary: z.ZodArray<
+						z.ZodObject<
+							{
+								appid: z.ZodNumber
+								new_this_year: z.ZodBoolean
+								rtime_first_played_lifetime: z.ZodNumber
+								demo: z.ZodBoolean
+								playtest: z.ZodBoolean
+								played_vr: z.ZodBoolean
+								played_deck: z.ZodBoolean
+								played_controller: z.ZodBoolean
+								played_linux: z.ZodBoolean
+								played_mac: z.ZodBoolean
+								played_windows: z.ZodBoolean
+								total_playtime_percentagex100: z.ZodNumber
+								total_sessions: z.ZodNumber
+								rtime_release_date: z.ZodNumber
+							},
+							z.core.$strip
+						>
+					>
+				},
+				z.core.$strip
+			>
+			demos_played: z.ZodNumber
+			game_rankings: z.ZodObject<
+				{
+					overall_ranking: z.ZodObject<
 						{
-							screenshots_shared: z.ZodNumber
-							gifts_sent: z.ZodNumber
-							loyalty_reactions: z.ZodNumber
-							written_reviews: z.ZodNumber
-							guides_submitted: z.ZodNumber
-							workshop_contributions: z.ZodNumber
-							badges_earned: z.ZodNumber
-							friends_added: z.ZodNumber
-							forum_posts: z.ZodNumber
-							workshop_subscriptions: z.ZodNumber
-							guide_subscribers: z.ZodNumber
-							workshop_subscribers: z.ZodNumber
-							games_played_pct: z.ZodNumber
-							achievements_pct: z.ZodNumber
-							game_streak_pct: z.ZodNumber
-							games_played_avg: z.ZodNumber
-							achievements_avg: z.ZodNumber
-							game_streak_avg: z.ZodNumber
+							category: z.ZodString
+							rankings: z.ZodOptional<
+								z.ZodArray<
+									z.ZodObject<
+										{
+											appid: z.ZodNumber
+											rank: z.ZodNumber
+											relative_playtime_percentagex100: z.ZodNumber
+										},
+										z.core.$strip
+									>
+								>
+							>
 						},
 						z.core.$strip
 					>
-					privacy_state: z.ZodNumber
+					vr_ranking: z.ZodObject<
+						{
+							category: z.ZodString
+							rankings: z.ZodOptional<
+								z.ZodArray<
+									z.ZodObject<
+										{
+											appid: z.ZodNumber
+											rank: z.ZodNumber
+											relative_playtime_percentagex100: z.ZodNumber
+										},
+										z.core.$strip
+									>
+								>
+							>
+						},
+						z.core.$strip
+					>
+					deck_ranking: z.ZodObject<
+						{
+							category: z.ZodString
+							rankings: z.ZodOptional<
+								z.ZodArray<
+									z.ZodObject<
+										{
+											appid: z.ZodNumber
+											rank: z.ZodNumber
+											relative_playtime_percentagex100: z.ZodNumber
+										},
+										z.core.$strip
+									>
+								>
+							>
+						},
+						z.core.$strip
+					>
+					controller_ranking: z.ZodObject<
+						{
+							category: z.ZodString
+							rankings: z.ZodOptional<
+								z.ZodArray<
+									z.ZodObject<
+										{
+											appid: z.ZodNumber
+											rank: z.ZodNumber
+											relative_playtime_percentagex100: z.ZodNumber
+										},
+										z.core.$strip
+									>
+								>
+							>
+						},
+						z.core.$strip
+					>
+					linux_ranking: z.ZodObject<
+						{
+							category: z.ZodString
+							rankings: z.ZodOptional<
+								z.ZodArray<
+									z.ZodObject<
+										{
+											appid: z.ZodNumber
+											rank: z.ZodNumber
+											relative_playtime_percentagex100: z.ZodNumber
+										},
+										z.core.$strip
+									>
+								>
+							>
+						},
+						z.core.$strip
+					>
+					mac_ranking: z.ZodObject<
+						{
+							category: z.ZodString
+							rankings: z.ZodOptional<
+								z.ZodArray<
+									z.ZodObject<
+										{
+											appid: z.ZodNumber
+											rank: z.ZodNumber
+											relative_playtime_percentagex100: z.ZodNumber
+										},
+										z.core.$strip
+									>
+								>
+							>
+						},
+						z.core.$strip
+					>
+					windows_ranking: z.ZodObject<
+						{
+							category: z.ZodString
+							rankings: z.ZodOptional<
+								z.ZodArray<
+									z.ZodObject<
+										{
+											appid: z.ZodNumber
+											rank: z.ZodNumber
+											relative_playtime_percentagex100: z.ZodNumber
+										},
+										z.core.$strip
+									>
+								>
+							>
+						},
+						z.core.$strip
+					>
 				},
 				z.core.$strip
 			>
-			performance_stats: z.ZodObject<
+			playtests_played: z.ZodNumber
+			summary_stats: z.ZodObject<
 				{
-					from_dbo: z.ZodBoolean
-					overall_time_ms: z.ZodString
-					dbo_load_ms: z.ZodString
-					message_population_ms: z.ZodString
-					dbo_lock_load_ms: z.ZodString
+					total_achievements: z.ZodNumber
+					total_games_with_achievements: z.ZodNumber
+					total_rare_achievements: z.ZodNumber
 				},
 				z.core.$strip
 			>
-			distribution: z.ZodObject<
+			substantial: z.ZodBoolean
+			tag_stats: z.ZodObject<
 				{
-					new_releases: z.ZodNumber
-					recent_releases: z.ZodNumber
-					classic_releases: z.ZodNumber
-					recent_cutoff_year: z.ZodNumber
+					stats: z.ZodArray<
+						z.ZodObject<
+							{
+								tag_id: z.ZodNumber
+								tag_weight: z.ZodNumber
+								tag_weight_pre_selection: z.ZodNumber
+							},
+							z.core.$strip
+						>
+					>
 				},
 				z.core.$strip
 			>
-			previous_year_summary: z.ZodObject<
+			by_numbers: z.ZodObject<
 				{
-					games_played: z.ZodNumber
-					unlocked_achievements: z.ZodNumber
-					longest_streak: z.ZodNumber
+					screenshots_shared: z.ZodNumber
+					gifts_sent: z.ZodNumber
+					loyalty_reactions: z.ZodNumber
+					written_reviews: z.ZodNumber
+					guides_submitted: z.ZodNumber
+					workshop_contributions: z.ZodNumber
+					badges_earned: z.ZodNumber
+					friends_added: z.ZodNumber
+					forum_posts: z.ZodNumber
+					workshop_subscriptions: z.ZodNumber
+					guide_subscribers: z.ZodNumber
+					workshop_subscribers: z.ZodNumber
+					games_played_pct: z.ZodNumber
+					achievements_pct: z.ZodNumber
+					game_streak_pct: z.ZodNumber
+					games_played_avg: z.ZodNumber
+					achievements_avg: z.ZodNumber
+					game_streak_avg: z.ZodNumber
 				},
 				z.core.$strip
 			>
+			privacy_state: z.ZodNumber
+		},
+		z.core.$strip
+	>
+	performance_stats: z.ZodObject<
+		{
+			from_dbo: z.ZodBoolean
+			overall_time_ms: z.ZodString
+			dbo_load_ms: z.ZodString
+			message_population_ms: z.ZodString
+			dbo_lock_load_ms: z.ZodString
+		},
+		z.core.$strip
+	>
+	distribution: z.ZodObject<
+		{
+			new_releases: z.ZodNumber
+			recent_releases: z.ZodNumber
+			classic_releases: z.ZodNumber
+			recent_cutoff_year: z.ZodNumber
+		},
+		z.core.$strip
+	>
+	previous_year_summary: z.ZodObject<
+		{
+			games_played: z.ZodNumber
+			unlocked_achievements: z.ZodNumber
+			longest_streak: z.ZodNumber
 		},
 		z.core.$strip
 	>
 }> = z.object({
-	response: z.object({
-		stats: StatsSchema,
-		performance_stats: PerformanceStatsSchema,
-		distribution: DistributionSchema,
-		previous_year_summary: PreviousYearSummarySchema,
-	}),
+	stats: StatsSchema,
+	performance_stats: PerformanceStatsSchema,
+	distribution: DistributionSchema,
+	previous_year_summary: PreviousYearSummarySchema,
 })
 
 export type UserYearInReviewResponse = z.infer<
 	typeof UserYearInReviewResponseSchema
+>
+
+const UserYearAchievementsResponseSchema: z.ZodObject<{
+	game_achievements: z.ZodArray<
+		z.ZodObject<
+			{
+				appid: z.ZodNumber
+				achievements: z.ZodArray<
+					z.ZodObject<
+						{
+							statid: z.ZodNumber
+							fieldid: z.ZodNumber
+							achievement_name_internal: z.ZodString
+						},
+						z.core.$strip
+					>
+				>
+				all_time_unlocked_achievements: z.ZodNumber
+				unlocked_more_in_future: z.ZodBoolean
+			},
+			z.core.$strip
+		>
+	>
+	total_achievements: z.ZodNumber
+	total_rare_achievements: z.ZodNumber
+	total_games_with_achievements: z.ZodNumber
+}> = z.object({
+	game_achievements: z.array(
+		z.object({
+			appid: z.number(),
+			achievements: z.array(
+				z.object({
+					statid: z.number(),
+					fieldid: z.number(),
+					achievement_name_internal: z.string(),
+				}),
+			),
+			all_time_unlocked_achievements: z.number(),
+			unlocked_more_in_future: z.boolean(),
+		}),
+	),
+	total_achievements: z.number(),
+	total_rare_achievements: z.number(),
+	total_games_with_achievements: z.number(),
+})
+
+export type UserYearAchievementsResponse = z.infer<
+	typeof UserYearAchievementsResponseSchema
 >

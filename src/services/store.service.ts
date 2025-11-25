@@ -8,8 +8,7 @@ import { BaseService } from './base.service'
 
 export class StoreService extends BaseService {
 	constructor(apiKey: string) {
-		super(apiKey)
-		this.baseUrl = `${this.baseUrl}/IStoreService`
+		super(apiKey, 'api', 'IStoreService')
 	}
 
 	/**
@@ -45,7 +44,10 @@ export class StoreService extends BaseService {
 		const url = this.generateSteamUrl(`/GetAppList/v1`, {
 			...config,
 		})
-		return await this.sendSteamRequest<GetAppListResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: GetAppListResponse
+		}>(url)
+		return response.response
 	}
 
 	/**
@@ -58,7 +60,10 @@ export class StoreService extends BaseService {
 		const url = this.generateSteamUrl(`/GetGamesFollowed/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<GetGamesFollowedResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: GetGamesFollowedResponse
+		}>(url)
+		return response.response
 	}
 
 	/**
@@ -71,11 +76,17 @@ export class StoreService extends BaseService {
 		const url = this.generateSteamUrl(`/GetGamesFollowedCount/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<GetGamesFollowedCountResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: GetGamesFollowedCountResponse
+		}>(url)
+		return response.response
 	}
 
 	async getMostPopularTags(): Promise<GetMostPopularTagsResponse> {
 		const url = this.generateSteamUrl(`/GetMostPopularTags/v1`)
-		return await this.sendSteamRequest<GetMostPopularTagsResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: GetMostPopularTagsResponse
+		}>(url)
+		return response.response
 	}
 }

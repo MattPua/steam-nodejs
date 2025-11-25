@@ -20,30 +20,23 @@ const CommunityAppSchema: z.ZodObject<{
 	content_descriptorids_including_dlc: z.array(z.number()),
 })
 const CommunityAppsResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			apps: z.ZodArray<
-				z.ZodObject<
-					{
-						appid: z.ZodNumber
-						name: z.ZodString
-						icon: z.ZodString
-						community_visible_stats: z.ZodBoolean
-						propagation: z.ZodString
-						app_type: z.ZodNumber
-						content_descriptorids: z.ZodArray<z.ZodNumber>
-						content_descriptorids_including_dlc: z.ZodArray<z.ZodNumber>
-					},
-					z.core.$strip
-				>
-			>
-		},
-		z.core.$strip
+	apps: z.ZodArray<
+		z.ZodObject<
+			{
+				appid: z.ZodNumber
+				name: z.ZodString
+				icon: z.ZodString
+				community_visible_stats: z.ZodBoolean
+				propagation: z.ZodString
+				app_type: z.ZodNumber
+				content_descriptorids: z.ZodArray<z.ZodNumber>
+				content_descriptorids_including_dlc: z.ZodArray<z.ZodNumber>
+			},
+			z.core.$strip
+		>
 	>
 }> = z.object({
-	response: z.object({
-		apps: z.array(CommunityAppSchema),
-	}),
+	apps: z.array(CommunityAppSchema),
 })
 
 export type CommunityApp = z.infer<typeof CommunityAppSchema>

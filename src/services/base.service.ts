@@ -1,9 +1,16 @@
 export abstract class BaseService {
 	protected readonly apiKey: string
-	protected baseUrl: string = 'https://api.steampowered.com'
+	protected readonly type: 'api' | 'store'
+	protected readonly route: string
 
-	constructor(apiKey: string) {
+	constructor(apiKey: string, type: 'api' | 'store', route: string) {
 		this.apiKey = apiKey
+		this.type = type
+		this.route = route
+	}
+
+	get baseUrl(): string {
+		return `https://${this.type}.steampowered.com/${this.route}`
 	}
 
 	protected async sendSteamRequest<T>(url: string): Promise<T> {

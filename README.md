@@ -55,6 +55,18 @@ const friendsList = await steamClient.user.getFriendsList(user.steamid);
 console.log(friendsList);
 ```
 
+## More Examples
+
+```typescript
+import { SteamClient } from 'steam-nodejs';
+
+const steamClient = new SteamClient('your-api-key');
+
+const followedGames = await steamClient.store.getGamesFollowed(user.steamid);
+
+console.log(appDetails.name);
+```
+
 ## Available Services
 
 Currently, the following services are available:
@@ -67,6 +79,7 @@ Currently, the following services are available:
 - [StatsService](./src/services/stats.service.ts)
 - [StoreService](./src/services/store.service.ts)
 - [StoreTopSellersService](./src/services/store-top-sellers.service.ts)
+- [SteamStoreService](./src/services/steam-store.service.ts)
 - [UserService](./src/services/user.service.ts)
 - [WishlistService](./src/services/wishlist.service.ts)
 
@@ -110,6 +123,8 @@ Currently, the following services are available:
   - Get user stats for game
 - Store Top Sellers
   - Get weekly top sellers
+- Steam Store
+  - Get app details (use this specifically to get information about a particular app)
 - Store
   - Get app list on store
   - Get games followed

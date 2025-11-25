@@ -6,6 +6,7 @@ import { NewsService } from './services/news.service'
 import { PlayerService } from './services/player.service'
 import { SaleService } from './services/sale.service'
 import { StatsService } from './services/stats.service'
+import { SteamStoreService } from './services/steam-store.service'
 import { StoreService } from './services/store.service'
 import { StoreTopSellersService } from './services/store-top-sellers.service'
 import { UserService } from './services/user.service'
@@ -24,6 +25,7 @@ export class SteamClient {
 	public readonly charts: ChartsService
 	public readonly store: StoreService
 	public readonly storeTopSellers: StoreTopSellersService
+	public readonly steamStore: SteamStoreService
 	constructor(apiKey: string) {
 		if (!apiKey) {
 			throw new Error('API key is required')
@@ -40,6 +42,7 @@ export class SteamClient {
 		this.charts = new ChartsService(apiKey)
 		this.store = new StoreService(apiKey)
 		this.storeTopSellers = new StoreTopSellersService(apiKey)
+		this.steamStore = new SteamStoreService(apiKey)
 	}
 
 	getSteamAuth({

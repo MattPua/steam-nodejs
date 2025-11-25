@@ -22,6 +22,9 @@ const BadgeSchema: z.ZodObject<{
 
 const BadgesResponseSchema: z.ZodObject<{
 	player_level: z.ZodOptional<z.ZodNumber>
+	player_xp: z.ZodOptional<z.ZodNumber>
+	player_xp_needed_to_level_up: z.ZodOptional<z.ZodNumber>
+	player_xp_needed_current_level: z.ZodOptional<z.ZodNumber>
 	badges: z.ZodArray<
 		z.ZodObject<
 			{
@@ -39,6 +42,9 @@ const BadgesResponseSchema: z.ZodObject<{
 	>
 }> = z.object({
 	player_level: z.number().optional(),
+	player_xp: z.number().optional(),
+	player_xp_needed_to_level_up: z.number().optional(),
+	player_xp_needed_current_level: z.number().optional(),
 	badges: z.array(BadgeSchema),
 })
 
@@ -145,68 +151,61 @@ const GameSchema: z.ZodIntersection<
 	)
 
 const OwnedGamesResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			game_count: z.ZodNumber
-			games: z.ZodArray<
+	game_count: z.ZodNumber
+	games: z.ZodArray<
+		z.ZodIntersection<
+			z.ZodIntersection<
 				z.ZodIntersection<
-					z.ZodIntersection<
-						z.ZodIntersection<
-							z.ZodObject<
-								{
-									name: z.ZodOptional<z.ZodString>
-									img_icon_url: z.ZodOptional<z.ZodString>
-									img_logo_url: z.ZodOptional<z.ZodString>
-									has_community_visible_stats: z.ZodOptional<z.ZodBoolean>
-									content_descriptorids: z.ZodOptional<z.ZodArray<z.ZodNumber>>
-								},
-								z.core.$strip
-							>,
-							z.ZodObject<
-								{
-									capsule_filename: z.ZodString
-									has_workshop: z.ZodBoolean
-									has_marketplace: z.ZodBoolean
-									has_dlc: z.ZodBoolean
-								},
-								z.core.$strip
-							>
-						>,
-						z.ZodObject<
-							{
-								playtime_windows_forever: z.ZodNumber
-								playtime_mac_forever: z.ZodNumber
-								playtime_linux_forever: z.ZodNumber
-								playtime_deck_forever: z.ZodNumber
-								playtime_forever: z.ZodNumber
-								playtime_2weeks: z.ZodOptional<z.ZodNumber>
-							},
-							z.core.$strip
-						>
+					z.ZodObject<
+						{
+							name: z.ZodOptional<z.ZodString>
+							img_icon_url: z.ZodOptional<z.ZodString>
+							img_logo_url: z.ZodOptional<z.ZodString>
+							has_community_visible_stats: z.ZodOptional<z.ZodBoolean>
+							content_descriptorids: z.ZodOptional<z.ZodArray<z.ZodNumber>>
+						},
+						z.core.$strip
 					>,
 					z.ZodObject<
 						{
-							appid: z.ZodNumber
-							playtime_forever: z.ZodNumber
-							playtime_windows_forever: z.ZodNumber
-							playtime_mac_forever: z.ZodNumber
-							playtime_linux_forever: z.ZodNumber
-							playtime_deck_forever: z.ZodNumber
-							rtime_last_played: z.ZodNumber
-							playtime_disconnected: z.ZodNumber
+							capsule_filename: z.ZodString
+							has_workshop: z.ZodBoolean
+							has_marketplace: z.ZodBoolean
+							has_dlc: z.ZodBoolean
 						},
 						z.core.$strip
 					>
+				>,
+				z.ZodObject<
+					{
+						playtime_windows_forever: z.ZodNumber
+						playtime_mac_forever: z.ZodNumber
+						playtime_linux_forever: z.ZodNumber
+						playtime_deck_forever: z.ZodNumber
+						playtime_forever: z.ZodNumber
+						playtime_2weeks: z.ZodOptional<z.ZodNumber>
+					},
+					z.core.$strip
 				>
+			>,
+			z.ZodObject<
+				{
+					appid: z.ZodNumber
+					playtime_forever: z.ZodNumber
+					playtime_windows_forever: z.ZodNumber
+					playtime_mac_forever: z.ZodNumber
+					playtime_linux_forever: z.ZodNumber
+					playtime_deck_forever: z.ZodNumber
+					rtime_last_played: z.ZodNumber
+					playtime_disconnected: z.ZodNumber
+				},
+				z.core.$strip
 			>
-		},
-		z.core.$strip
+		>
 	>
 }> = z.object({
-	response: z.object({
-		game_count: z.number(),
-		games: z.array(GameSchema),
-	}),
+	game_count: z.number(),
+	games: z.array(GameSchema),
 })
 
 const RecentlyPlayedGameSchema: z.ZodIntersection<
@@ -242,119 +241,108 @@ const RecentlyPlayedGameSchema: z.ZodIntersection<
 	.and(PlaytimeSchema)
 
 const RecentlyPlayedGamesResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			total_count: z.ZodOptional<z.ZodNumber>
-			games: z.ZodArray<
-				z.ZodIntersection<
-					z.ZodObject<
-						{
-							appid: z.ZodNumber
-							name: z.ZodString
-							playtime_2weeks: z.ZodOptional<z.ZodNumber>
-							img_icon_url: z.ZodOptional<z.ZodString>
-							img_logo_url: z.ZodOptional<z.ZodString>
-						},
-						z.core.$strip
-					>,
-					z.ZodObject<
-						{
-							playtime_windows_forever: z.ZodNumber
-							playtime_mac_forever: z.ZodNumber
-							playtime_linux_forever: z.ZodNumber
-							playtime_deck_forever: z.ZodNumber
-							playtime_forever: z.ZodNumber
-							playtime_2weeks: z.ZodOptional<z.ZodNumber>
-						},
-						z.core.$strip
-					>
-				>
+	total_count: z.ZodOptional<z.ZodNumber>
+	games: z.ZodArray<
+		z.ZodIntersection<
+			z.ZodObject<
+				{
+					appid: z.ZodNumber
+					name: z.ZodString
+					playtime_2weeks: z.ZodOptional<z.ZodNumber>
+					img_icon_url: z.ZodOptional<z.ZodString>
+					img_logo_url: z.ZodOptional<z.ZodString>
+				},
+				z.core.$strip
+			>,
+			z.ZodObject<
+				{
+					playtime_windows_forever: z.ZodNumber
+					playtime_mac_forever: z.ZodNumber
+					playtime_linux_forever: z.ZodNumber
+					playtime_deck_forever: z.ZodNumber
+					playtime_forever: z.ZodNumber
+					playtime_2weeks: z.ZodOptional<z.ZodNumber>
+				},
+				z.core.$strip
 			>
-		},
-		z.core.$strip
+		>
 	>
 }> = z.object({
-	response: z.object({
-		total_count: z.number().optional(),
-		games: z.array(RecentlyPlayedGameSchema),
-	}),
+	total_count: z.number().optional(),
+	games: z.array(RecentlyPlayedGameSchema),
 })
 
 const SteamLevelResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			player_level: z.ZodNumber
-		},
-		z.core.$strip
-	>
+	player_level: z.ZodNumber
 }> = z.object({
-	response: z.object({
-		player_level: z.number(),
-	}),
+	player_level: z.number(),
 })
 
 const LastPlayedTimesResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			games: z.ZodArray<
-				z.ZodIntersection<
-					z.ZodObject<
-						{
-							appid: z.ZodNumber
-							last_playtime: z.ZodNumber
-							first_playtime: z.ZodNumber
-							first_windows_playtime: z.ZodNumber
-							first_mac_playtime: z.ZodNumber
-							first_linux_playtime: z.ZodNumber
-							first_deck_playtime: z.ZodNumber
-							last_windows_playtime: z.ZodNumber
-							last_mac_playtime: z.ZodNumber
-							last_linux_playtime: z.ZodNumber
-							last_deck_playtime: z.ZodNumber
-							playtime_disconnected: z.ZodNumber
-						},
-						z.core.$strip
-					>,
-					z.ZodObject<
-						{
-							playtime_windows_forever: z.ZodNumber
-							playtime_mac_forever: z.ZodNumber
-							playtime_linux_forever: z.ZodNumber
-							playtime_deck_forever: z.ZodNumber
-							playtime_forever: z.ZodNumber
-							playtime_2weeks: z.ZodOptional<z.ZodNumber>
-						},
-						z.core.$strip
-					>
-				>
+	games: z.ZodArray<
+		z.ZodIntersection<
+			z.ZodObject<
+				{
+					appid: z.ZodNumber
+					last_playtime: z.ZodNumber
+					first_playtime: z.ZodNumber
+					first_windows_playtime: z.ZodNumber
+					first_mac_playtime: z.ZodNumber
+					first_linux_playtime: z.ZodNumber
+					first_deck_playtime: z.ZodNumber
+					last_windows_playtime: z.ZodNumber
+					last_mac_playtime: z.ZodNumber
+					last_linux_playtime: z.ZodNumber
+					last_deck_playtime: z.ZodNumber
+					playtime_disconnected: z.ZodNumber
+				},
+				z.core.$strip
+			>,
+			z.ZodObject<
+				{
+					playtime_windows_forever: z.ZodNumber
+					playtime_mac_forever: z.ZodNumber
+					playtime_linux_forever: z.ZodNumber
+					playtime_deck_forever: z.ZodNumber
+					playtime_forever: z.ZodNumber
+					playtime_2weeks: z.ZodOptional<z.ZodNumber>
+				},
+				z.core.$strip
 			>
-		},
-		z.core.$strip
+		>
 	>
 }> = z.object({
-	response: z.object({
-		games: z.array(
-			z
-				.object({
-					appid: z.number(),
-					last_playtime: z.number(),
-					first_playtime: z.number(),
-					first_windows_playtime: z.number(),
-					first_mac_playtime: z.number(),
-					first_linux_playtime: z.number(),
-					first_deck_playtime: z.number(),
-					last_windows_playtime: z.number(),
-					last_mac_playtime: z.number(),
-					last_linux_playtime: z.number(),
-					last_deck_playtime: z.number(),
-					playtime_disconnected: z.number(),
-				})
-				.and(PlaytimeSchema),
-		),
-	}),
+	games: z.array(
+		z
+			.object({
+				appid: z.number(),
+				last_playtime: z.number(),
+				first_playtime: z.number(),
+				first_windows_playtime: z.number(),
+				first_mac_playtime: z.number(),
+				first_linux_playtime: z.number(),
+				first_deck_playtime: z.number(),
+				last_windows_playtime: z.number(),
+				last_mac_playtime: z.number(),
+				last_linux_playtime: z.number(),
+				last_deck_playtime: z.number(),
+				playtime_disconnected: z.number(),
+			})
+			.and(PlaytimeSchema),
+	),
 })
 
-const ProfileItemSchema = z.object({
+const ProfileItemSchema: z.ZodObject<{
+	communityitemid: z.ZodString
+	image_small: z.ZodOptional<z.ZodString>
+	image_large: z.ZodString
+	name: z.ZodString
+	item_title: z.ZodString
+	item_description: z.ZodString
+	appid: z.ZodNumber
+	item_type: z.ZodNumber
+	item_class: z.ZodNumber
+}> = z.object({
 	communityitemid: z.string(),
 	image_small: z.string().optional(),
 	image_large: z.string(),
@@ -367,174 +355,114 @@ const ProfileItemSchema = z.object({
 })
 
 const AnimatedAvatarResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			avatar: z.ZodObject<
-				{
-					communityitemid: z.ZodString
-					image_small: z.ZodOptional<z.ZodString>
-					image_large: z.ZodString
-					name: z.ZodString
-					item_title: z.ZodString
-					item_description: z.ZodString
-					appid: z.ZodNumber
-					item_type: z.ZodNumber
-					item_class: z.ZodNumber
-				},
-				z.core.$strip
-			>
-		},
-		z.core.$strip
-	>
-}> = z.object({
-	response: z.object({
-		avatar: ProfileItemSchema,
-	}),
-})
+	communityitemid: z.ZodString
+	image_small: z.ZodOptional<z.ZodString>
+	image_large: z.ZodString
+	name: z.ZodString
+	item_title: z.ZodString
+	item_description: z.ZodString
+	appid: z.ZodNumber
+	item_type: z.ZodNumber
+	item_class: z.ZodNumber
+}> = ProfileItemSchema
 
 const AvatarFrameResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			avatar_frame: z.ZodObject<
-				{
-					communityitemid: z.ZodString
-					image_small: z.ZodOptional<z.ZodString>
-					image_large: z.ZodString
-					name: z.ZodString
-					item_title: z.ZodString
-					item_description: z.ZodString
-					appid: z.ZodNumber
-					item_type: z.ZodNumber
-					item_class: z.ZodNumber
-				},
-				z.core.$strip
-			>
-		},
-		z.core.$strip
-	>
-}> = z.object({
-	response: z.object({
-		avatar_frame: ProfileItemSchema,
-	}),
-})
+	communityitemid: z.ZodString
+	image_small: z.ZodOptional<z.ZodString>
+	image_large: z.ZodString
+	name: z.ZodString
+	item_title: z.ZodString
+	item_description: z.ZodString
+	appid: z.ZodNumber
+	item_type: z.ZodNumber
+	item_class: z.ZodNumber
+}> = ProfileItemSchema
 
 const ProfileBackgroundResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
+	profile_background: z.ZodObject<
 		{
-			profile_background: z.ZodObject<
-				{
-					communityitemid: z.ZodString
-					image_small: z.ZodOptional<z.ZodString>
-					image_large: z.ZodString
-					name: z.ZodString
-					item_title: z.ZodString
-					item_description: z.ZodString
-					appid: z.ZodNumber
-					item_type: z.ZodNumber
-					item_class: z.ZodNumber
-					movie_webm: z.ZodString
-					movie_mp4: z.ZodString
-				},
-				z.core.$strip
-			>
+			communityitemid: z.ZodString
+			image_small: z.ZodOptional<z.ZodString>
+			image_large: z.ZodString
+			name: z.ZodString
+			item_title: z.ZodString
+			item_description: z.ZodString
+			appid: z.ZodNumber
+			item_type: z.ZodNumber
+			item_class: z.ZodNumber
+			movie_webm: z.ZodString
+			movie_mp4: z.ZodString
 		},
 		z.core.$strip
 	>
 }> = z.object({
-	response: z.object({
-		profile_background: ProfileItemSchema.extend({
-			movie_webm: z.string(),
-			movie_mp4: z.string(),
-		}),
+	profile_background: ProfileItemSchema.extend({
+		movie_webm: z.string(),
+		movie_mp4: z.string(),
 	}),
 })
 
 const PlayerLinkDetailsResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
+	public_data: z.ZodObject<
 		{
-			accounts: z.ZodArray<
-				z.ZodObject<
-					{
-						public_data: z.ZodObject<
-							{
-								steamid: z.ZodString
-								visibility_state: z.ZodNumber
-								profile_state: z.ZodNumber
-								sha_digest_avatar: z.ZodString
-								persona_name: z.ZodString
-								profile_url: z.ZodString
-								content_country_restricted: z.ZodBoolean
-							},
-							z.core.$strip
-						>
-						private_data: z.ZodObject<
-							{
-								time_created: z.ZodNumber
-								last_logoff_time: z.ZodNumber
-								last_seen_online: z.ZodNumber
-							},
-							z.core.$strip
-						>
-					},
-					z.core.$strip
-				>
-			>
+			steamid: z.ZodString
+			visibility_state: z.ZodNumber
+			profile_state: z.ZodNumber
+			sha_digest_avatar: z.ZodString
+			persona_name: z.ZodString
+			profile_url: z.ZodString
+			content_country_restricted: z.ZodBoolean
+		},
+		z.core.$strip
+	>
+	private_data: z.ZodObject<
+		{
+			time_created: z.ZodNumber
+			last_logoff_time: z.ZodNumber
+			last_seen_online: z.ZodNumber
 		},
 		z.core.$strip
 	>
 }> = z.object({
-	response: z.object({
-		accounts: z.array(
-			z.object({
-				public_data: z.object({
-					steamid: z.string(),
-					visibility_state: z.number(),
-					profile_state: z.number(),
-					sha_digest_avatar: z.string(),
-					persona_name: z.string(),
-					profile_url: z.string(),
-					content_country_restricted: z.boolean(),
-				}),
-				private_data: z.object({
-					time_created: z.number(),
-					last_logoff_time: z.number(),
-					last_seen_online: z.number(),
-				}),
-			}),
-		),
+	public_data: z.object({
+		steamid: z.string(),
+		visibility_state: z.number(),
+		profile_state: z.number(),
+		sha_digest_avatar: z.string(),
+		persona_name: z.string(),
+		profile_url: z.string(),
+		content_country_restricted: z.boolean(),
+	}),
+	private_data: z.object({
+		time_created: z.number(),
+		last_logoff_time: z.number(),
+		last_seen_online: z.number(),
 	}),
 })
 
 const ProfileCustomizationResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
+	slots_available: z.ZodNumber
+	profile_theme: z.ZodObject<
 		{
-			slots_available: z.ZodNumber
-			profile_theme: z.ZodObject<
-				{
-					theme_id: z.ZodString
-					title: z.ZodString
-				},
-				z.core.$strip
-			>
-			profile_preferences: z.ZodObject<
-				{
-					hide_profile_awards: z.ZodBoolean
-				},
-				z.core.$strip
-			>
+			theme_id: z.ZodString
+			title: z.ZodString
+		},
+		z.core.$strip
+	>
+	profile_preferences: z.ZodObject<
+		{
+			hide_profile_awards: z.ZodBoolean
 		},
 		z.core.$strip
 	>
 }> = z.object({
-	response: z.object({
-		slots_available: z.number(),
-		profile_theme: z.object({
-			theme_id: z.string(),
-			title: z.string(),
-		}),
-		profile_preferences: z.object({
-			hide_profile_awards: z.boolean(),
-		}),
+	slots_available: z.number(),
+	profile_theme: z.object({
+		theme_id: z.string(),
+		title: z.string(),
+	}),
+	profile_preferences: z.object({
+		hide_profile_awards: z.boolean(),
 	}),
 })
 
@@ -651,67 +579,44 @@ const ProfileItemsEquippedResponseSchema: z.ZodObject<{
  * TODO: need to type correctly
  */
 const SteamDeckKeyboardSkinsResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			steam_deck_keyboard_skin: z.ZodUnknown
-		},
-		z.core.$strip
-	>
+	steam_deck_keyboard_skin: z.ZodUnknown
 }> = z.object({
-	response: z.object({
-		steam_deck_keyboard_skin: z.unknown(),
-	}),
+	steam_deck_keyboard_skin: z.unknown(),
 })
 
 const TopAchievementsForGamesResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			games: z.ZodArray<
-				z.ZodObject<
-					{
-						appid: z.ZodNumber
-						achievements: z.ZodArray<
-							z.ZodObject<
-								{
-									statid: z.ZodNumber
-									bit: z.ZodNumber
-									name: z.ZodString
-									desc: z.ZodString
-									icon: z.ZodString
-									icon_gray: z.ZodString
-									hidden: z.ZodBoolean
-									player_percent_unlocked: z.ZodString
-								},
-								z.core.$strip
-							>
-						>
-					},
-					z.core.$strip
-				>
-			>
-		},
-		z.core.$strip
+	appid: z.ZodNumber
+	total_achievements: z.ZodNumber
+	achievements: z.ZodArray<
+		z.ZodObject<
+			{
+				statid: z.ZodNumber
+				bit: z.ZodNumber
+				name: z.ZodString
+				desc: z.ZodString
+				icon: z.ZodString
+				icon_gray: z.ZodString
+				hidden: z.ZodBoolean
+				player_percent_unlocked: z.ZodString
+			},
+			z.core.$strip
+		>
 	>
 }> = z.object({
-	response: z.object({
-		games: z.array(
-			z.object({
-				appid: z.number(),
-				achievements: z.array(
-					z.object({
-						statid: z.number(),
-						bit: z.number(),
-						name: z.string(),
-						desc: z.string(),
-						icon: z.string(),
-						icon_gray: z.string(),
-						hidden: z.boolean(),
-						player_percent_unlocked: z.string(),
-					}),
-				),
-			}),
-		),
-	}),
+	appid: z.number(),
+	total_achievements: z.number(),
+	achievements: z.array(
+		z.object({
+			statid: z.number(),
+			bit: z.number(),
+			name: z.string(),
+			desc: z.string(),
+			icon: z.string(),
+			icon_gray: z.string(),
+			hidden: z.boolean(),
+			player_percent_unlocked: z.string(),
+		}),
+	),
 })
 
 export type Badge = z.infer<typeof BadgeSchema>

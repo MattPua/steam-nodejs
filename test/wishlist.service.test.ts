@@ -6,7 +6,8 @@ describe('WishlistService', () => {
 	test('should get wishlist correctly', async () => {
 		const steamClient = new SteamClient(getApiKey())
 		const wishlist = await steamClient.wishlist.getWishlist(getSteamUserId())
-		expect(wishlist).toBeDefined()
+		expect(wishlist.items).toBeDefined()
+		expect(wishlist.items.length).toBeGreaterThan(0)
 	})
 
 	test('should get wishlist item count correctly', async () => {
@@ -14,6 +15,6 @@ describe('WishlistService', () => {
 		const wishlistCount = await steamClient.wishlist.getWishlistItemCount(
 			getSteamUserId(),
 		)
-		expect(wishlistCount).toBeDefined()
+		expect(wishlistCount.count).toBeDefined()
 	})
 })

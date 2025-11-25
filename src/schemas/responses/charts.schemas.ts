@@ -8,95 +8,71 @@ const BestOfYearPageSchema = z.object({
 	start_date: z.number(),
 })
 
-const BestOfYearResponseSchema: z.ZodObject<
-	{
-		response: z.ZodObject<
+const BestOfYearResponseSchema: z.ZodObject<{
+	pages: z.ZodArray<
+		z.ZodObject<
 			{
-				pages: z.ZodArray<
-					z.ZodObject<
-						{
-							name: z.ZodString
-							url_path: z.ZodString
-							banner_url: z.ZodArray<z.ZodString>
-							banner_url_mobile: z.ZodArray<z.ZodString>
-							start_date: z.ZodNumber
-						},
-						z.core.$strip
-					>
-				>
+				name: z.ZodString
+				url_path: z.ZodString
+				banner_url: z.ZodArray<z.ZodString>
+				banner_url_mobile: z.ZodArray<z.ZodString>
+				start_date: z.ZodNumber
 			},
 			z.core.$strip
 		>
-	},
-	z.core.$strip
-> = z.object({
-	response: z.object({
-		pages: z.array(BestOfYearPageSchema),
-	}),
+	>
+}> = z.object({
+	pages: z.array(BestOfYearPageSchema),
 })
 
 const GamesByConcurrentPlayersResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			last_update: z.ZodNumber
-			ranks: z.ZodArray<
-				z.ZodObject<
-					{
-						concurrent_in_game: z.ZodNumber
-						rank: z.ZodNumber
-						appid: z.ZodNumber
-						peak_in_game: z.ZodNumber
-					},
-					z.core.$strip
-				>
-			>
-		},
-		z.core.$strip
+	last_update: z.ZodNumber
+	ranks: z.ZodArray<
+		z.ZodObject<
+			{
+				concurrent_in_game: z.ZodNumber
+				rank: z.ZodNumber
+				appid: z.ZodNumber
+				peak_in_game: z.ZodNumber
+			},
+			z.core.$strip
+		>
 	>
 }> = z.object({
-	response: z.object({
-		last_update: z.number(),
-		ranks: z.array(
-			z.object({
-				concurrent_in_game: z.number(),
-				rank: z.number(),
-				appid: z.number(),
-				peak_in_game: z.number(),
-			}),
-		),
-	}),
+	last_update: z.number(),
+	ranks: z.array(
+		z.object({
+			concurrent_in_game: z.number(),
+			rank: z.number(),
+			appid: z.number(),
+			peak_in_game: z.number(),
+		}),
+	),
 })
 
 const MostPlayedGamesResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			rollup_date: z.ZodNumber
-			ranks: z.ZodArray<
-				z.ZodObject<
-					{
-						last_week_rank: z.ZodNumber
-						rank: z.ZodNumber
-						appid: z.ZodNumber
-						peak_in_game: z.ZodNumber
-					},
-					z.core.$strip
-				>
-			>
-		},
-		z.core.$strip
+	rollup_date: z.ZodNumber
+	ranks: z.ZodArray<
+		z.ZodObject<
+			{
+				last_week_rank: z.ZodNumber
+				rank: z.ZodNumber
+				appid: z.ZodNumber
+				peak_in_game: z.ZodNumber
+			},
+			z.core.$strip
+		>
 	>
 }> = z.object({
-	response: z.object({
-		rollup_date: z.number(),
-		ranks: z.array(
-			z.object({
-				last_week_rank: z.number(),
-				rank: z.number(),
-				appid: z.number(),
-				peak_in_game: z.number(),
-			}),
-		),
-	}),
+	rollup_date: z.number(),
+	ranks: z.array(
+		z.object({
+			last_week_rank: z.number(),
+			rank: z.number(),
+			appid: z.number(),
+			peak_in_game: z.number(),
+		}),
+	),
 })
 
 export type BestOfYearResponse = z.infer<typeof BestOfYearResponseSchema>

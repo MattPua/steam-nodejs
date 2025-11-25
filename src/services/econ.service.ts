@@ -3,8 +3,7 @@ import { BaseService } from './base.service'
 
 export class EconService extends BaseService {
 	constructor(apiKey: string) {
-		super(apiKey)
-		this.baseUrl = `${this.baseUrl}/IEconService`
+		super(apiKey, 'api', 'IEconService')
 	}
 
 	/**
@@ -16,7 +15,10 @@ export class EconService extends BaseService {
 		const url = this.generateSteamUrl(`/GetTradeOffersSummary/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<TradeOffersSummaryResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: TradeOffersSummaryResponse
+		}>(url)
+		return response.response
 	}
 
 	/**

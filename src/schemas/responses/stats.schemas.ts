@@ -1,18 +1,11 @@
 import { z } from 'zod'
 
 const NumberOfCurrentPlayersResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			result: z.ZodNumber
-			player_count: z.ZodNumber
-		},
-		z.core.$strip
-	>
+	result: z.ZodNumber
+	player_count: z.ZodNumber
 }> = z.object({
-	response: z.object({
-		result: z.number(),
-		player_count: z.number(),
-	}),
+	result: z.number(),
+	player_count: z.number(),
 })
 
 const AchievementSchema: z.ZodObject<{
@@ -82,67 +75,48 @@ const PlayerAchievementsResponseSchema: z.ZodObject<{
 })
 
 const GlobalAchievementPercentagesForAppResponseSchema: z.ZodObject<{
-	response: z.ZodObject<
-		{
-			achievementpercentages: z.ZodObject<
-				{
-					achievements: z.ZodArray<
-						z.ZodObject<
-							{
-								name: z.ZodString
-								percent: z.ZodString
-							},
-							z.core.$strip
-						>
-					>
-				},
-				z.core.$strip
-			>
-		},
-		z.core.$strip
+	achievements: z.ZodArray<
+		z.ZodObject<
+			{
+				name: z.ZodString
+				percent: z.ZodString
+			},
+			z.core.$strip
+		>
 	>
 }> = z.object({
-	response: z.object({
-		achievementpercentages: z.object({
-			achievements: z.array(
-				z.object({
-					name: z.string(),
-					percent: z.string(),
-				}),
-			),
+	achievements: z.array(
+		z.object({
+			name: z.string(),
+			percent: z.string(),
 		}),
-	}),
+	),
 })
 
 const SchemaForGameResponseSchema: z.ZodObject<{
-	game: z.ZodObject<
+	gameName: z.ZodString
+	gameVersion: z.ZodString
+	availableGameStats: z.ZodObject<
 		{
-			gameName: z.ZodString
-			gameVersion: z.ZodString
-			availableGameStats: z.ZodObject<
+			achievements: z.ZodArray<
+				z.ZodObject<
+					{
+						name: z.ZodString
+						defaultvalue: z.ZodNumber
+						displayName: z.ZodString
+						hidden: z.ZodNumber
+						description: z.ZodString
+						icon: z.ZodString
+						icongray: z.ZodString
+					},
+					z.core.$strip
+				>
+			>
+			stats: z.ZodObject<
 				{
-					achievements: z.ZodArray<
-						z.ZodObject<
-							{
-								name: z.ZodString
-								defaultvalue: z.ZodNumber
-								displayName: z.ZodString
-								hidden: z.ZodNumber
-								description: z.ZodString
-								icon: z.ZodString
-								icongray: z.ZodString
-							},
-							z.core.$strip
-						>
-					>
-					stats: z.ZodObject<
-						{
-							name: z.ZodString
-							defaultvalue: z.ZodNumber
-							displayName: z.ZodString
-						},
-						z.core.$strip
-					>
+					name: z.ZodString
+					defaultvalue: z.ZodNumber
+					displayName: z.ZodString
 				},
 				z.core.$strip
 			>
@@ -150,54 +124,49 @@ const SchemaForGameResponseSchema: z.ZodObject<{
 		z.core.$strip
 	>
 }> = z.object({
-	game: z.object({
-		gameName: z.string(),
-		gameVersion: z.string(),
-		availableGameStats: z.object({
-			achievements: z.array(
-				z.object({
-					name: z.string(),
-					defaultvalue: z.number(),
-					displayName: z.string(),
-					hidden: z.number(),
-					description: z.string(),
-					icon: z.string(),
-					icongray: z.string(),
-				}),
-			),
-			stats: z.object({
+	gameName: z.string(),
+	gameVersion: z.string(),
+	availableGameStats: z.object({
+		achievements: z.array(
+			z.object({
 				name: z.string(),
 				defaultvalue: z.number(),
 				displayName: z.string(),
+				hidden: z.number(),
+				description: z.string(),
+				icon: z.string(),
+				icongray: z.string(),
 			}),
+		),
+		stats: z.object({
+			name: z.string(),
+			defaultvalue: z.number(),
+			displayName: z.string(),
 		}),
 	}),
 })
 
 const UserStatsForGameResponseSchema: z.ZodObject<{
-	playerstats: z.ZodObject<
-		{
-			steamID: z.ZodString
-			gameName: z.ZodString
-			achievements: z.ZodObject<
-				{
-					name: z.ZodString
-					achived: z.ZodNumber
-				},
-				z.core.$strip
-			>
-		},
-		z.core.$strip
+	steamID: z.ZodString
+	gameName: z.ZodString
+	achievements: z.ZodArray<
+		z.ZodObject<
+			{
+				name: z.ZodString
+				achieved: z.ZodNumber
+			},
+			z.core.$strip
+		>
 	>
 }> = z.object({
-	playerstats: z.object({
-		steamID: z.string(),
-		gameName: z.string(),
-		achievements: z.object({
+	steamID: z.string(),
+	gameName: z.string(),
+	achievements: z.array(
+		z.object({
 			name: z.string(),
-			achived: z.number(),
+			achieved: z.number(),
 		}),
-	}),
+	),
 })
 
 export type NumberOfCurrentPlayersResponse = z.infer<

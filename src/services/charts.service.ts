@@ -7,21 +7,29 @@ import { BaseService } from './base.service'
 
 export class ChartsService extends BaseService {
 	constructor(apiKey: string) {
-		super(apiKey)
-		this.baseUrl = `${this.baseUrl}/ISteamChartsService`
+		super(apiKey, 'api', 'ISteamChartsService')
 	}
 
 	async getGamesByConcurrentPlayers(): Promise<GamesByConcurrentPlayersResponse> {
 		const url = this.generateSteamUrl(`/GetGamesByConcurrentPlayers/v1`)
-		return await this.sendSteamRequest<GamesByConcurrentPlayersResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: GamesByConcurrentPlayersResponse
+		}>(url)
+		return response.response
 	}
 	async getMostPlayedGames(): Promise<MostPlayedGamesResponse> {
 		const url = this.generateSteamUrl(`/GetMostPlayedGames/v1`)
-		return await this.sendSteamRequest<MostPlayedGamesResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: MostPlayedGamesResponse
+		}>(url)
+		return response.response
 	}
 
 	async getBestOfYear(): Promise<BestOfYearResponse> {
 		const url = this.generateSteamUrl(`/GetBestOfYearPages/v1`)
-		return await this.sendSteamRequest<BestOfYearResponse>(url)
+		const response = await this.sendSteamRequest<{
+			response: BestOfYearResponse
+		}>(url)
+		return response.response
 	}
 }

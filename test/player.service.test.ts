@@ -7,12 +7,27 @@ describe('PlayerService', () => {
 		const steamClient = new SteamClient(getApiKey())
 		const badges = await steamClient.player.getBadges(getSteamUserId())
 		expect(badges).toBeDefined()
+		expect(badges.player_level).toBeDefined()
+		expect(badges.player_xp).toBeDefined()
+		expect(badges.player_xp_needed_to_level_up).toBeDefined()
+		expect(badges.player_xp_needed_current_level).toBeDefined()
+		expect(badges.badges).toBeDefined()
+		expect(badges.badges.length).toBeGreaterThan(0)
+		expect(badges.badges[0]).toHaveProperty('badgeid')
+		expect(badges.badges[0]).toHaveProperty('level')
+		expect(badges.badges[0]).toHaveProperty('completion_time')
 	})
 
 	test('should get owned games correctly', async () => {
 		const steamClient = new SteamClient(getApiKey())
 		const ownedGames = await steamClient.player.getOwnedGames(getSteamUserId())
 		expect(ownedGames).toBeDefined()
+		expect(ownedGames.games).toBeDefined()
+		expect(ownedGames.games.length).toBeGreaterThan(0)
+		expect(ownedGames.games[0]).toHaveProperty('appid')
+		expect(ownedGames.games[0]).toHaveProperty('name')
+		expect(ownedGames.games[0]).toHaveProperty('has_community_visible_stats')
+		expect(ownedGames.games[0]).toHaveProperty('content_descriptorids')
 	})
 
 	test('should get recently played games correctly', async () => {
