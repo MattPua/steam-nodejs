@@ -65,10 +65,26 @@ export class UserService extends BaseService {
 	/**
 	 * Returns the friends list for a user with their profiles
 	 */
-	async getFriendsListWithProfiles(steamUserId: string): Promise<Player[]> {
+	async getFriendsListWithProfiles(
+		steamUserId: string,
+	): Promise<(Player & Friend)[]> {
 		const friendsList = await this.getFriendsList(steamUserId)
 		const userIds = friendsList.map((friend) => friend.steamid)
+		const friendsMapping = new Map<string, Friend>()
+		friendsList.forEach((friend) => {
+			friendsMapping.set(friend.steamid, friend)
+		})
+
 		const users = await this.getUsers(userIds)
-		return users
+		return users.map((user) => ({
+			steamid: user.steamid,
+			personaname: user.personaname,
+			profileurl: user.profileurl,
+			avatar: user.avatar,
+			avatarmedium: user.avatarmedium,
+			avatarfull: user.avatarfull,
+			avatarhash: user.avatarhash,
+			...friendsMapping.get(user.steamid),
+		})) as (Player & Friend)[]
 	}
 }

@@ -158,6 +158,7 @@ const UserGroupListResponseSchema: z.ZodObject<{
 export type Friend = z.infer<typeof FriendSchema>
 export type FriendsListResponse = z.infer<typeof FriendsListResponseSchema>
 export type Player = z.infer<typeof PlayerSchema>
+
 export type ListUsersResponse = z.infer<typeof ListUsersResponseSchema>
 export type PlayerSummaryResponse = z.infer<typeof PlayerSummaryResponseSchema>
 export type UserGroup = z.infer<typeof UserGroupSchema>
