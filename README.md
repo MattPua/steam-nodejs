@@ -90,61 +90,21 @@ Currently, the following services are available:
 
 ## Features
 
-- Charts
-  - Get games by concurrent players
-  - Get most played games
-  - Get best of year
-- Community
-  - Get apps
-- Econ
-  - Get trade offers summary
-  - Get trade history
-  - Get trade offers
-- News
-  - Get news for app
-- Player
-  - Get Steam level
-  - Get badges
-  - Get owned games
-  - Get recently played games
-  - Get last played times
-  - Get animated avatar
-  - Get avatar frame
-  - Get mini profile background
-  - Get favourite badge
-  - Get player link details
-  - Get profile background
-  - Get profile customization
-  - Get profile items equipped
-  - Get Steam Deck keyboard skins
-  - Get top achievements for games
-- Sale
-  - Get user year in review
-- Stats
-  - Get number of current players
-  - Get player achievements
-  - Get global achievement percentages for app
-  - Get schema for game
-  - Get user stats for game
-- Store Top Sellers
-  - Get weekly top sellers
-- Steam Store
-  - Get app details (use this specifically to get information about a particular app)
-- Store
-  - Get app list on store
-  - Get games followed
-  - Get games followed count
-  - Get most popular tags
-- User Store Visit
-  - Get most visited items on store
-- User
-  - Get user
-  - Get friends list
-  - Get users
-  - Get user group list
-- Wishlist
-  - Get wishlist
-  - Get wishlist item count
+| Service            | Features                                                                                                                |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------|
+| **Charts**         | Get games by concurrent players<br>Get most played games<br>Get best of year                                            |
+| **Community**      | Get apps                                                                                                                |
+| **Econ**           | Get trade offers summary<br>Get trade history<br>Get trade offers                                                       |
+| **News**           | Get news for app                                                                                                        |
+| **Player**         | Get Steam level<br>Get badges<br>Get owned games<br>Get recently played games<br>Get last played times<br>Get animated avatar<br>Get avatar frame<br>Get mini profile background<br>Get favourite badge<br>Get player link details<br>Get profile background<br>Get profile customization<br>Get profile items equipped<br>Get Steam Deck keyboard skins<br>Get top achievements for games |
+| **Sale**           | Get user year in review<br>Get user year achievements                                                                   |
+| **Stats**          | Get number of current players<br>Get player achievements<br>Get global achievement percentages for app<br>Get schema for game<br>Get user stats for game |
+| **Store Top Sellers** | Get weekly top sellers                                                                                               |
+| **Steam Store**    | Get app details (use this specifically to get information about a particular app)                                       |
+| **Store**          | Get app list on store<br>Get games followed<br>Get games followed count<br>Get most popular tags                        |
+| **User Store Visit** | Get most visited items on store                                                                                       |
+| **User**           | Get user<br>Get friends list<br>Get users<br>Get user group list                                                        |
+| **Wishlist**       | Get wishlist<br>Get wishlist item count                                                                                 |
 
 ## Documentation
 
