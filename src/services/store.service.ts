@@ -4,7 +4,7 @@ import type {
 	GetGamesFollowedResponse,
 	GetMostPopularTagsResponse,
 } from '../schemas/responses/store.schemas'
-import { BaseService } from './base.service'
+import { BaseService } from './_base.service'
 
 export class StoreService extends BaseService {
 	constructor(apiKey: string) {
@@ -44,7 +44,7 @@ export class StoreService extends BaseService {
 		const url = this.generateSteamUrl(`/GetAppList/v1`, {
 			...config,
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: GetAppListResponse
 		}>(url)
 		return response.response
@@ -60,7 +60,7 @@ export class StoreService extends BaseService {
 		const url = this.generateSteamUrl(`/GetGamesFollowed/v1`, {
 			steamid: steamUserId,
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: GetGamesFollowedResponse
 		}>(url)
 		return response.response
@@ -76,7 +76,7 @@ export class StoreService extends BaseService {
 		const url = this.generateSteamUrl(`/GetGamesFollowedCount/v1`, {
 			steamid: steamUserId,
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: GetGamesFollowedCountResponse
 		}>(url)
 		return response.response
@@ -84,7 +84,7 @@ export class StoreService extends BaseService {
 
 	async getMostPopularTags(): Promise<GetMostPopularTagsResponse> {
 		const url = this.generateSteamUrl(`/GetMostPopularTags/v1`)
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: GetMostPopularTagsResponse
 		}>(url)
 		return response.response

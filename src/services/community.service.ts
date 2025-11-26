@@ -1,5 +1,5 @@
 import type { CommunityAppsResponse } from '../schemas/responses'
-import { BaseService } from './base.service'
+import { BaseService } from './_base.service'
 
 export class CommunityService extends BaseService {
 	constructor(apiKey: string) {
@@ -20,7 +20,7 @@ export class CommunityService extends BaseService {
 			steamid: steamUserId,
 			'appids[0]': appid,
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: CommunityAppsResponse
 		}>(url)
 		return response.response

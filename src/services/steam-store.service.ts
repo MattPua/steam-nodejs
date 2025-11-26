@@ -2,7 +2,7 @@ import type {
 	SteamStoreAppDetails,
 	SteamStoreSchemasRoot,
 } from '../schemas/responses/steam-store.schemas'
-import { BaseService } from './base.service'
+import { BaseService } from './_base.service'
 
 export class SteamStoreService extends BaseService {
 	constructor(apiKey: string) {
@@ -16,7 +16,7 @@ export class SteamStoreService extends BaseService {
 		const url = this.generateSteamUrl(`/GetAppDetails/v2`, {
 			appids: appId,
 		})
-		const data = await this.sendSteamRequest<SteamStoreSchemasRoot>(url)
+		const data = await this.sendGETRequest<SteamStoreSchemasRoot>(url)
 		const response = data?.[appId]
 		if (response?.success) {
 			return response.data

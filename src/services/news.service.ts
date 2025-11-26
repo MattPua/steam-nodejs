@@ -1,5 +1,5 @@
 import type { NewsForAppResponse } from '../schemas/responses'
-import { BaseService } from './base.service'
+import { BaseService } from './_base.service'
 
 export class NewsService extends BaseService {
 	constructor(apiKey: string) {
@@ -25,7 +25,7 @@ export class NewsService extends BaseService {
 			appid: appId,
 			...config,
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			appnews: NewsForAppResponse
 		}>(url)
 		return response.appnews

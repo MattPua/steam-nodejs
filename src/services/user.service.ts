@@ -1,5 +1,5 @@
 import type { Friend, Player, UserGroup } from '../schemas/responses'
-import { BaseService } from './base.service'
+import { BaseService } from './_base.service'
 
 export class UserService extends BaseService {
 	constructor(apiKey: string) {
@@ -13,7 +13,7 @@ export class UserService extends BaseService {
 		const url = this.generateSteamUrl(`/GetPlayerSummaries/v2`, {
 			steamids: steamUserId,
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: { players: Player[] }
 		}>(url)
 		return response.response.players[0] as Player
@@ -27,7 +27,7 @@ export class UserService extends BaseService {
 			steamid: steamUserId,
 			relationship: 'friend',
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			friendslist: { friends: Friend[] }
 		}>(url)
 		return response.friendslist.friends
@@ -40,7 +40,7 @@ export class UserService extends BaseService {
 		const url = this.generateSteamUrl(`/GetPlayerSummaries/v2`, {
 			steamids: steamUserIds.join(','),
 		})
-		const data = await this.sendSteamRequest<{
+		const data = await this.sendGETRequest<{
 			response: { players: Player[] }
 		}>(url)
 		return data.response.players
@@ -53,7 +53,7 @@ export class UserService extends BaseService {
 		const url = this.generateSteamUrl(`/GetUserGroupList/v1`, {
 			steamid: steamUserId,
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: {
 				success: boolean
 				groups: UserGroup[]

@@ -76,15 +76,15 @@ const ExtendedGameAppInfoSchema = z
 	)
 
 const PlaytimeSchema = z.object({
-	playtime_windows_forever: z.number(),
-	playtime_mac_forever: z.number(),
+	playtime_windows_forever: z.number().describe('In minutes'),
+	playtime_mac_forever: z.number().describe('In minutes'),
 	playtime_linux_forever: z.number(),
-	playtime_deck_forever: z.number(),
-	playtime_forever: z.number(),
+	playtime_deck_forever: z.number().describe('In minutes'),
+	playtime_forever: z.number().describe('In minutes'),
 	playtime_2weeks: z
 		.number()
 		.optional()
-		.describe('Only applicable for recently played games'),
+		.describe('Only applicable for recently played games in minutes'),
 })
 
 const GameSchema: z.ZodIntersection<

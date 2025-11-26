@@ -1,6 +1,6 @@
 import type { SteamDataRequest } from '../schemas/requests/common.schemas'
 import type { GetMostVisitedItemsOnStoreResponse } from '../schemas/responses/user-store-visit.schemas'
-import { BaseService } from './base.service'
+import { BaseService } from './_base.service'
 
 export class UserStoreVisitService extends BaseService {
 	constructor(apiKey: string) {
@@ -32,7 +32,7 @@ export class UserStoreVisitService extends BaseService {
 			steamid: steamUserId,
 			input_json: JSON.stringify(config),
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: GetMostVisitedItemsOnStoreResponse
 		}>(url)
 		return response.response

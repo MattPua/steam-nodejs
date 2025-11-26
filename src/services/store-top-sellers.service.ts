@@ -1,6 +1,6 @@
 import type { SteamDataRequest } from '../schemas'
 import type { StoreTopSellersResponse } from '../schemas/responses/store-top-sellers.schema'
-import { BaseService } from './base.service'
+import { BaseService } from './_base.service'
 
 export class StoreTopSellersService extends BaseService {
 	constructor(apiKey: string) {
@@ -25,7 +25,7 @@ export class StoreTopSellersService extends BaseService {
 		const url = this.generateSteamUrl(`/GetWeeklyTopSellers/v1`, {
 			input_json: JSON.stringify({ data_request, context }),
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: StoreTopSellersResponse
 		}>(url)
 		return response.response

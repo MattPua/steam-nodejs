@@ -2,7 +2,7 @@ import type {
 	UserYearAchievementsResponse,
 	UserYearInReviewResponse,
 } from '../schemas/responses'
-import { BaseService } from './base.service'
+import { BaseService } from './_base.service'
 
 export class SaleService extends BaseService {
 	constructor(apiKey: string) {
@@ -24,7 +24,7 @@ export class SaleService extends BaseService {
 			'appids[0]': appid,
 			year: config.year,
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: UserYearAchievementsResponse
 		}>(url)
 		return response.response
@@ -47,7 +47,7 @@ export class SaleService extends BaseService {
 			force_regenerate: true,
 			fetch_previous_year_summary: true,
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: UserYearInReviewResponse
 		}>(url)
 		return response.response

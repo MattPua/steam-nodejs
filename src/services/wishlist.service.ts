@@ -2,7 +2,7 @@ import type {
 	WishlistItemCountResponse,
 	WishlistResponse,
 } from '../schemas/responses/wishlist.schemas'
-import { BaseService } from './base.service'
+import { BaseService } from './_base.service'
 
 export class WishlistService extends BaseService {
 	constructor(apiKey: string) {
@@ -15,7 +15,7 @@ export class WishlistService extends BaseService {
 		const url = this.generateSteamUrl(`/GetWishlist/v1`, {
 			steamid: steamUserId,
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: WishlistResponse
 		}>(url)
 		return response.response
@@ -30,7 +30,7 @@ export class WishlistService extends BaseService {
 		const url = this.generateSteamUrl(`/GetWishlistItemCount/v1`, {
 			steamid: steamUserId,
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: WishlistItemCountResponse
 		}>(url)
 		return response.response

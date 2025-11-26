@@ -1,10 +1,10 @@
 export abstract class BaseService {
-	protected readonly apiKey: string
+	protected readonly _apiKey: string
 	protected readonly type: 'api' | 'store'
 	protected readonly route: string
 
 	constructor(apiKey: string, type: 'api' | 'store', route: string) {
-		this.apiKey = apiKey
+		this._apiKey = apiKey
 		this.type = type
 		this.route = route
 	}
@@ -13,10 +13,11 @@ export abstract class BaseService {
 		return `https://${this.type}.steampowered.com/${this.route}`
 	}
 
-	protected async sendSteamRequest<T>(url: string): Promise<T> {
+	protected async sendGETRequest<T>(url: string): Promise<T> {
 		try {
 			const response = await fetch(url)
 			if (!response.ok) {
+				console.error(response)
 				throw new Error(`Failed to fetch ${url}: ${response.statusText}.`)
 			}
 			return response.json()
@@ -36,7 +37,7 @@ export abstract class BaseService {
 				url.searchParams.set(key, value.toString())
 			}
 		}
-		url.searchParams.set('key', this.apiKey)
+		url.searchParams.set('key', this._apiKey)
 		return url.toString()
 	}
 }

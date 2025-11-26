@@ -1,5 +1,5 @@
 import type { TradeOffersSummaryResponse } from '../schemas/responses'
-import { BaseService } from './base.service'
+import { BaseService } from './_base.service'
 
 export class EconService extends BaseService {
 	constructor(apiKey: string) {
@@ -15,7 +15,7 @@ export class EconService extends BaseService {
 		const url = this.generateSteamUrl(`/GetTradeOffersSummary/v1`, {
 			steamid: steamUserId,
 		})
-		const response = await this.sendSteamRequest<{
+		const response = await this.sendGETRequest<{
 			response: TradeOffersSummaryResponse
 		}>(url)
 		return response.response
@@ -29,7 +29,7 @@ export class EconService extends BaseService {
 		const url = this.generateSteamUrl(`/GetTradeHistory/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<any>(url)
+		return await this.sendGETRequest<any>(url)
 	}
 
 	/**
@@ -40,6 +40,6 @@ export class EconService extends BaseService {
 		const url = this.generateSteamUrl(`/GetTradeOffers/v1`, {
 			steamid: steamUserId,
 		})
-		return await this.sendSteamRequest<any>(url)
+		return await this.sendGETRequest<any>(url)
 	}
 }
