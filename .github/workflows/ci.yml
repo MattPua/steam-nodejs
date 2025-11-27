@@ -15,6 +15,10 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
+    env:
+      TEST_STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+      TEST_STEAM_USER_ID: ${{ secrets.STEAM_USER_ID }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -36,5 +40,5 @@ jobs:
       - name: Lint
         run: bun run lint
 
-      # - name: Run tests
-      #   run: bun run test
+      - name: Run tests
+        run: bun run test

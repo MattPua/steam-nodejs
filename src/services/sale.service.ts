@@ -47,6 +47,7 @@ export class SaleService extends BaseService {
 			force_regenerate: true,
 			fetch_previous_year_summary: true,
 		})
+		console.log(url)
 		const response = await this.sendGETRequest<{
 			response: UserYearInReviewResponse
 		}>(url)

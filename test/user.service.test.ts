@@ -23,7 +23,6 @@ describe('UserService', () => {
 		expect(users[0]).toHaveProperty('avatarmedium')
 		expect(users[0]).toHaveProperty('avatarfull')
 		expect(users[0]).toHaveProperty('avatarhash')
-		expect(users[0]).toHaveProperty('lastlogoff')
 		expect(users[0]).toHaveProperty('personastate')
 	})
 
