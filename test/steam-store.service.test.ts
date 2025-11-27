@@ -13,7 +13,6 @@ describe('SteamStoreService', () => {
 		expect(typeof appDetails.name).toBe('string')
 		expect(typeof appDetails.type).toBe('string')
 		expect(typeof appDetails.steam_appid).toBe('number')
-		expect(typeof appDetails.required_age).toBe('string')
 
 		expect(Array.isArray(appDetails.developers)).toBe(true)
 		expect(Array.isArray(appDetails.publishers)).toBe(true)

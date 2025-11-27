@@ -1,7 +1,7 @@
 export abstract class BaseService {
-	protected readonly _apiKey: string
-	protected readonly type: 'api' | 'store'
-	protected readonly route: string
+	private readonly _apiKey: string
+	private readonly type: 'api' | 'store'
+	private readonly route: string
 
 	constructor(apiKey: string, type: 'api' | 'store', route: string) {
 		this._apiKey = apiKey

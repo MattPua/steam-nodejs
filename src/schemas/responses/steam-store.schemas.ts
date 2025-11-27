@@ -4,8 +4,8 @@ export const SteamStoreRequirementSchema: z.ZodObject<{
 	minimum: z.ZodOptional<z.ZodString>
 	recommended: z.ZodOptional<z.ZodString>
 }> = z.object({
-	minimum: z.string().optional(),
-	recommended: z.string().optional(),
+	minimum: z.string().optional().describe('Can be in HTML or plain text'),
+	recommended: z.string().optional().describe('Can be in HTML or plain text'),
 })
 
 export const SteamStorePriceOverviewSchema: z.ZodObject<{
@@ -124,6 +124,24 @@ export const SteamStoreScreenshotSchema: z.ZodObject<{
 	path_full: z.string(),
 })
 
+export const SteamStoreMovieSchema: z.ZodObject<{
+	id: z.ZodString
+	name: z.ZodString
+	thumbnail: z.ZodString
+	dash_av1: z.ZodOptional<z.ZodString>
+	dash_h264: z.ZodOptional<z.ZodString>
+	hls_h264: z.ZodOptional<z.ZodString>
+	highlight: z.ZodBoolean
+}> = z.object({
+	id: z.string(),
+	name: z.string(),
+	thumbnail: z.string(),
+	dash_av1: z.string().optional(),
+	dash_h264: z.string().optional(),
+	hls_h264: z.string().optional(),
+	highlight: z.boolean(),
+})
+
 export const SteamStoreRecommendationsSchema: z.ZodObject<{
 	total: z.ZodNumber
 }> = z.object({
@@ -148,23 +166,23 @@ export const SteamStoreSupportInfoSchema: z.ZodObject<{
 
 export const SteamStoreContentDescriptorsSchema: z.ZodObject<{
 	ids: z.ZodArray<z.ZodNumber>
-	notes: z.ZodString
+	notes: z.ZodNullable<z.ZodString>
 }> = z.object({
 	ids: z.array(z.number()),
-	notes: z.string(),
+	notes: z.string().nullable(),
 })
 
 export const SteamStoreRatingsSubSchema: z.ZodObject<{
 	rating: z.ZodOptional<z.ZodString>
 	rating_generated: z.ZodOptional<z.ZodString>
-	required_age: z.ZodOptional<z.ZodString>
+	required_age: z.ZodOptional<z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>>
 	banned: z.ZodOptional<z.ZodString>
 	use_age_gate: z.ZodOptional<z.ZodString>
 	descriptors: z.ZodOptional<z.ZodString>
 }> = z.object({
 	rating: z.string().optional(),
 	rating_generated: z.string().optional(),
-	required_age: z.string().optional(),
+	required_age: z.union([z.string(), z.number()]).optional(),
 	banned: z.string().optional(),
 	use_age_gate: z.string().optional(),
 	descriptors: z.string().optional(),
@@ -176,7 +194,9 @@ export const SteamStoreRatingsSchema: z.ZodObject<{
 			{
 				rating: z.ZodOptional<z.ZodString>
 				rating_generated: z.ZodOptional<z.ZodString>
-				required_age: z.ZodOptional<z.ZodString>
+				required_age: z.ZodOptional<
+					z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+				>
 				banned: z.ZodOptional<z.ZodString>
 				use_age_gate: z.ZodOptional<z.ZodString>
 				descriptors: z.ZodOptional<z.ZodString>
@@ -189,7 +209,9 @@ export const SteamStoreRatingsSchema: z.ZodObject<{
 			{
 				rating: z.ZodOptional<z.ZodString>
 				rating_generated: z.ZodOptional<z.ZodString>
-				required_age: z.ZodOptional<z.ZodString>
+				required_age: z.ZodOptional<
+					z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+				>
 				banned: z.ZodOptional<z.ZodString>
 				use_age_gate: z.ZodOptional<z.ZodString>
 				descriptors: z.ZodOptional<z.ZodString>
@@ -202,7 +224,84 @@ export const SteamStoreRatingsSchema: z.ZodObject<{
 			{
 				rating: z.ZodOptional<z.ZodString>
 				rating_generated: z.ZodOptional<z.ZodString>
-				required_age: z.ZodOptional<z.ZodString>
+				required_age: z.ZodOptional<
+					z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+				>
+				banned: z.ZodOptional<z.ZodString>
+				use_age_gate: z.ZodOptional<z.ZodString>
+				descriptors: z.ZodOptional<z.ZodString>
+			},
+			z.core.$strip
+		>
+	>
+	esrb: z.ZodOptional<
+		z.ZodObject<
+			{
+				rating: z.ZodOptional<z.ZodString>
+				rating_generated: z.ZodOptional<z.ZodString>
+				required_age: z.ZodOptional<
+					z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+				>
+				banned: z.ZodOptional<z.ZodString>
+				use_age_gate: z.ZodOptional<z.ZodString>
+				descriptors: z.ZodOptional<z.ZodString>
+			},
+			z.core.$strip
+		>
+	>
+	pegi: z.ZodOptional<
+		z.ZodObject<
+			{
+				rating: z.ZodOptional<z.ZodString>
+				rating_generated: z.ZodOptional<z.ZodString>
+				required_age: z.ZodOptional<
+					z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+				>
+				banned: z.ZodOptional<z.ZodString>
+				use_age_gate: z.ZodOptional<z.ZodString>
+				descriptors: z.ZodOptional<z.ZodString>
+			},
+			z.core.$strip
+		>
+	>
+	bbfc: z.ZodOptional<
+		z.ZodObject<
+			{
+				rating: z.ZodOptional<z.ZodString>
+				rating_generated: z.ZodOptional<z.ZodString>
+				required_age: z.ZodOptional<
+					z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+				>
+				banned: z.ZodOptional<z.ZodString>
+				use_age_gate: z.ZodOptional<z.ZodString>
+				descriptors: z.ZodOptional<z.ZodString>
+			},
+			z.core.$strip
+		>
+	>
+	oflc: z.ZodOptional<
+		z.ZodObject<
+			{
+				rating: z.ZodOptional<z.ZodString>
+				rating_generated: z.ZodOptional<z.ZodString>
+				required_age: z.ZodOptional<
+					z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+				>
+				banned: z.ZodOptional<z.ZodString>
+				use_age_gate: z.ZodOptional<z.ZodString>
+				descriptors: z.ZodOptional<z.ZodString>
+			},
+			z.core.$strip
+		>
+	>
+	nzoflc: z.ZodOptional<
+		z.ZodObject<
+			{
+				rating: z.ZodOptional<z.ZodString>
+				rating_generated: z.ZodOptional<z.ZodString>
+				required_age: z.ZodOptional<
+					z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+				>
 				banned: z.ZodOptional<z.ZodString>
 				use_age_gate: z.ZodOptional<z.ZodString>
 				descriptors: z.ZodOptional<z.ZodString>
@@ -214,22 +313,39 @@ export const SteamStoreRatingsSchema: z.ZodObject<{
 	usk: SteamStoreRatingsSubSchema.optional(),
 	dejus: SteamStoreRatingsSubSchema.optional(),
 	steam_germany: SteamStoreRatingsSubSchema.optional(),
+	esrb: SteamStoreRatingsSubSchema.optional(),
+	pegi: SteamStoreRatingsSubSchema.optional(),
+	bbfc: SteamStoreRatingsSubSchema.optional(),
+	oflc: SteamStoreRatingsSubSchema.optional(),
+	nzoflc: SteamStoreRatingsSubSchema.optional(),
 })
 
 export const SteamStoreDataSchema: z.ZodObject<{
 	type: z.ZodString
 	name: z.ZodString
 	steam_appid: z.ZodNumber
-	required_age: z.ZodString
+	required_age: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
 	is_free: z.ZodBoolean
+	controller_support: z.ZodOptional<z.ZodString>
+	dlc: z.ZodOptional<z.ZodArray<z.ZodNumber>>
 	detailed_description: z.ZodString
 	about_the_game: z.ZodString
 	short_description: z.ZodString
 	supported_languages: z.ZodString
 	header_image: z.ZodString
 	capsule_image: z.ZodString
+	fullgame: z.ZodOptional<
+		z.ZodObject<
+			{
+				appid: z.ZodString
+				name: z.ZodString
+			},
+			z.core.$strip
+		>
+	>
 	capsule_imagev5: z.ZodString
 	website: z.ZodNullable<z.ZodString>
+	legal_notice: z.ZodOptional<z.ZodString>
 	pc_requirements: z.ZodObject<
 		{
 			minimum: z.ZodOptional<z.ZodString>
@@ -374,48 +490,89 @@ export const SteamStoreDataSchema: z.ZodObject<{
 	content_descriptors: z.ZodObject<
 		{
 			ids: z.ZodArray<z.ZodNumber>
-			notes: z.ZodString
+			notes: z.ZodNullable<z.ZodString>
 		},
 		z.core.$strip
 	>
-	ratings: z.ZodOptional<
+	ratings: z.ZodNullable<
+		z.ZodOptional<
+			z.ZodObject<
+				{
+					usk: z.ZodOptional<
+						z.ZodObject<
+							{
+								rating: z.ZodOptional<z.ZodString>
+								rating_generated: z.ZodOptional<z.ZodString>
+								required_age: z.ZodOptional<
+									z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+								>
+								banned: z.ZodOptional<z.ZodString>
+								use_age_gate: z.ZodOptional<z.ZodString>
+								descriptors: z.ZodOptional<z.ZodString>
+							},
+							z.core.$strip
+						>
+					>
+					dejus: z.ZodOptional<
+						z.ZodObject<
+							{
+								rating: z.ZodOptional<z.ZodString>
+								rating_generated: z.ZodOptional<z.ZodString>
+								required_age: z.ZodOptional<
+									z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+								>
+								banned: z.ZodOptional<z.ZodString>
+								use_age_gate: z.ZodOptional<z.ZodString>
+								descriptors: z.ZodOptional<z.ZodString>
+							},
+							z.core.$strip
+						>
+					>
+					steam_germany: z.ZodOptional<
+						z.ZodObject<
+							{
+								rating: z.ZodOptional<z.ZodString>
+								rating_generated: z.ZodOptional<z.ZodString>
+								required_age: z.ZodOptional<
+									z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+								>
+								banned: z.ZodOptional<z.ZodString>
+								use_age_gate: z.ZodOptional<z.ZodString>
+								descriptors: z.ZodOptional<z.ZodString>
+							},
+							z.core.$strip
+						>
+					>
+				},
+				z.core.$strip
+			>
+		>
+	>
+	movies: z.ZodOptional<
+		z.ZodArray<
+			z.ZodObject<
+				{
+					id: z.ZodString
+					name: z.ZodString
+					thumbnail: z.ZodString
+					dash_av1: z.ZodOptional<z.ZodString>
+					dash_h264: z.ZodOptional<z.ZodString>
+					hls_h264: z.ZodOptional<z.ZodString>
+					highlight: z.ZodBoolean
+				},
+				z.core.$strip
+			>
+		>
+	>
+	achievements: z.ZodOptional<
 		z.ZodObject<
 			{
-				usk: z.ZodOptional<
+				total: z.ZodNumber
+				highlighted: z.ZodArray<
 					z.ZodObject<
 						{
-							rating: z.ZodOptional<z.ZodString>
-							rating_generated: z.ZodOptional<z.ZodString>
-							required_age: z.ZodOptional<z.ZodString>
-							banned: z.ZodOptional<z.ZodString>
-							use_age_gate: z.ZodOptional<z.ZodString>
-							descriptors: z.ZodOptional<z.ZodString>
-						},
-						z.core.$strip
-					>
-				>
-				dejus: z.ZodOptional<
-					z.ZodObject<
-						{
-							rating: z.ZodOptional<z.ZodString>
-							rating_generated: z.ZodOptional<z.ZodString>
-							required_age: z.ZodOptional<z.ZodString>
-							banned: z.ZodOptional<z.ZodString>
-							use_age_gate: z.ZodOptional<z.ZodString>
-							descriptors: z.ZodOptional<z.ZodString>
-						},
-						z.core.$strip
-					>
-				>
-				steam_germany: z.ZodOptional<
-					z.ZodObject<
-						{
-							rating: z.ZodOptional<z.ZodString>
-							rating_generated: z.ZodOptional<z.ZodString>
-							required_age: z.ZodOptional<z.ZodString>
-							banned: z.ZodOptional<z.ZodString>
-							use_age_gate: z.ZodOptional<z.ZodString>
-							descriptors: z.ZodOptional<z.ZodString>
+							name: z.ZodString
+							path: z.ZodString
 						},
 						z.core.$strip
 					>
@@ -428,16 +585,28 @@ export const SteamStoreDataSchema: z.ZodObject<{
 	type: z.string(),
 	name: z.string(),
 	steam_appid: z.number(),
-	required_age: z.string(),
+	required_age: z.union([z.string(), z.number()]),
 	is_free: z.boolean(),
-	detailed_description: z.string(),
-	about_the_game: z.string(),
-	short_description: z.string(),
-	supported_languages: z.string(),
+	controller_support: z.string().optional(),
+	dlc: z.array(z.number()).optional(),
+	detailed_description: z.string().describe('can be in HTML or plain text'),
+	about_the_game: z.string().describe('can be in HTML or plain text'),
+	short_description: z.string().describe('in plain text'),
+	supported_languages: z
+		.string()
+		.describe('Sometimes in HTML, Comma separated list of languages'),
+	reviews: z.string().optional(),
 	header_image: z.string(),
 	capsule_image: z.string(),
+	fullgame: z
+		.object({
+			appid: z.string(),
+			name: z.string(),
+		})
+		.optional(),
 	capsule_imagev5: z.string(),
 	website: z.string().nullable(),
+	legal_notice: z.string().optional(),
 	pc_requirements: SteamStoreRequirementSchema,
 	mac_requirements: SteamStoreRequirementSchema,
 	linux_requirements: SteamStoreRequirementSchema,
@@ -457,7 +626,19 @@ export const SteamStoreDataSchema: z.ZodObject<{
 	background: z.string(),
 	background_raw: z.string(),
 	content_descriptors: SteamStoreContentDescriptorsSchema,
-	ratings: SteamStoreRatingsSchema.optional(),
+	ratings: SteamStoreRatingsSchema.optional().nullable(),
+	movies: z.array(SteamStoreMovieSchema).optional(),
+	achievements: z
+		.object({
+			total: z.number(),
+			highlighted: z.array(
+				z.object({
+					name: z.string(),
+					path: z.string(),
+				}),
+			),
+		})
+		.optional(),
 })
 
 export const SteamStoreResponseSchema: z.ZodObject<{
@@ -467,16 +648,28 @@ export const SteamStoreResponseSchema: z.ZodObject<{
 			type: z.ZodString
 			name: z.ZodString
 			steam_appid: z.ZodNumber
-			required_age: z.ZodString
+			required_age: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
 			is_free: z.ZodBoolean
+			controller_support: z.ZodOptional<z.ZodString>
+			dlc: z.ZodOptional<z.ZodArray<z.ZodNumber>>
 			detailed_description: z.ZodString
 			about_the_game: z.ZodString
 			short_description: z.ZodString
 			supported_languages: z.ZodString
 			header_image: z.ZodString
 			capsule_image: z.ZodString
+			fullgame: z.ZodOptional<
+				z.ZodObject<
+					{
+						appid: z.ZodString
+						name: z.ZodString
+					},
+					z.core.$strip
+				>
+			>
 			capsule_imagev5: z.ZodString
 			website: z.ZodNullable<z.ZodString>
+			legal_notice: z.ZodOptional<z.ZodString>
 			pc_requirements: z.ZodObject<
 				{
 					minimum: z.ZodOptional<z.ZodString>
@@ -621,48 +814,89 @@ export const SteamStoreResponseSchema: z.ZodObject<{
 			content_descriptors: z.ZodObject<
 				{
 					ids: z.ZodArray<z.ZodNumber>
-					notes: z.ZodString
+					notes: z.ZodNullable<z.ZodString>
 				},
 				z.core.$strip
 			>
-			ratings: z.ZodOptional<
+			ratings: z.ZodNullable<
+				z.ZodOptional<
+					z.ZodObject<
+						{
+							usk: z.ZodOptional<
+								z.ZodObject<
+									{
+										rating: z.ZodOptional<z.ZodString>
+										rating_generated: z.ZodOptional<z.ZodString>
+										required_age: z.ZodOptional<
+											z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+										>
+										banned: z.ZodOptional<z.ZodString>
+										use_age_gate: z.ZodOptional<z.ZodString>
+										descriptors: z.ZodOptional<z.ZodString>
+									},
+									z.core.$strip
+								>
+							>
+							dejus: z.ZodOptional<
+								z.ZodObject<
+									{
+										rating: z.ZodOptional<z.ZodString>
+										rating_generated: z.ZodOptional<z.ZodString>
+										required_age: z.ZodOptional<
+											z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+										>
+										banned: z.ZodOptional<z.ZodString>
+										use_age_gate: z.ZodOptional<z.ZodString>
+										descriptors: z.ZodOptional<z.ZodString>
+									},
+									z.core.$strip
+								>
+							>
+							steam_germany: z.ZodOptional<
+								z.ZodObject<
+									{
+										rating: z.ZodOptional<z.ZodString>
+										rating_generated: z.ZodOptional<z.ZodString>
+										required_age: z.ZodOptional<
+											z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+										>
+										banned: z.ZodOptional<z.ZodString>
+										use_age_gate: z.ZodOptional<z.ZodString>
+										descriptors: z.ZodOptional<z.ZodString>
+									},
+									z.core.$strip
+								>
+							>
+						},
+						z.core.$strip
+					>
+				>
+			>
+			movies: z.ZodOptional<
+				z.ZodArray<
+					z.ZodObject<
+						{
+							id: z.ZodString
+							name: z.ZodString
+							thumbnail: z.ZodString
+							dash_av1: z.ZodOptional<z.ZodString>
+							dash_h264: z.ZodOptional<z.ZodString>
+							hls_h264: z.ZodOptional<z.ZodString>
+							highlight: z.ZodBoolean
+						},
+						z.core.$strip
+					>
+				>
+			>
+			achievements: z.ZodOptional<
 				z.ZodObject<
 					{
-						usk: z.ZodOptional<
+						total: z.ZodNumber
+						highlighted: z.ZodArray<
 							z.ZodObject<
 								{
-									rating: z.ZodOptional<z.ZodString>
-									rating_generated: z.ZodOptional<z.ZodString>
-									required_age: z.ZodOptional<z.ZodString>
-									banned: z.ZodOptional<z.ZodString>
-									use_age_gate: z.ZodOptional<z.ZodString>
-									descriptors: z.ZodOptional<z.ZodString>
-								},
-								z.core.$strip
-							>
-						>
-						dejus: z.ZodOptional<
-							z.ZodObject<
-								{
-									rating: z.ZodOptional<z.ZodString>
-									rating_generated: z.ZodOptional<z.ZodString>
-									required_age: z.ZodOptional<z.ZodString>
-									banned: z.ZodOptional<z.ZodString>
-									use_age_gate: z.ZodOptional<z.ZodString>
-									descriptors: z.ZodOptional<z.ZodString>
-								},
-								z.core.$strip
-							>
-						>
-						steam_germany: z.ZodOptional<
-							z.ZodObject<
-								{
-									rating: z.ZodOptional<z.ZodString>
-									rating_generated: z.ZodOptional<z.ZodString>
-									required_age: z.ZodOptional<z.ZodString>
-									banned: z.ZodOptional<z.ZodString>
-									use_age_gate: z.ZodOptional<z.ZodString>
-									descriptors: z.ZodOptional<z.ZodString>
+									name: z.ZodString
+									path: z.ZodString
 								},
 								z.core.$strip
 							>
@@ -689,16 +923,28 @@ export const SteamStoreSchemasRoot: z.ZodRecord<
 					type: z.ZodString
 					name: z.ZodString
 					steam_appid: z.ZodNumber
-					required_age: z.ZodString
+					required_age: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
 					is_free: z.ZodBoolean
+					controller_support: z.ZodOptional<z.ZodString>
+					dlc: z.ZodOptional<z.ZodArray<z.ZodNumber>>
 					detailed_description: z.ZodString
 					about_the_game: z.ZodString
 					short_description: z.ZodString
 					supported_languages: z.ZodString
 					header_image: z.ZodString
 					capsule_image: z.ZodString
+					fullgame: z.ZodOptional<
+						z.ZodObject<
+							{
+								appid: z.ZodString
+								name: z.ZodString
+							},
+							z.core.$strip
+						>
+					>
 					capsule_imagev5: z.ZodString
 					website: z.ZodNullable<z.ZodString>
+					legal_notice: z.ZodOptional<z.ZodString>
 					pc_requirements: z.ZodObject<
 						{
 							minimum: z.ZodOptional<z.ZodString>
@@ -843,48 +1089,89 @@ export const SteamStoreSchemasRoot: z.ZodRecord<
 					content_descriptors: z.ZodObject<
 						{
 							ids: z.ZodArray<z.ZodNumber>
-							notes: z.ZodString
+							notes: z.ZodNullable<z.ZodString>
 						},
 						z.core.$strip
 					>
-					ratings: z.ZodOptional<
+					ratings: z.ZodNullable<
+						z.ZodOptional<
+							z.ZodObject<
+								{
+									usk: z.ZodOptional<
+										z.ZodObject<
+											{
+												rating: z.ZodOptional<z.ZodString>
+												rating_generated: z.ZodOptional<z.ZodString>
+												required_age: z.ZodOptional<
+													z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+												>
+												banned: z.ZodOptional<z.ZodString>
+												use_age_gate: z.ZodOptional<z.ZodString>
+												descriptors: z.ZodOptional<z.ZodString>
+											},
+											z.core.$strip
+										>
+									>
+									dejus: z.ZodOptional<
+										z.ZodObject<
+											{
+												rating: z.ZodOptional<z.ZodString>
+												rating_generated: z.ZodOptional<z.ZodString>
+												required_age: z.ZodOptional<
+													z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+												>
+												banned: z.ZodOptional<z.ZodString>
+												use_age_gate: z.ZodOptional<z.ZodString>
+												descriptors: z.ZodOptional<z.ZodString>
+											},
+											z.core.$strip
+										>
+									>
+									steam_germany: z.ZodOptional<
+										z.ZodObject<
+											{
+												rating: z.ZodOptional<z.ZodString>
+												rating_generated: z.ZodOptional<z.ZodString>
+												required_age: z.ZodOptional<
+													z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+												>
+												banned: z.ZodOptional<z.ZodString>
+												use_age_gate: z.ZodOptional<z.ZodString>
+												descriptors: z.ZodOptional<z.ZodString>
+											},
+											z.core.$strip
+										>
+									>
+								},
+								z.core.$strip
+							>
+						>
+					>
+					movies: z.ZodOptional<
+						z.ZodArray<
+							z.ZodObject<
+								{
+									id: z.ZodString
+									name: z.ZodString
+									thumbnail: z.ZodString
+									dash_av1: z.ZodOptional<z.ZodString>
+									dash_h264: z.ZodOptional<z.ZodString>
+									hls_h264: z.ZodOptional<z.ZodString>
+									highlight: z.ZodBoolean
+								},
+								z.core.$strip
+							>
+						>
+					>
+					achievements: z.ZodOptional<
 						z.ZodObject<
 							{
-								usk: z.ZodOptional<
+								total: z.ZodNumber
+								highlighted: z.ZodArray<
 									z.ZodObject<
 										{
-											rating: z.ZodOptional<z.ZodString>
-											rating_generated: z.ZodOptional<z.ZodString>
-											required_age: z.ZodOptional<z.ZodString>
-											banned: z.ZodOptional<z.ZodString>
-											use_age_gate: z.ZodOptional<z.ZodString>
-											descriptors: z.ZodOptional<z.ZodString>
-										},
-										z.core.$strip
-									>
-								>
-								dejus: z.ZodOptional<
-									z.ZodObject<
-										{
-											rating: z.ZodOptional<z.ZodString>
-											rating_generated: z.ZodOptional<z.ZodString>
-											required_age: z.ZodOptional<z.ZodString>
-											banned: z.ZodOptional<z.ZodString>
-											use_age_gate: z.ZodOptional<z.ZodString>
-											descriptors: z.ZodOptional<z.ZodString>
-										},
-										z.core.$strip
-									>
-								>
-								steam_germany: z.ZodOptional<
-									z.ZodObject<
-										{
-											rating: z.ZodOptional<z.ZodString>
-											rating_generated: z.ZodOptional<z.ZodString>
-											required_age: z.ZodOptional<z.ZodString>
-											banned: z.ZodOptional<z.ZodString>
-											use_age_gate: z.ZodOptional<z.ZodString>
-											descriptors: z.ZodOptional<z.ZodString>
+											name: z.ZodString
+											path: z.ZodString
 										},
 										z.core.$strip
 									>
