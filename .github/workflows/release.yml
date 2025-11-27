@@ -13,6 +13,9 @@ jobs:
   release:
     name: Release Package
     runs-on: ubuntu-latest
+    env:
+      TEST_STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+      TEST_STEAM_USER_ID: ${{ secrets.STEAM_USER_ID }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
