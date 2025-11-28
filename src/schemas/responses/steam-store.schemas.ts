@@ -444,13 +444,15 @@ export const SteamStoreDataSchema: z.ZodObject<{
 			z.core.$strip
 		>
 	>
-	genres: z.ZodArray<
-		z.ZodObject<
-			{
-				id: z.ZodString
-				description: z.ZodString
-			},
-			z.core.$strip
+	genres: z.ZodOptional<
+		z.ZodArray<
+			z.ZodObject<
+				{
+					id: z.ZodString
+					description: z.ZodString
+				},
+				z.core.$strip
+			>
 		>
 	>
 	screenshots: z.ZodArray<
@@ -618,7 +620,7 @@ export const SteamStoreDataSchema: z.ZodObject<{
 	platforms: SteamStorePlatformsSchema,
 	metacritic: SteamStoreMetacriticSchema.optional(),
 	categories: z.array(SteamStoreCategorySchema),
-	genres: z.array(SteamStoreGenreSchema),
+	genres: z.array(SteamStoreGenreSchema).optional(),
 	screenshots: z.array(SteamStoreScreenshotSchema),
 	recommendations: SteamStoreRecommendationsSchema.optional(),
 	release_date: SteamStoreReleaseDateSchema,
@@ -768,13 +770,15 @@ export const SteamStoreResponseSchema: z.ZodObject<{
 					z.core.$strip
 				>
 			>
-			genres: z.ZodArray<
-				z.ZodObject<
-					{
-						id: z.ZodString
-						description: z.ZodString
-					},
-					z.core.$strip
+			genres: z.ZodOptional<
+				z.ZodArray<
+					z.ZodObject<
+						{
+							id: z.ZodString
+							description: z.ZodString
+						},
+						z.core.$strip
+					>
 				>
 			>
 			screenshots: z.ZodArray<
@@ -1043,13 +1047,15 @@ export const SteamStoreSchemasRoot: z.ZodRecord<
 							z.core.$strip
 						>
 					>
-					genres: z.ZodArray<
-						z.ZodObject<
-							{
-								id: z.ZodString
-								description: z.ZodString
-							},
-							z.core.$strip
+					genres: z.ZodOptional<
+						z.ZodArray<
+							z.ZodObject<
+								{
+									id: z.ZodString
+									description: z.ZodString
+								},
+								z.core.$strip
+							>
 						>
 					>
 					screenshots: z.ZodArray<
