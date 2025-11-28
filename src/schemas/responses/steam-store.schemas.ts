@@ -333,7 +333,7 @@ export const SteamStoreDataSchema: z.ZodObject<{
 	short_description: z.ZodString
 	supported_languages: z.ZodString
 	reviews: z.ZodOptional<z.ZodString>
-	header_image: z.ZodString
+	header_image: z.ZodNullable<z.ZodString>
 	capsule_image: z.ZodString
 	fullgame: z.ZodOptional<
 		z.ZodObject<
@@ -436,13 +436,15 @@ export const SteamStoreDataSchema: z.ZodObject<{
 			z.core.$strip
 		>
 	>
-	categories: z.ZodArray<
-		z.ZodObject<
-			{
-				id: z.ZodNumber
-				description: z.ZodString
-			},
-			z.core.$strip
+	categories: z.ZodOptional<
+		z.ZodArray<
+			z.ZodObject<
+				{
+					id: z.ZodNumber
+					description: z.ZodString
+				},
+				z.core.$strip
+			>
 		>
 	>
 	genres: z.ZodOptional<
@@ -676,7 +678,7 @@ export const SteamStoreDataSchema: z.ZodObject<{
 		.string()
 		.describe('Sometimes in HTML, Comma separated list of languages'),
 	reviews: z.string().optional(),
-	header_image: z.string(),
+	header_image: z.string().nullable(),
 	capsule_image: z.string(),
 	fullgame: z
 		.object({
@@ -697,7 +699,7 @@ export const SteamStoreDataSchema: z.ZodObject<{
 	package_groups: z.array(SteamStorePackageGroupSchema),
 	platforms: SteamStorePlatformsSchema,
 	metacritic: SteamStoreMetacriticSchema.optional(),
-	categories: z.array(SteamStoreCategorySchema),
+	categories: z.array(SteamStoreCategorySchema).optional(),
 	genres: z.array(SteamStoreGenreSchema).optional(),
 	screenshots: z.array(SteamStoreScreenshotSchema).optional(),
 	recommendations: SteamStoreRecommendationsSchema.optional(),
@@ -737,7 +739,7 @@ export const SteamStoreResponseSchema: z.ZodObject<{
 			short_description: z.ZodString
 			supported_languages: z.ZodString
 			reviews: z.ZodOptional<z.ZodString>
-			header_image: z.ZodString
+			header_image: z.ZodNullable<z.ZodString>
 			capsule_image: z.ZodString
 			fullgame: z.ZodOptional<
 				z.ZodObject<
@@ -840,13 +842,15 @@ export const SteamStoreResponseSchema: z.ZodObject<{
 					z.core.$strip
 				>
 			>
-			categories: z.ZodArray<
-				z.ZodObject<
-					{
-						id: z.ZodNumber
-						description: z.ZodString
-					},
-					z.core.$strip
+			categories: z.ZodOptional<
+				z.ZodArray<
+					z.ZodObject<
+						{
+							id: z.ZodNumber
+							description: z.ZodString
+						},
+						z.core.$strip
+					>
 				>
 			>
 			genres: z.ZodOptional<
@@ -1092,7 +1096,7 @@ export const SteamStoreSchemasRoot: z.ZodRecord<
 					short_description: z.ZodString
 					supported_languages: z.ZodString
 					reviews: z.ZodOptional<z.ZodString>
-					header_image: z.ZodString
+					header_image: z.ZodNullable<z.ZodString>
 					capsule_image: z.ZodString
 					fullgame: z.ZodOptional<
 						z.ZodObject<
@@ -1195,13 +1199,15 @@ export const SteamStoreSchemasRoot: z.ZodRecord<
 							z.core.$strip
 						>
 					>
-					categories: z.ZodArray<
-						z.ZodObject<
-							{
-								id: z.ZodNumber
-								description: z.ZodString
-							},
-							z.core.$strip
+					categories: z.ZodOptional<
+						z.ZodArray<
+							z.ZodObject<
+								{
+									id: z.ZodNumber
+									description: z.ZodString
+								},
+								z.core.$strip
+							>
 						>
 					>
 					genres: z.ZodOptional<
