@@ -332,6 +332,7 @@ export const SteamStoreDataSchema: z.ZodObject<{
 	about_the_game: z.ZodString
 	short_description: z.ZodString
 	supported_languages: z.ZodString
+	reviews: z.ZodOptional<z.ZodString>
 	header_image: z.ZodString
 	capsule_image: z.ZodString
 	fullgame: z.ZodOptional<
@@ -455,14 +456,16 @@ export const SteamStoreDataSchema: z.ZodObject<{
 			>
 		>
 	>
-	screenshots: z.ZodArray<
-		z.ZodObject<
-			{
-				id: z.ZodNumber
-				path_thumbnail: z.ZodString
-				path_full: z.ZodString
-			},
-			z.core.$strip
+	screenshots: z.ZodOptional<
+		z.ZodArray<
+			z.ZodObject<
+				{
+					id: z.ZodNumber
+					path_thumbnail: z.ZodString
+					path_full: z.ZodString
+				},
+				z.core.$strip
+			>
 		>
 	>
 	recommendations: z.ZodOptional<
@@ -531,6 +534,81 @@ export const SteamStoreDataSchema: z.ZodObject<{
 						>
 					>
 					steam_germany: z.ZodOptional<
+						z.ZodObject<
+							{
+								rating: z.ZodOptional<z.ZodString>
+								rating_generated: z.ZodOptional<z.ZodString>
+								required_age: z.ZodOptional<
+									z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+								>
+								banned: z.ZodOptional<z.ZodString>
+								use_age_gate: z.ZodOptional<z.ZodString>
+								descriptors: z.ZodOptional<z.ZodString>
+							},
+							z.core.$strip
+						>
+					>
+					esrb: z.ZodOptional<
+						z.ZodObject<
+							{
+								rating: z.ZodOptional<z.ZodString>
+								rating_generated: z.ZodOptional<z.ZodString>
+								required_age: z.ZodOptional<
+									z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+								>
+								banned: z.ZodOptional<z.ZodString>
+								use_age_gate: z.ZodOptional<z.ZodString>
+								descriptors: z.ZodOptional<z.ZodString>
+							},
+							z.core.$strip
+						>
+					>
+					pegi: z.ZodOptional<
+						z.ZodObject<
+							{
+								rating: z.ZodOptional<z.ZodString>
+								rating_generated: z.ZodOptional<z.ZodString>
+								required_age: z.ZodOptional<
+									z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+								>
+								banned: z.ZodOptional<z.ZodString>
+								use_age_gate: z.ZodOptional<z.ZodString>
+								descriptors: z.ZodOptional<z.ZodString>
+							},
+							z.core.$strip
+						>
+					>
+					bbfc: z.ZodOptional<
+						z.ZodObject<
+							{
+								rating: z.ZodOptional<z.ZodString>
+								rating_generated: z.ZodOptional<z.ZodString>
+								required_age: z.ZodOptional<
+									z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+								>
+								banned: z.ZodOptional<z.ZodString>
+								use_age_gate: z.ZodOptional<z.ZodString>
+								descriptors: z.ZodOptional<z.ZodString>
+							},
+							z.core.$strip
+						>
+					>
+					oflc: z.ZodOptional<
+						z.ZodObject<
+							{
+								rating: z.ZodOptional<z.ZodString>
+								rating_generated: z.ZodOptional<z.ZodString>
+								required_age: z.ZodOptional<
+									z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+								>
+								banned: z.ZodOptional<z.ZodString>
+								use_age_gate: z.ZodOptional<z.ZodString>
+								descriptors: z.ZodOptional<z.ZodString>
+							},
+							z.core.$strip
+						>
+					>
+					nzoflc: z.ZodOptional<
 						z.ZodObject<
 							{
 								rating: z.ZodOptional<z.ZodString>
@@ -621,7 +699,7 @@ export const SteamStoreDataSchema: z.ZodObject<{
 	metacritic: SteamStoreMetacriticSchema.optional(),
 	categories: z.array(SteamStoreCategorySchema),
 	genres: z.array(SteamStoreGenreSchema).optional(),
-	screenshots: z.array(SteamStoreScreenshotSchema),
+	screenshots: z.array(SteamStoreScreenshotSchema).optional(),
 	recommendations: SteamStoreRecommendationsSchema.optional(),
 	release_date: SteamStoreReleaseDateSchema,
 	support_info: SteamStoreSupportInfoSchema,
@@ -658,6 +736,7 @@ export const SteamStoreResponseSchema: z.ZodObject<{
 			about_the_game: z.ZodString
 			short_description: z.ZodString
 			supported_languages: z.ZodString
+			reviews: z.ZodOptional<z.ZodString>
 			header_image: z.ZodString
 			capsule_image: z.ZodString
 			fullgame: z.ZodOptional<
@@ -781,14 +860,16 @@ export const SteamStoreResponseSchema: z.ZodObject<{
 					>
 				>
 			>
-			screenshots: z.ZodArray<
-				z.ZodObject<
-					{
-						id: z.ZodNumber
-						path_thumbnail: z.ZodString
-						path_full: z.ZodString
-					},
-					z.core.$strip
+			screenshots: z.ZodOptional<
+				z.ZodArray<
+					z.ZodObject<
+						{
+							id: z.ZodNumber
+							path_thumbnail: z.ZodString
+							path_full: z.ZodString
+						},
+						z.core.$strip
+					>
 				>
 			>
 			recommendations: z.ZodOptional<
@@ -871,6 +952,81 @@ export const SteamStoreResponseSchema: z.ZodObject<{
 									z.core.$strip
 								>
 							>
+							esrb: z.ZodOptional<
+								z.ZodObject<
+									{
+										rating: z.ZodOptional<z.ZodString>
+										rating_generated: z.ZodOptional<z.ZodString>
+										required_age: z.ZodOptional<
+											z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+										>
+										banned: z.ZodOptional<z.ZodString>
+										use_age_gate: z.ZodOptional<z.ZodString>
+										descriptors: z.ZodOptional<z.ZodString>
+									},
+									z.core.$strip
+								>
+							>
+							pegi: z.ZodOptional<
+								z.ZodObject<
+									{
+										rating: z.ZodOptional<z.ZodString>
+										rating_generated: z.ZodOptional<z.ZodString>
+										required_age: z.ZodOptional<
+											z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+										>
+										banned: z.ZodOptional<z.ZodString>
+										use_age_gate: z.ZodOptional<z.ZodString>
+										descriptors: z.ZodOptional<z.ZodString>
+									},
+									z.core.$strip
+								>
+							>
+							bbfc: z.ZodOptional<
+								z.ZodObject<
+									{
+										rating: z.ZodOptional<z.ZodString>
+										rating_generated: z.ZodOptional<z.ZodString>
+										required_age: z.ZodOptional<
+											z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+										>
+										banned: z.ZodOptional<z.ZodString>
+										use_age_gate: z.ZodOptional<z.ZodString>
+										descriptors: z.ZodOptional<z.ZodString>
+									},
+									z.core.$strip
+								>
+							>
+							oflc: z.ZodOptional<
+								z.ZodObject<
+									{
+										rating: z.ZodOptional<z.ZodString>
+										rating_generated: z.ZodOptional<z.ZodString>
+										required_age: z.ZodOptional<
+											z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+										>
+										banned: z.ZodOptional<z.ZodString>
+										use_age_gate: z.ZodOptional<z.ZodString>
+										descriptors: z.ZodOptional<z.ZodString>
+									},
+									z.core.$strip
+								>
+							>
+							nzoflc: z.ZodOptional<
+								z.ZodObject<
+									{
+										rating: z.ZodOptional<z.ZodString>
+										rating_generated: z.ZodOptional<z.ZodString>
+										required_age: z.ZodOptional<
+											z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+										>
+										banned: z.ZodOptional<z.ZodString>
+										use_age_gate: z.ZodOptional<z.ZodString>
+										descriptors: z.ZodOptional<z.ZodString>
+									},
+									z.core.$strip
+								>
+							>
 						},
 						z.core.$strip
 					>
@@ -935,6 +1091,7 @@ export const SteamStoreSchemasRoot: z.ZodRecord<
 					about_the_game: z.ZodString
 					short_description: z.ZodString
 					supported_languages: z.ZodString
+					reviews: z.ZodOptional<z.ZodString>
 					header_image: z.ZodString
 					capsule_image: z.ZodString
 					fullgame: z.ZodOptional<
@@ -1058,14 +1215,16 @@ export const SteamStoreSchemasRoot: z.ZodRecord<
 							>
 						>
 					>
-					screenshots: z.ZodArray<
-						z.ZodObject<
-							{
-								id: z.ZodNumber
-								path_thumbnail: z.ZodString
-								path_full: z.ZodString
-							},
-							z.core.$strip
+					screenshots: z.ZodOptional<
+						z.ZodArray<
+							z.ZodObject<
+								{
+									id: z.ZodNumber
+									path_thumbnail: z.ZodString
+									path_full: z.ZodString
+								},
+								z.core.$strip
+							>
 						>
 					>
 					recommendations: z.ZodOptional<
@@ -1134,6 +1293,81 @@ export const SteamStoreSchemasRoot: z.ZodRecord<
 										>
 									>
 									steam_germany: z.ZodOptional<
+										z.ZodObject<
+											{
+												rating: z.ZodOptional<z.ZodString>
+												rating_generated: z.ZodOptional<z.ZodString>
+												required_age: z.ZodOptional<
+													z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+												>
+												banned: z.ZodOptional<z.ZodString>
+												use_age_gate: z.ZodOptional<z.ZodString>
+												descriptors: z.ZodOptional<z.ZodString>
+											},
+											z.core.$strip
+										>
+									>
+									esrb: z.ZodOptional<
+										z.ZodObject<
+											{
+												rating: z.ZodOptional<z.ZodString>
+												rating_generated: z.ZodOptional<z.ZodString>
+												required_age: z.ZodOptional<
+													z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+												>
+												banned: z.ZodOptional<z.ZodString>
+												use_age_gate: z.ZodOptional<z.ZodString>
+												descriptors: z.ZodOptional<z.ZodString>
+											},
+											z.core.$strip
+										>
+									>
+									pegi: z.ZodOptional<
+										z.ZodObject<
+											{
+												rating: z.ZodOptional<z.ZodString>
+												rating_generated: z.ZodOptional<z.ZodString>
+												required_age: z.ZodOptional<
+													z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+												>
+												banned: z.ZodOptional<z.ZodString>
+												use_age_gate: z.ZodOptional<z.ZodString>
+												descriptors: z.ZodOptional<z.ZodString>
+											},
+											z.core.$strip
+										>
+									>
+									bbfc: z.ZodOptional<
+										z.ZodObject<
+											{
+												rating: z.ZodOptional<z.ZodString>
+												rating_generated: z.ZodOptional<z.ZodString>
+												required_age: z.ZodOptional<
+													z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+												>
+												banned: z.ZodOptional<z.ZodString>
+												use_age_gate: z.ZodOptional<z.ZodString>
+												descriptors: z.ZodOptional<z.ZodString>
+											},
+											z.core.$strip
+										>
+									>
+									oflc: z.ZodOptional<
+										z.ZodObject<
+											{
+												rating: z.ZodOptional<z.ZodString>
+												rating_generated: z.ZodOptional<z.ZodString>
+												required_age: z.ZodOptional<
+													z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
+												>
+												banned: z.ZodOptional<z.ZodString>
+												use_age_gate: z.ZodOptional<z.ZodString>
+												descriptors: z.ZodOptional<z.ZodString>
+											},
+											z.core.$strip
+										>
+									>
+									nzoflc: z.ZodOptional<
 										z.ZodObject<
 											{
 												rating: z.ZodOptional<z.ZodString>
