@@ -87,6 +87,10 @@ Currently, the following services are available:
 - [SteamStoreService](./src/services/steam-store.service.ts)
 - [UserService](./src/services/user.service.ts)
 - [WishlistService](./src/services/wishlist.service.ts)
+- [ReviewsService](./src/services/reviews.service.ts)
+- [UserStoreVisitService](./src/services/user-store-visit.service.ts)
+- [ActionsService](./src/services/actions.service.ts)
+
 
 ## Features
 
@@ -105,10 +109,14 @@ Currently, the following services are available:
 | **User Store Visit** | Get most visited items on store                                                                                       |
 | **User**           | Get user<br>Get friends list<br>Get users<br>Get user group list                                                        |
 | **Wishlist**       | Get wishlist<br>Get wishlist item count                                                                                 |
+| **Reviews**        | Get reviews for an app                                                                                                 |
+| **Actions**        | Get categories for the store<br>Get tags for the store                                                                   |
 
 ## Documentation
 
 For more information, please see the [documentation](https://steamapi.xpaw.me/#).
+
+Also read [InternalSteamWebAPI](https://github.com/Revadike/InternalSteamWebAPI) for more extra on other undocumented endpoints and information on the Steam Store Web API.
 
 ## Contributing
 

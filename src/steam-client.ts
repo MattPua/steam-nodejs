@@ -1,9 +1,11 @@
 import SteamAuth from 'node-steam-openid'
+import { ActionsService } from './services/actions.service'
 import { ChartsService } from './services/charts.service'
 import { CommunityService } from './services/community.service'
 import { EconService } from './services/econ.service'
 import { NewsService } from './services/news.service'
 import { PlayerService } from './services/player.service'
+import { ReviewsService } from './services/reviews.service'
 import { SaleService } from './services/sale.service'
 import { StatsService } from './services/stats.service'
 import { SteamStoreService } from './services/steam-store.service'
@@ -26,6 +28,9 @@ export class SteamClient {
 	public readonly store: StoreService
 	public readonly storeTopSellers: StoreTopSellersService
 	public readonly steamStore: SteamStoreService
+	public readonly reviews: ReviewsService
+
+	public readonly actions: ActionsService
 	constructor(apiKey: string) {
 		if (!apiKey) {
 			throw new Error('API key is required')
@@ -43,6 +48,8 @@ export class SteamClient {
 		this.store = new StoreService(apiKey)
 		this.storeTopSellers = new StoreTopSellersService(apiKey)
 		this.steamStore = new SteamStoreService(apiKey)
+		this.reviews = new ReviewsService(apiKey)
+		this.actions = new ActionsService(apiKey)
 	}
 
 	getSteamAuth({

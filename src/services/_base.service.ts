@@ -30,6 +30,7 @@ export abstract class BaseService {
 	protected generateSteamUrl(
 		link: string,
 		params?: Record<string, string | number | boolean | undefined>,
+		authenticated = true,
 	): string {
 		const url = new URL(this.baseUrl + link)
 		for (const [key, value] of Object.entries(params ?? {})) {
@@ -37,7 +38,9 @@ export abstract class BaseService {
 				url.searchParams.set(key, value.toString())
 			}
 		}
-		url.searchParams.set('key', this._apiKey)
+		if (authenticated) {
+			url.searchParams.set('key', this._apiKey)
+		}
 		return url.toString()
 	}
 }
