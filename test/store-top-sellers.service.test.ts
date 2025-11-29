@@ -6,10 +6,15 @@ describe('StoreTopSellersService', () => {
 	test('should get store weekly top sellers basic fields', async () => {
 		const steamClient = new SteamClient(getApiKey())
 		const topSellers =
-			await steamClient.storeTopSellers.getStoreWeeklyTopSellers({})
+			await steamClient.storeTopSellers.getStoreWeeklyTopSellers({
+				context: {
+					country_code: 'CA',
+				},
+				country_code: 'NZ',
+			})
+
 		expect(topSellers).toBeDefined()
 		expect(topSellers.start_date).toBeDefined()
-		// Page sizes for now are fixed at 20
 		expect(topSellers.ranks.length).toBe(20)
 		expect(topSellers.ranks[0].rank).toBe(1)
 		expect(topSellers.ranks[0].item).toBeDefined()
@@ -21,6 +26,24 @@ describe('StoreTopSellersService', () => {
 		expect(topSellers.ranks[0].item.reviews).toBeUndefined()
 		expect(topSellers.ranks[0].item.basic_info).toBeUndefined()
 		expect(topSellers.ranks[0].item.full_description).toBeUndefined()
+	})
+
+	test('should paginate correctly', async () => {
+		const steamClient = new SteamClient(getApiKey())
+		const topSellers =
+			await steamClient.storeTopSellers.getStoreWeeklyTopSellers({
+				page_start: 1,
+				page_count: 10,
+			})
+		expect(topSellers.ranks.length).toBe(10)
+	})
+	test('should paginate with offset correctly', async () => {
+		const steamClient = new SteamClient(getApiKey())
+		const topSellers =
+			await steamClient.storeTopSellers.getStoreWeeklyTopSellers({
+				page_start: 100,
+			})
+		expect(topSellers.ranks[0].rank).toBe(101)
 	})
 
 	test('should include assets when requested', async () => {

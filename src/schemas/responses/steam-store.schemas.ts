@@ -326,14 +326,18 @@ export const SteamStoreDataSchema: z.ZodObject<{
 	steam_appid: z.ZodNumber
 	required_age: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
 	is_free: z.ZodBoolean
-	controller_support: z.ZodOptional<z.ZodString>
+	controller_support: z.ZodOptional<
+		z.ZodEnum<{
+			full: 'full'
+		}>
+	>
 	dlc: z.ZodOptional<z.ZodArray<z.ZodNumber>>
 	detailed_description: z.ZodString
 	about_the_game: z.ZodString
 	short_description: z.ZodString
 	supported_languages: z.ZodString
 	reviews: z.ZodOptional<z.ZodString>
-	header_image: z.ZodNullable<z.ZodString>
+	header_image: z.ZodNullable<z.ZodOptional<z.ZodString>>
 	capsule_image: z.ZodString
 	fullgame: z.ZodOptional<
 		z.ZodObject<
@@ -669,7 +673,7 @@ export const SteamStoreDataSchema: z.ZodObject<{
 	steam_appid: z.number(),
 	required_age: z.union([z.string(), z.number()]),
 	is_free: z.boolean(),
-	controller_support: z.string().optional(),
+	controller_support: z.enum(['full']).optional(),
 	dlc: z.array(z.number()).optional(),
 	detailed_description: z.string().describe('can be in HTML or plain text'),
 	about_the_game: z.string().describe('can be in HTML or plain text'),
@@ -678,7 +682,7 @@ export const SteamStoreDataSchema: z.ZodObject<{
 		.string()
 		.describe('Sometimes in HTML, Comma separated list of languages'),
 	reviews: z.string().optional(),
-	header_image: z.string().nullable(),
+	header_image: z.string().optional().nullable(),
 	capsule_image: z.string(),
 	fullgame: z
 		.object({
@@ -732,14 +736,18 @@ export const SteamStoreResponseSchema: z.ZodObject<{
 			steam_appid: z.ZodNumber
 			required_age: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
 			is_free: z.ZodBoolean
-			controller_support: z.ZodOptional<z.ZodString>
+			controller_support: z.ZodOptional<
+				z.ZodEnum<{
+					full: 'full'
+				}>
+			>
 			dlc: z.ZodOptional<z.ZodArray<z.ZodNumber>>
 			detailed_description: z.ZodString
 			about_the_game: z.ZodString
 			short_description: z.ZodString
 			supported_languages: z.ZodString
 			reviews: z.ZodOptional<z.ZodString>
-			header_image: z.ZodNullable<z.ZodString>
+			header_image: z.ZodNullable<z.ZodOptional<z.ZodString>>
 			capsule_image: z.ZodString
 			fullgame: z.ZodOptional<
 				z.ZodObject<
@@ -1089,14 +1097,18 @@ export const SteamStoreSchemasRoot: z.ZodRecord<
 					steam_appid: z.ZodNumber
 					required_age: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>
 					is_free: z.ZodBoolean
-					controller_support: z.ZodOptional<z.ZodString>
+					controller_support: z.ZodOptional<
+						z.ZodEnum<{
+							full: 'full'
+						}>
+					>
 					dlc: z.ZodOptional<z.ZodArray<z.ZodNumber>>
 					detailed_description: z.ZodString
 					about_the_game: z.ZodString
 					short_description: z.ZodString
 					supported_languages: z.ZodString
 					reviews: z.ZodOptional<z.ZodString>
-					header_image: z.ZodNullable<z.ZodString>
+					header_image: z.ZodNullable<z.ZodOptional<z.ZodString>>
 					capsule_image: z.ZodString
 					fullgame: z.ZodOptional<
 						z.ZodObject<

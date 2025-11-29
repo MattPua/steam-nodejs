@@ -18,7 +18,7 @@ export abstract class BaseService {
 			const response = await fetch(url)
 			if (!response.ok) {
 				console.error(response)
-				throw new Error(`Failed to fetch ${url}: ${response.statusText}.`)
+				throw new Error(response.statusText)
 			}
 			return response.json()
 		} catch (error) {
