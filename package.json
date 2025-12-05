@@ -1,6 +1,6 @@
 {
 	"name": "steam-nodejs",
-	"version": "0.3.5",
+	"version": "0.3.6-beta.1",
 	"description": "A Node.js library for the Steam Web API",
 	"homepage": "https://github.com/mattpua/steam-nodejs#readme",
 	"bugs": {
