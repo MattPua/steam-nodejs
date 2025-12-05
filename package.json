@@ -1,7 +1,7 @@
 {
 	"name": "steam-nodejs",
 	"description": "A Node.js library for the Steam Web API",
-	"version": "0.3.6-beta.2",
+	"version": "0.3.7",
 	"type": "module",
 	"files": [
 		"dist"
