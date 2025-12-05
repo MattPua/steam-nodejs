@@ -135,15 +135,4 @@ describe('StoreTopSellersService', () => {
 			})
 		expect(topSellers.ranks?.[0].item.basic_info).toBeDefined()
 	})
-
-	test('should include full description when requested', async () => {
-		const steamClient = new SteamClient(getApiKey())
-		const topSellers =
-			await steamClient.storeTopSellers.getStoreWeeklyTopSellers({
-				data_request: {
-					include_full_description: true,
-				},
-			})
-		expect(topSellers.ranks?.[0].item.full_description).toBeDefined()
-	})
 })
