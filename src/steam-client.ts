@@ -1,4 +1,3 @@
-import SteamAuth from 'node-steam-openid'
 import { ActionsService } from './services/actions.service'
 import { ChartsService } from './services/charts.service'
 import { CommunityService } from './services/community.service'
@@ -50,19 +49,5 @@ export class SteamClient {
 		this.steamStore = new SteamStoreService(apiKey)
 		this.reviews = new ReviewsService(apiKey)
 		this.actions = new ActionsService(apiKey)
-	}
-
-	getSteamAuth({
-		realm,
-		returnUrl,
-	}: {
-		realm: string
-		returnUrl: string
-	}): SteamAuth {
-		return new SteamAuth({
-			realm,
-			returnUrl,
-			apiKey: this.apiKey,
-		})
 	}
 }

@@ -21,22 +21,6 @@ This library is not affiliated with Valve Corporation or Steam. All trademarks a
 bun add steam-nodejs
 ```
 
-## Authentication
-
-```typescript
-import { SteamClient } from 'steam-nodejs';
-
-const steamClient = new SteamClient('your-api-key');
-
-// Generate a redirect URL to login with Steam with openID Connect. This refers 
-const redirectUrl = await steamClient
-.getSteamAuth({
-  realm: "https://your-website.com",
-  returnUrl: "https://your-website.com/callback",
-})
-.getRedirectUrl();
-
-```
 
 ## Usage
 
@@ -46,13 +30,6 @@ import { SteamClient } from 'steam-nodejs';
 
 const steamClient = new SteamClient('your-api-key');
 
-// On receiving the callback, authenticate the user
-const user = await steamClient
-.getSteamAuth({
-  realm: "https://your-website.com",
-  returnUrl: "https://your-website.com/callback",
-})
-.authenticate(request);
 
 // After authenticating the user, you can operate on different parts of the Steam API
 const friendsList = await steamClient.user.getFriendsList(user.steamid);

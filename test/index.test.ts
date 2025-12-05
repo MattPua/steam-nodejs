@@ -22,12 +22,4 @@ describe('SteamClient', () => {
 		expect(steamClient.store).toBeDefined()
 		expect(steamClient.storeTopSellers).toBeDefined()
 	})
-
-	test('should get SteamAuth instance', () => {
-		const steamClient = new SteamClient(getApiKey())
-		const realm = 'http://localhost:3000'
-		const returnUrl = 'http://localhost:3000/auth/steam/callback'
-		const steamAuth = steamClient.getSteamAuth({ realm, returnUrl })
-		expect(steamAuth).toBeDefined()
-	})
 })
